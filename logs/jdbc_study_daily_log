@@ -1,3 +1,7 @@
 [DEBUG] [2019-07-09 16:40] testOpenSession()
 [DEBUG] [2019-07-09 16:41] testOpenSession()
 [DEBUG] [2019-07-09 16:41] session org.apache.ibatis.session.defaults.DefaultSqlSession@79c29e77
+[DEBUG] [2019-07-09 17:22] testOpenSession()
+[DEBUG] [2019-07-09 17:22] session org.apache.ibatis.session.defaults.DefaultSqlSession@79c29e77
+[DEBUG] [2019-07-09 17:27] testOpenSession()
+[DEBUG] [2019-07-09 17:27] session org.apache.ibatis.session.defaults.DefaultSqlSession@79c29e77
