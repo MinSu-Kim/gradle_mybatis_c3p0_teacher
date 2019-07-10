@@ -32,7 +32,6 @@ public class TitleFrameUI extends JFrame implements ActionListener {
 
 	public TitleFrameUI() {
 		dao = new TitleDaoImpl();
-		titleList = dao.selectTitleByAll();
 		initComponents();
 	}
 
@@ -43,8 +42,8 @@ public class TitleFrameUI extends JFrame implements ActionListener {
 		getContentPane().add(pMain, BorderLayout.CENTER);
 		pMain.setLayout(new BorderLayout(0, 0));
 
-		pContent = new PanelTitle();
-		clearContent();
+		pContent = new PanelTitle("직책");
+		
 
 		pMain.add(pContent, BorderLayout.CENTER);
 
@@ -60,8 +59,6 @@ public class TitleFrameUI extends JFrame implements ActionListener {
 		pBtns.add(btnCancel);
 
 		pList = new TitleList("직책 목록");
-		reloadList();
-
 		getContentPane().add(pList, BorderLayout.SOUTH);
 		
 		popupMenu = new JPopupMenu();
@@ -76,6 +73,9 @@ public class TitleFrameUI extends JFrame implements ActionListener {
 		popupMenu.add(mntmDelete);
 		
 		pList.setPopupMenu(popupMenu);
+		
+		reloadList();
+		clearContent();
 	}
 
 	private void reloadList() {

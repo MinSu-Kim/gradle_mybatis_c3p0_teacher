@@ -15,12 +15,12 @@ public class PanelTitle extends JPanel {
 	private JTextField tfTitleNo;
 	private JTextField tfTitleName;
 
-	public PanelTitle() {
-		initComponents();
+	public PanelTitle(String title) {
+		initComponents(title);
 	}
 
-	private void initComponents() {
-		setBorder(new TitledBorder(null, "직책 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	private void initComponents(String title) {
+		setBorder(new TitledBorder(null, title + " 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new GridLayout(0, 2, 10, 10));
 
 		JLabel lblTitleNo = new JLabel("직책 번호");
@@ -56,15 +56,6 @@ public class PanelTitle extends JPanel {
 		tfTitleNo.setText(String.format("T%03d", nextNo));
 		tfTitleName.setText("");
 		tfTitleNo.setEditable(false);
-	}
-
-	public JTextField getTfNo() {
-		return tfTitleNo;
-	}
-
-	public void setComponentAllEditable(boolean isEditable) {
-		tfTitleNo.setEditable(isEditable);
-		tfTitleName.setEditable(isEditable);
 	}
 
 }

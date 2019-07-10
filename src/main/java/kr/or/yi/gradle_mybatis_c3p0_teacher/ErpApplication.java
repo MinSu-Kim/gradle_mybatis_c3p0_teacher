@@ -9,12 +9,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.DepartmentFrameUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.TitleFrameUI;
 
 @SuppressWarnings("serial")
 public class ErpApplication extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnTitle;
+	private JButton btnDepartment;
 
 	public ErpApplication() {
 		initComponents();
@@ -31,9 +33,16 @@ public class ErpApplication extends JFrame implements ActionListener {
 		btnTitle = new JButton("직책관리");
 		btnTitle.addActionListener(this);
 		contentPane.add(btnTitle);
+		
+		btnDepartment = new JButton("부서관리");
+		btnDepartment.addActionListener(this);
+		contentPane.add(btnDepartment);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnDepartment) {
+			actionPerformedBtnDepartment(e);
+		}
 		if (e.getSource() == btnTitle) {
 			actionPerformedBtnTitle(e);
 		}
@@ -42,6 +51,10 @@ public class ErpApplication extends JFrame implements ActionListener {
 
 	protected void actionPerformedBtnTitle(ActionEvent e) {
 		TitleFrameUI frame = new TitleFrameUI();
+		frame.setVisible(true);
+	}
+	protected void actionPerformedBtnDepartment(ActionEvent e) {
+		DepartmentFrameUI frame = new DepartmentFrameUI();
 		frame.setVisible(true);
 	}
 }

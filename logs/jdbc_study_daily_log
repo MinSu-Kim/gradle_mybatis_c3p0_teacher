@@ -962,3 +962,115 @@
 [DEBUG] [2019-07-10 17:20] search Title1-사장
 [DEBUG] [2019-07-10 17:20] testOpenSession()
 [DEBUG] [2019-07-10 17:20] session org.apache.ibatis.session.defaults.DefaultSqlSession@8b78e0
+[DEBUG] [2019-07-10 17:23] testOpenSession()
+[DEBUG] [2019-07-10 17:23] session org.apache.ibatis.session.defaults.DefaultSqlSession@6b8e82c
+[DEBUG] [2019-07-10 17:23] test01InsertTitle()
+[DEBUG] [2019-07-10 17:23] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:23] 1 -> 사장
+[DEBUG] [2019-07-10 17:23] 2 -> 부장
+[DEBUG] [2019-07-10 17:23] 3 -> 과장
+[DEBUG] [2019-07-10 17:23] 4 -> 대리
+[DEBUG] [2019-07-10 17:23] 5 -> 사원
+[DEBUG] [2019-07-10 17:23] 6 -> 인턴
+[DEBUG] [2019-07-10 17:23] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:23] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:23] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:23] search Title1-사장
+[DEBUG] [2019-07-10 17:38] testOpenSession()
+[DEBUG] [2019-07-10 17:38] session org.apache.ibatis.session.defaults.DefaultSqlSession@3473d833
+[DEBUG] [2019-07-10 17:38] test01InsertTitle()
+[DEBUG] [2019-07-10 17:38] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:38] 1 -> 사장
+[DEBUG] [2019-07-10 17:38] 2 -> 부장
+[DEBUG] [2019-07-10 17:38] 3 -> 과장
+[DEBUG] [2019-07-10 17:38] 4 -> 대리
+[DEBUG] [2019-07-10 17:38] 5 -> 사원
+[DEBUG] [2019-07-10 17:38] 6 -> 인턴
+[DEBUG] [2019-07-10 17:38] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:38] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:38] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:38] search Title1-사장
+[DEBUG] [2019-07-10 17:39] testOpenSession()
+[DEBUG] [2019-07-10 17:39] session org.apache.ibatis.session.defaults.DefaultSqlSession@3473d833
+[DEBUG] [2019-07-10 17:39] test01InsertTitle()
+[DEBUG] [2019-07-10 17:39] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:39] 1 -> 사장
+[DEBUG] [2019-07-10 17:39] 2 -> 부장
+[DEBUG] [2019-07-10 17:39] 3 -> 과장
+[DEBUG] [2019-07-10 17:39] 4 -> 대리
+[DEBUG] [2019-07-10 17:39] 5 -> 사원
+[DEBUG] [2019-07-10 17:39] 6 -> 인턴
+[DEBUG] [2019-07-10 17:39] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:39] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:39] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:39] search Title1-사장
+[DEBUG] [2019-07-10 17:40] testOpenSession()
+[DEBUG] [2019-07-10 17:40] session org.apache.ibatis.session.defaults.DefaultSqlSession@3473d833
+[DEBUG] [2019-07-10 17:40] test01InsertTitle()
+[DEBUG] [2019-07-10 17:40] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:40] 1 -> 사장
+[DEBUG] [2019-07-10 17:40] 2 -> 부장
+[DEBUG] [2019-07-10 17:40] 3 -> 과장
+[DEBUG] [2019-07-10 17:40] 4 -> 대리
+[DEBUG] [2019-07-10 17:40] 5 -> 사원
+[DEBUG] [2019-07-10 17:40] 6 -> 인턴
+[DEBUG] [2019-07-10 17:40] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:40] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:40] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:40] search Title1-사장
+[DEBUG] [2019-07-10 17:41] testOpenSession()
+[DEBUG] [2019-07-10 17:41] session org.apache.ibatis.session.defaults.DefaultSqlSession@3473d833
+[DEBUG] [2019-07-10 17:41] test01InsertTitle()
+[DEBUG] [2019-07-10 17:41] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:41] 1 -> 사장
+[DEBUG] [2019-07-10 17:41] 2 -> 부장
+[DEBUG] [2019-07-10 17:41] 3 -> 과장
+[DEBUG] [2019-07-10 17:41] 4 -> 대리
+[DEBUG] [2019-07-10 17:41] 5 -> 사원
+[DEBUG] [2019-07-10 17:41] 6 -> 인턴
+[DEBUG] [2019-07-10 17:41] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:41] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:41] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:41] search Title1-사장
+[DEBUG] [2019-07-10 17:43] testOpenSession()
+[DEBUG] [2019-07-10 17:43] session org.apache.ibatis.session.defaults.DefaultSqlSession@3473d833
+[DEBUG] [2019-07-10 17:43] test01InsertTitle()
+[DEBUG] [2019-07-10 17:43] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:43] 1 -> 사장
+[DEBUG] [2019-07-10 17:43] 2 -> 부장
+[DEBUG] [2019-07-10 17:43] 3 -> 과장
+[DEBUG] [2019-07-10 17:43] 4 -> 대리
+[DEBUG] [2019-07-10 17:43] 5 -> 사원
+[DEBUG] [2019-07-10 17:43] 6 -> 인턴
+[DEBUG] [2019-07-10 17:43] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:43] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:43] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:43] search Title1-사장
+[DEBUG] [2019-07-10 17:47] testOpenSession()
+[DEBUG] [2019-07-10 17:47] session org.apache.ibatis.session.defaults.DefaultSqlSession@3473d833
+[DEBUG] [2019-07-10 17:47] test01InsertTitle()
+[DEBUG] [2019-07-10 17:47] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:47] 1 -> 사장
+[DEBUG] [2019-07-10 17:47] 2 -> 부장
+[DEBUG] [2019-07-10 17:47] 3 -> 과장
+[DEBUG] [2019-07-10 17:47] 4 -> 대리
+[DEBUG] [2019-07-10 17:47] 5 -> 사원
+[DEBUG] [2019-07-10 17:47] 6 -> 인턴
+[DEBUG] [2019-07-10 17:47] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:47] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:47] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:47] search Title1-사장
+[DEBUG] [2019-07-10 17:47] testOpenSession()
+[DEBUG] [2019-07-10 17:47] session org.apache.ibatis.session.defaults.DefaultSqlSession@3473d833
+[DEBUG] [2019-07-10 17:47] test01InsertTitle()
+[DEBUG] [2019-07-10 17:47] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:47] 1 -> 사장
+[DEBUG] [2019-07-10 17:47] 2 -> 부장
+[DEBUG] [2019-07-10 17:47] 3 -> 과장
+[DEBUG] [2019-07-10 17:47] 4 -> 대리
+[DEBUG] [2019-07-10 17:47] 5 -> 사원
+[DEBUG] [2019-07-10 17:47] 6 -> 인턴
+[DEBUG] [2019-07-10 17:47] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:47] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:47] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:47] search Title1-사장
