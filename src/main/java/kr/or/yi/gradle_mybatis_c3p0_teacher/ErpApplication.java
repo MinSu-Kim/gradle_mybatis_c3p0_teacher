@@ -1,4 +1,4 @@
-package kr.or.yi.gradle_jdbc_study_teacher;
+package kr.or.yi.gradle_mybatis_c3p0_teacher;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import kr.or.yi.gradle_jdbc_study_teacher.ui.TitleFrameUI;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.TitleFrameUI;
 
 @SuppressWarnings("serial")
 public class ErpApplication extends JFrame implements ActionListener {

@@ -1,4 +1,4 @@
-package kr.or.yi.gradle_jdbc_study_teacher;
+package kr.or.yi.gradle_mybatis_c3p0_teacher;
 
 import java.awt.EventQueue;
 

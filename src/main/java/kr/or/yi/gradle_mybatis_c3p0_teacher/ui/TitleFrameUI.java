@@ -1,4 +1,4 @@
-package kr.or.yi.gradle_jdbc_study_teacher.ui;
+package kr.or.yi.gradle_mybatis_c3p0_teacher.ui;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -7,9 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import kr.or.yi.gradle_jdbc_study_teacher.dto.Title;
-import kr.or.yi.gradle_jdbc_study_teacher.ui.content.PanelTitle;
-import kr.or.yi.gradle_jdbc_study_teacher.ui.list.TitleList;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelTitle;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.TitleList;
 
 @SuppressWarnings("serial")
 public class TitleFrameUI extends JFrame {

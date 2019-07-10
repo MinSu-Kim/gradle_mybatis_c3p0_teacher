@@ -3,10 +3,14 @@
 <configuration>
 	<properties resource="application.properties"/>
 	
+	<typeAliases>
+		<package name="kr.or.yi.gradle_mybatis_c3p0_teacher.dto"/>
+	</typeAliases>
+	
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC"/>
-			<dataSource type="kr.or.yi.gradle_jdbc_study_teacher.jdbc.C3P0DataSourceFactory">
+			<dataSource type="kr.or.yi.gradle_mybatis_c3p0_teacher.jdbc.C3P0DataSourceFactory">
 				<property name="driver" value="${driver}"/>
 				<property name="url" value="${url}"/>
 				<property name="username" value="${username}"/>
@@ -16,6 +20,7 @@
 	</environments>
 	
 	<mappers>
+		<mapper resource="mappers/TitleMapper.xml"/>
 	</mappers>
 	
 </configuration>

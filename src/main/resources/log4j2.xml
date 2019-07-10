@@ -19,7 +19,7 @@
    </Appenders>
    
    <Loggers>
-      <Logger name="kr.or.yi.gradle_jdbc_study_teacher" level="trace" additivity="false">
+      <Logger name="kr.or.yi.gradle_mybatis_c3p0_teacher" level="trace" additivity="false">
          <AppenderRef ref="Console" />
          <AppenderRef ref="RollingFile_Daily" />
       </Logger>

@@ -1,4 +1,4 @@
-package kr.or.yi.gradle_jdbc_study_teacher.ui.content;
+package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content;
 
 import java.awt.GridLayout;
 
@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import kr.or.yi.gradle_jdbc_study_teacher.dto.Title;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;
 
 @SuppressWarnings("serial")
 public class PanelTitle extends JPanel {
