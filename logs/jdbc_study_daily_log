@@ -890,3 +890,75 @@
 [TRACE] [2019-07-10 17:11] <==        Row: 4, 대리
 [TRACE] [2019-07-10 17:11] <==        Row: 5, 사원
 [DEBUG] [2019-07-10 17:11] <==      Total: 5
+[DEBUG] [2019-07-10 17:19] testOpenSession()
+[DEBUG] [2019-07-10 17:19] session org.apache.ibatis.session.defaults.DefaultSqlSession@4a635c2e
+[DEBUG] [2019-07-10 17:19] test01InsertTitle()
+[DEBUG] [2019-07-10 17:19] ==>  Preparing: insert into title(title_code, title_name) values(?, ?) 
+[DEBUG] [2019-07-10 17:19] ==> Parameters: 6(Integer), 인턴(String)
+[DEBUG] [2019-07-10 17:19] <==    Updates: 1
+[DEBUG] [2019-07-10 17:19] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:19] ==>  Preparing: select title_code, title_name from title 
+[DEBUG] [2019-07-10 17:19] ==> Parameters: 
+[TRACE] [2019-07-10 17:19] <==    Columns: title_code, title_name
+[TRACE] [2019-07-10 17:19] <==        Row: 1, 사장
+[TRACE] [2019-07-10 17:19] <==        Row: 2, 부장
+[TRACE] [2019-07-10 17:19] <==        Row: 3, 과장
+[TRACE] [2019-07-10 17:19] <==        Row: 4, 대리
+[TRACE] [2019-07-10 17:19] <==        Row: 5, 사원
+[TRACE] [2019-07-10 17:19] <==        Row: 6, 인턴
+[DEBUG] [2019-07-10 17:19] <==      Total: 6
+[DEBUG] [2019-07-10 17:19] 1 -> 사장
+[DEBUG] [2019-07-10 17:19] 2 -> 부장
+[DEBUG] [2019-07-10 17:19] 3 -> 과장
+[DEBUG] [2019-07-10 17:19] 4 -> 대리
+[DEBUG] [2019-07-10 17:19] 5 -> 사원
+[DEBUG] [2019-07-10 17:19] 6 -> 인턴
+[DEBUG] [2019-07-10 17:19] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:19] ==>  Preparing: update title set title_name = ? where title_code = ? 
+[DEBUG] [2019-07-10 17:19] ==> Parameters: 계약직(String), 6(Integer)
+[DEBUG] [2019-07-10 17:19] <==    Updates: 1
+[DEBUG] [2019-07-10 17:19] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:19] ==>  Preparing: delete from title where title_code = ? 
+[DEBUG] [2019-07-10 17:19] ==> Parameters: 6(Integer)
+[DEBUG] [2019-07-10 17:19] <==    Updates: 1
+[DEBUG] [2019-07-10 17:19] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:19] ==>  Preparing: select title_code, title_name from title where title_code = ? 
+[DEBUG] [2019-07-10 17:19] ==> Parameters: 1(Integer)
+[DEBUG] [2019-07-10 17:20] test01InsertTitle()
+[DEBUG] [2019-07-10 17:20] ==>  Preparing: insert into title(title_code, title_name) values(?, ?) 
+[DEBUG] [2019-07-10 17:20] ==> Parameters: 6(Integer), 인턴(String)
+[DEBUG] [2019-07-10 17:20] <==    Updates: 1
+[DEBUG] [2019-07-10 17:20] test02SelectTitleByAll()
+[DEBUG] [2019-07-10 17:20] ==>  Preparing: select title_code, title_name from title 
+[DEBUG] [2019-07-10 17:20] ==> Parameters: 
+[TRACE] [2019-07-10 17:20] <==    Columns: title_code, title_name
+[TRACE] [2019-07-10 17:20] <==        Row: 1, 사장
+[TRACE] [2019-07-10 17:20] <==        Row: 2, 부장
+[TRACE] [2019-07-10 17:20] <==        Row: 3, 과장
+[TRACE] [2019-07-10 17:20] <==        Row: 4, 대리
+[TRACE] [2019-07-10 17:20] <==        Row: 5, 사원
+[TRACE] [2019-07-10 17:20] <==        Row: 6, 인턴
+[DEBUG] [2019-07-10 17:20] <==      Total: 6
+[DEBUG] [2019-07-10 17:20] 1 -> 사장
+[DEBUG] [2019-07-10 17:20] 2 -> 부장
+[DEBUG] [2019-07-10 17:20] 3 -> 과장
+[DEBUG] [2019-07-10 17:20] 4 -> 대리
+[DEBUG] [2019-07-10 17:20] 5 -> 사원
+[DEBUG] [2019-07-10 17:20] 6 -> 인턴
+[DEBUG] [2019-07-10 17:20] test03UpdateTitle()
+[DEBUG] [2019-07-10 17:20] ==>  Preparing: update title set title_name = ? where title_code = ? 
+[DEBUG] [2019-07-10 17:20] ==> Parameters: 계약직(String), 6(Integer)
+[DEBUG] [2019-07-10 17:20] <==    Updates: 1
+[DEBUG] [2019-07-10 17:20] test04DeleteTitle()
+[DEBUG] [2019-07-10 17:20] ==>  Preparing: delete from title where title_code = ? 
+[DEBUG] [2019-07-10 17:20] ==> Parameters: 6(Integer)
+[DEBUG] [2019-07-10 17:20] <==    Updates: 1
+[DEBUG] [2019-07-10 17:20] test05SelectTitleByCode()
+[DEBUG] [2019-07-10 17:20] ==>  Preparing: select title_code, title_name from title where title_code = ? 
+[DEBUG] [2019-07-10 17:20] ==> Parameters: 1(Integer)
+[TRACE] [2019-07-10 17:20] <==    Columns: title_code, title_name
+[TRACE] [2019-07-10 17:20] <==        Row: 1, 사장
+[DEBUG] [2019-07-10 17:20] <==      Total: 1
+[DEBUG] [2019-07-10 17:20] search Title1-사장
+[DEBUG] [2019-07-10 17:20] testOpenSession()
+[DEBUG] [2019-07-10 17:20] session org.apache.ibatis.session.defaults.DefaultSqlSession@8b78e0

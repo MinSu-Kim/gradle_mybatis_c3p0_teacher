@@ -9,4 +9,5 @@ public interface TitleDao {
 	int insertTitle(Title title);
 	int deleteTitle(Title title);
 	int updateTitle(Title title);
+	Title selectTitleByCode(Title title);
 }

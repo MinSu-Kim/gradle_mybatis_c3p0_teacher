@@ -19,6 +19,12 @@
 		set title_name = #{titleName}
 		where title_code = #{titleNo}
 	</update>
+	
+	<select id="selectTitleByCode" parameterType="Title" resultType="Title">
+		select title_code, title_name 
+		from title
+		where title_code = #{titleNo}
+	</select>
 </mapper>
 
 
