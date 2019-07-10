@@ -5,4 +5,24 @@
 	<select id="selectTitleByAll" resultType="Title">
 		select title_code, title_name from title
 	</select>
+	
+	<insert id="insertTitle" parameterType="Title">
+		insert into title(title_code, title_name) values(#{titleNo}, #{titleName})
+	</insert>
+	
+	<delete id="deleteTitle" parameterType="Title">
+		delete from title where title_code = #{titleNo}
+	</delete>
+	
+	<update id="updateTitle" parameterType="Title">
+		update title
+		set title_name = #{titleName}
+		where title_code = #{titleNo}
+	</update>
 </mapper>
+
+
+
+
+
+

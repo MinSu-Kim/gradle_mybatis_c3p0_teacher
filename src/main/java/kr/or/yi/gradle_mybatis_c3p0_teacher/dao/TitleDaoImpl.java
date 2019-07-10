@@ -15,5 +15,29 @@ public class TitleDaoImpl implements TitleDao {
 			return sqlSession.selectList(namespace + ".selectTitleByAll");
 		}
 	}
+	@Override
+	public int insertTitle(Title title) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()){
+			int res = sqlSession.insert(namespace + ".insertTitle", title);
+			sqlSession.commit();
+			return res;
+		}
+	}
+	@Override
+	public int deleteTitle(Title title) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()){
+			int res = sqlSession.delete(namespace + ".deleteTitle", title);
+			sqlSession.commit();
+			return res;
+		}
+	}
+	@Override
+	public int updateTitle(Title title) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()){
+			int res = sqlSession.update(namespace + ".updateTitle", title);
+			sqlSession.commit();
+			return res;
+		}
+	}
 
 }
