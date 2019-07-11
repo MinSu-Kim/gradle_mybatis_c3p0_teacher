@@ -65,7 +65,7 @@ public class TitleList extends JPanel {
 		// 직책번호, 직책명은 가운데 정렬
 		tableCellAlignment(SwingConstants.CENTER, 0, 1);
 		// 직책번호, 직책명의 폭을 (100, 200)으로 가능하면 설정
-		tableSetWidth(100, 200);
+		tableSetWidth(150, 300);
 	}
 
 	protected Object[] toArray(int idx) {

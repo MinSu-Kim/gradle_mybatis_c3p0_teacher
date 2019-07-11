@@ -37,5 +37,39 @@ public class DepartmentDaoTest extends AbstractTest {
 			log.debug(String.format("%d %s %s", dept.getDeptCode(), dept.getDeptName(), dept.getFloor()));
 		}
 	}
+	
+	@Test
+	public void test02Insertdepartment() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Department insertDepartment = new Department(6, "마케팅", 20);
+		int res = deptDao.insertDepartment(insertDepartment);
+		Assert.assertEquals(1, res);
+	}
+	
+	@Test
+	public void test03Updatedepartment() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Department updatedepartment = new Department(6, "마케팅2", 40);
+		int res = deptDao.updateDepartment(updatedepartment);
+		Assert.assertEquals(1, res);
+	}
+	
+	
+	@Test
+	public void test04Deletedepartment() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Department deletedepartment = new Department(6);
+		int res = deptDao.deleteDepartment(deletedepartment);
+		Assert.assertEquals(1, res);
+	}
+
+	@Test
+	public void test05SelectdepartmentByCode() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Department seletedDepartment = new Department(1);
+		Department searchDepartment = deptDao.selectDepartmentByCode(seletedDepartment);
+		log.debug("search department" + searchDepartment);
+		Assert.assertNotNull(searchDepartment);
+	}
 
 }

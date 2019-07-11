@@ -43,7 +43,6 @@ public class TitleFrameUI extends JFrame implements ActionListener {
 		pMain.setLayout(new BorderLayout(0, 0));
 
 		pContent = new PanelTitle("직책");
-		
 
 		pMain.add(pContent, BorderLayout.CENTER);
 
@@ -60,28 +59,21 @@ public class TitleFrameUI extends JFrame implements ActionListener {
 
 		pList = new TitleList("직책 목록");
 		getContentPane().add(pList, BorderLayout.SOUTH);
-		
+
 		popupMenu = new JPopupMenu();
-		pList.add(popupMenu, BorderLayout.NORTH);
-		
+
 		mntmUpdate = new JMenuItem("수정");
 		mntmUpdate.addActionListener(this);
 		popupMenu.add(mntmUpdate);
-		
+
 		mntmDelete = new JMenuItem("삭제");
 		mntmDelete.addActionListener(this);
 		popupMenu.add(mntmDelete);
-		
+
 		pList.setPopupMenu(popupMenu);
-		
+
 		reloadList();
 		clearContent();
-	}
-
-	private void reloadList() {
-		titleList = dao.selectTitleByAll();
-		pList.setItemList(titleList);
-		pList.reloadData();
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -104,6 +96,23 @@ public class TitleFrameUI extends JFrame implements ActionListener {
 		}
 	}
 
+	private void clearContent() {
+		pContent.clearComponent(titleList.size() == 0 ? 1 : titleList.size() + 1);
+	}
+
+	private void reloadList() {
+		titleList = dao.selectTitleByAll();
+		pList.setItemList(titleList);
+		pList.reloadData();
+	}
+
+	private void refreshUI(Title item, int res) {
+		String message = res == 1 ? "성공" : "실패";
+		JOptionPane.showMessageDialog(null, item + message);
+		reloadList();
+		clearContent();
+	}
+
 	private void actionPerformedBtnUpdate(ActionEvent e) {
 		Title updateTitle = pContent.getItem();
 		int res = dao.updateTitle(updateTitle);
@@ -117,30 +126,19 @@ public class TitleFrameUI extends JFrame implements ActionListener {
 		refreshUI(insertTitle, res);
 	}
 
-	private void clearContent() {
-		pContent.clearComponent(titleList.size() == 0 ? 1 : titleList.size() + 1);
-	}
-
 	protected void actionPerformedBtnCancel(ActionEvent e) {
 		clearContent();
 	}
-	
+
 	protected void actionPerformedMntmUpdate(ActionEvent e) {
 		Title updateTitle = pList.getSelectedItem();
 		pContent.setItem(updateTitle);
 		btnAdd.setText("수정");
 	}
-	
+
 	protected void actionPerformedMntmDelete(ActionEvent e) {
 		Title delTitle = pList.getSelectedItem();
 		int res = dao.deleteTitle(delTitle);
 		refreshUI(delTitle, res);
-	}
-
-	private void refreshUI(Title item, int res) {
-		String message = res == 1 ? "성공" : "실패";
-		JOptionPane.showMessageDialog(null, item + message);
-		reloadList();
-		clearContent();
 	}
 }

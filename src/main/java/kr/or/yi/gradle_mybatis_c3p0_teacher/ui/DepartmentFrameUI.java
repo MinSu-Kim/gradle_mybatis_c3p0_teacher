@@ -7,7 +7,10 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDaoImpl;
@@ -22,8 +25,13 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 	private List<Department> deptList;
 	private DepartmentList pList;
 	private JButton btnCancel;
+
+	private JPopupMenu popupMenu;
+	private JMenuItem mntmUpdate;
+	private JMenuItem mntmDelete;
+
 	private DepartmentDao dao;
-	
+
 	public DepartmentFrameUI() {
 		dao = new DepartmentDaoImpl();
 		initComponents();
@@ -37,8 +45,7 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 		pMain.setLayout(new BorderLayout(0, 0));
 
 		pContent = new PanelDepartment("부서");
-		
-		
+
 		pMain.add(pContent, BorderLayout.CENTER);
 
 		JPanel pBtns = new JPanel();
@@ -53,31 +60,88 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 		pBtns.add(btnCancel);
 
 		pList = new DepartmentList("부서");
-		
-		deptList = dao.selectDepartmentByAll();
-		pList.setItemList(deptList);
-		pList.reloadData();
-		
 		getContentPane().add(pList, BorderLayout.SOUTH);
-		
-		pContent.clearComponent(deptList.size() == 0 ? 1 : deptList.size() + 1);
+
+		popupMenu = new JPopupMenu();
+
+		mntmUpdate = new JMenuItem("수정");
+		mntmUpdate.addActionListener(this);
+		popupMenu.add(mntmUpdate);
+
+		mntmDelete = new JMenuItem("삭제");
+		mntmDelete.addActionListener(this);
+		popupMenu.add(mntmDelete);
+
+		pList.setPopupMenu(popupMenu);
+
+		reloadList();
+		clearContent();
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
+		if (e.getSource() == mntmDelete) {
+			actionPerformedMntmDelete(e);
+		}
+		if (e.getSource() == mntmUpdate) {
+			actionPerformedMntmUpdate(e);
+		}
 		if (e.getSource() == btnCancel) {
 			actionPerformedBtnCancel(e);
 		}
 		if (e.getSource() == btnAdd) {
-			actionPerformedBtnAdd(e);
+			if (e.getActionCommand().equals("추가")) {
+				actionPerformedBtnAdd(e);
+			}
+			if (e.getActionCommand().equals("수정")) {
+				actionPerformedBtnUpdate(e);
+			}
 		}
 	}
 
-	protected void actionPerformedBtnAdd(ActionEvent e) {
+	private void clearContent() {
+		pContent.clearComponent(deptList.size() == 0 ? 1 : deptList.size() + 1);
+	}
 
+	private void reloadList() {
+		deptList = dao.selectDepartmentByAll();
+		pList.setItemList(deptList);
+		pList.reloadData();
+	}
+
+	private void refreshUI(Department item, int res) {
+		String message = res == 1 ? "성공" : "실패";
+		JOptionPane.showMessageDialog(null, item + message);
+		reloadList();
+		clearContent();
+	}
+
+	private void actionPerformedBtnUpdate(ActionEvent e) {
+		Department updateDept = pContent.getItem();
+		int res = dao.updateDepartment(updateDept);
+		refreshUI(updateDept, res);
+		btnAdd.setText("추가");
+	}
+	
+	protected void actionPerformedBtnAdd(ActionEvent e) {
+		Department insertDepartment = pContent.getItem();
+		int res = dao.insertDepartment(insertDepartment);
+		refreshUI(insertDepartment, res);
 	}
 
 	protected void actionPerformedBtnCancel(ActionEvent e) {
+		clearContent();
 	}
-	
+
+	private void actionPerformedMntmUpdate(ActionEvent e) {
+		Department updateDept = pList.getSelectedItem();
+		pContent.setItem(updateDept);
+		btnAdd.setText("수정");
+	}
+
+	private void actionPerformedMntmDelete(ActionEvent e) {
+		Department delDept = pList.getSelectedItem();
+		int res = dao.deleteDepartment(delDept);
+		refreshUI(delDept, res);
+	}
+
 }

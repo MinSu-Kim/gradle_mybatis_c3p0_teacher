@@ -19,27 +19,37 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	}
 
 	@Override
-	public int insertDepartment(Department title) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertDepartment(Department department) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			int res = sqlSession.insert(namespace + ".insertDepartment", department);
+			sqlSession.commit();
+			return res;
+		}
 	}
 
 	@Override
-	public int deleteDepartment(Department title) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteDepartment(Department department) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			int res = sqlSession.delete(namespace + ".deleteDepartment", department);
+			sqlSession.commit();
+			return res;
+		}
 	}
 
 	@Override
-	public int updateDepartment(Department title) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDepartment(Department department) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			int res = sqlSession.update(namespace + ".updateDepartment", department);
+			sqlSession.commit();
+			return res;
+		}
 	}
 
 	@Override
-	public Department selectDepartmentByCode(Department title) {
-		// TODO Auto-generated method stub
-		return null;
+	public Department selectDepartmentByCode(Department department) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			return sqlSession.selectOne(namespace + ".selectDepartmentByCode", department);
+		}
 	}
 
 }
