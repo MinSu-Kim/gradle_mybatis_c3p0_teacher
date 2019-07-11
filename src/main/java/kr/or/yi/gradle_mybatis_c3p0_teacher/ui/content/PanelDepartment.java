@@ -3,7 +3,6 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
@@ -11,16 +10,17 @@ import javax.swing.border.TitledBorder;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 
 @SuppressWarnings("serial")
-public class PanelDepartment extends JPanel {
+public class PanelDepartment extends AbstractPanel<Department> {
 	private JTextField tfDeptNo;
 	private JTextField tfDeptName;
 	private JTextField tfFloor;
 
 	public PanelDepartment(String title) {
-		initComponents(title);
+		super(title);
 	}
 
-	private void initComponents(String title) {
+	@Override
+	protected void initComponents(String title) {
 		setBorder(new TitledBorder(null, title + " 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new GridLayout(0, 2, 10, 10));
 
