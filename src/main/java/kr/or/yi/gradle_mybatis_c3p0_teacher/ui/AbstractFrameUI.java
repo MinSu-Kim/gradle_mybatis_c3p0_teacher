@@ -12,41 +12,36 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDaoImpl;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.AbstractPanel;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelDepartment;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.AbstractList;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.DepartmentList;
 
 @SuppressWarnings("serial")
-public class DepartmentFrameUI extends JFrame implements ActionListener {
+public abstract class AbstractFrameUI<T> extends JFrame implements ActionListener {
 	private JButton btnAdd;
-	private AbstractPanel<Department> pContent;
-	private List<Department> deptList;
-	private AbstractList<Department> pList;
+	protected AbstractPanel<T> pContent;
+	protected List<T> itemList;
+	protected AbstractList<T> pList;
 	private JButton btnCancel;
 
 	private JPopupMenu popupMenu;
 	private JMenuItem mntmUpdate;
 	private JMenuItem mntmDelete;
 
-	private DepartmentDao dao;
-
-	public DepartmentFrameUI() {
-		dao = new DepartmentDaoImpl();
-		initComponents();
+	public AbstractFrameUI(String title) {
+		initDao();
+		initComponents(title);
 	}
 
-	private void initComponents() {
-		setTitle("직책관리");
+	protected abstract void initDao();
+
+	private void initComponents(String title) {
+		setTitle(title);
 		setBounds(200, 100, 450, 450);
 		JPanel pMain = new JPanel();
 		getContentPane().add(pMain, BorderLayout.CENTER);
 		pMain.setLayout(new BorderLayout(0, 0));
 
-		pContent = new PanelDepartment("부서");
+		pContent = createContentPanel();
 
 		pMain.add(pContent, BorderLayout.CENTER);
 
@@ -61,7 +56,7 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 		btnCancel.addActionListener(this);
 		pBtns.add(btnCancel);
 
-		pList = new DepartmentList("부서");
+		pList = createListPanel();
 		getContentPane().add(pList, BorderLayout.SOUTH);
 
 		popupMenu = new JPopupMenu();
@@ -80,6 +75,11 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 		clearContent();
 	}
 
+	protected abstract AbstractList<T> createListPanel();
+
+	protected abstract AbstractPanel<T> createContentPanel();
+
+	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == mntmDelete) {
 			actionPerformedMntmDelete(e);
@@ -100,17 +100,17 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 		}
 	}
 
-	private void clearContent() {
-		pContent.clearComponent(deptList.size() == 0 ? 1 : deptList.size() + 1);
-	}
+	protected abstract void clearContent();
 
-	private void reloadList() {
-		deptList = dao.selectDepartmentByAll();
-		pList.setItemList(deptList);
+	protected void reloadList() {
+		itemList = getListAll();
+		pList.setItemList(itemList);
 		pList.reloadData();
 	}
 
-	private void refreshUI(Department item, int res) {
+	protected abstract List<T> getListAll();
+
+	private void refreshUI(T item, int res) {
 		String message = res == 1 ? "성공" : "실패";
 		JOptionPane.showMessageDialog(null, item + message);
 		reloadList();
@@ -118,32 +118,38 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 	}
 
 	private void actionPerformedBtnUpdate(ActionEvent e) {
-		Department updateDept = pContent.getItem();
-		int res = dao.updateDepartment(updateDept);
+		T updateDept = pContent.getItem();
+//		int res = dao.updateDepartment(updateDept);
+		int res =updateItem(updateDept);
 		refreshUI(updateDept, res);
 		btnAdd.setText("추가");
 	}
 	
+	protected abstract int updateItem(T item);
+	
 	protected void actionPerformedBtnAdd(ActionEvent e) {
-		Department insertDepartment = pContent.getItem();
-		int res = dao.insertDepartment(insertDepartment);
+		T insertDepartment = pContent.getItem();
+		int res = insertItem(insertDepartment);
 		refreshUI(insertDepartment, res);
 	}
-
+	protected abstract int insertItem(T item);
+	
 	protected void actionPerformedBtnCancel(ActionEvent e) {
 		clearContent();
 	}
 
 	private void actionPerformedMntmUpdate(ActionEvent e) {
-		Department updateDept = pList.getSelectedItem();
+		T updateDept = pList.getSelectedItem();
 		pContent.setItem(updateDept);
 		btnAdd.setText("수정");
 	}
 
 	private void actionPerformedMntmDelete(ActionEvent e) {
-		Department delDept = pList.getSelectedItem();
-		int res = dao.deleteDepartment(delDept);
+		T delDept = pList.getSelectedItem();
+		int res = deleteItem(delDept);
 		refreshUI(delDept, res);
 	}
+	
+	protected abstract int deleteItem(T item);
 
 }

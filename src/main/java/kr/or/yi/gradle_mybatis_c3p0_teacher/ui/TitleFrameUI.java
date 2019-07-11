@@ -1,144 +1,61 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.ui;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.AbstractPanel;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelTitle;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.AbstractList;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.TitleList;
 
 @SuppressWarnings("serial")
-public class TitleFrameUI extends JFrame implements ActionListener {
+public class TitleFrameUI extends AbstractFrameUI<Title> {
 	private TitleDao dao;
-	private JButton btnAdd;
-	private PanelTitle pContent;
-	private List<Title> titleList;
-	private TitleList pList;
-	private JButton btnCancel;
-	private JPopupMenu popupMenu;
-	private JMenuItem mntmUpdate;
-	private JMenuItem mntmDelete;
-
-	public TitleFrameUI() {
+	
+	public TitleFrameUI(String title) {
+		super(title);
+	}
+	
+	@Override
+	protected  void initDao() {
 		dao = new TitleDaoImpl();
-		initComponents();
+	}
+	
+	@Override
+	protected AbstractList<Title> createListPanel(){
+		return new TitleList("직책 목록");
+	}
+	
+	@Override
+	protected AbstractPanel<Title> createContentPanel(){
+		return new PanelTitle("직책 정보");
 	}
 
-	private void initComponents() {
-		setTitle("직책관리");
-		setBounds(200, 100, 450, 450);
-		JPanel pMain = new JPanel();
-		getContentPane().add(pMain, BorderLayout.CENTER);
-		pMain.setLayout(new BorderLayout(0, 0));
-
-		pContent = new PanelTitle("직책");
-
-		pMain.add(pContent, BorderLayout.CENTER);
-
-		JPanel pBtns = new JPanel();
-		pMain.add(pBtns, BorderLayout.SOUTH);
-
-		btnAdd = new JButton("추가");
-		btnAdd.addActionListener(this);
-		pBtns.add(btnAdd);
-
-		btnCancel = new JButton("취소");
-		btnCancel.addActionListener(this);
-		pBtns.add(btnCancel);
-
-		pList = new TitleList("직책 목록");
-		getContentPane().add(pList, BorderLayout.SOUTH);
-
-		popupMenu = new JPopupMenu();
-
-		mntmUpdate = new JMenuItem("수정");
-		mntmUpdate.addActionListener(this);
-		popupMenu.add(mntmUpdate);
-
-		mntmDelete = new JMenuItem("삭제");
-		mntmDelete.addActionListener(this);
-		popupMenu.add(mntmDelete);
-
-		pList.setPopupMenu(popupMenu);
-
-		reloadList();
-		clearContent();
+	@Override
+	protected void clearContent() {
+		pContent.clearComponent(itemList.size() == 0 ? 1 : itemList.size() + 1);
+	}
+	
+	@Override
+	public List<Title> getListAll(){
+		return dao.selectTitleByAll();
+	}
+	
+	@Override
+	protected int updateItem(Title item) {
+		return dao.updateTitle(item);
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == mntmDelete) {
-			actionPerformedMntmDelete(e);
-		}
-		if (e.getSource() == mntmUpdate) {
-			actionPerformedMntmUpdate(e);
-		}
-		if (e.getSource() == btnCancel) {
-			actionPerformedBtnCancel(e);
-		}
-		if (e.getSource() == btnAdd) {
-			if (e.getActionCommand().equals("추가")) {
-				actionPerformedBtnAdd(e);
-			}
-			if (e.getActionCommand().equals("수정")) {
-				actionPerformedBtnUpdate(e);
-			}
-		}
+	@Override
+	protected int insertItem(Title item) {
+		return dao.insertTitle(item);
 	}
-
-	private void clearContent() {
-		pContent.clearComponent(titleList.size() == 0 ? 1 : titleList.size() + 1);
-	}
-
-	private void reloadList() {
-		titleList = dao.selectTitleByAll();
-		pList.setItemList(titleList);
-		pList.reloadData();
-	}
-
-	private void refreshUI(Title item, int res) {
-		String message = res == 1 ? "성공" : "실패";
-		JOptionPane.showMessageDialog(null, item + message);
-		reloadList();
-		clearContent();
-	}
-
-	private void actionPerformedBtnUpdate(ActionEvent e) {
-		Title updateTitle = pContent.getItem();
-		int res = dao.updateTitle(updateTitle);
-		refreshUI(updateTitle, res);
-		btnAdd.setText("추가");
-	}
-
-	protected void actionPerformedBtnAdd(ActionEvent e) {
-		Title insertTitle = pContent.getItem();
-		int res = dao.insertTitle(insertTitle);
-		refreshUI(insertTitle, res);
-	}
-
-	protected void actionPerformedBtnCancel(ActionEvent e) {
-		clearContent();
-	}
-
-	protected void actionPerformedMntmUpdate(ActionEvent e) {
-		Title updateTitle = pList.getSelectedItem();
-		pContent.setItem(updateTitle);
-		btnAdd.setText("수정");
-	}
-
-	protected void actionPerformedMntmDelete(ActionEvent e) {
-		Title delTitle = pList.getSelectedItem();
-		int res = dao.deleteTitle(delTitle);
-		refreshUI(delTitle, res);
+	
+	@Override
+	protected int deleteItem(Title item) {
+		return dao.deleteTitle(item);
 	}
 }
