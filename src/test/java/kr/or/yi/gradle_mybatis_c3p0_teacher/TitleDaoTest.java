@@ -34,7 +34,7 @@ public class TitleDaoTest extends AbstractTest {
 		Assert.assertNotNull(titleList);
 		
 		for(Title t : titleList) {
-			log.debug(String.format("%d -> %s", t.getTitleNo(), t.getTitleName()));
+			log.debug(String.format("%d -> %s", t.getTitleCode(), t.getTitleName()));
 		}
 	}
 	
