@@ -3,13 +3,14 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.ui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDao;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelDepartment;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.DepartmentList;
@@ -21,8 +22,10 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 	private List<Department> deptList;
 	private DepartmentList pList;
 	private JButton btnCancel;
-
+	private DepartmentDao dao;
+	
 	public DepartmentFrameUI() {
+		dao = new DepartmentDaoImpl();
 		initComponents();
 	}
 
@@ -35,7 +38,7 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 
 		pContent = new PanelDepartment("부서");
 		
-
+		
 		pMain.add(pContent, BorderLayout.CENTER);
 
 		JPanel pBtns = new JPanel();
@@ -51,13 +54,13 @@ public class DepartmentFrameUI extends JFrame implements ActionListener {
 
 		pList = new DepartmentList("부서");
 		
-		deptList = new ArrayList<Department>();
+		deptList = dao.selectDepartmentByAll();
 		pList.setItemList(deptList);
 		pList.reloadData();
 		
 		getContentPane().add(pList, BorderLayout.SOUTH);
 		
-		pContent.clearComponent(1);
+		pContent.clearComponent(deptList.size() == 0 ? 1 : deptList.size() + 1);
 	}
 
 	public void actionPerformed(ActionEvent e) {

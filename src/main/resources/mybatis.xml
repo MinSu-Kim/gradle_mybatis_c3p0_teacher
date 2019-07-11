@@ -2,7 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<properties resource="application.properties"/>
-	
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
 	<typeAliases>
 		<package name="kr.or.yi.gradle_mybatis_c3p0_teacher.dto"/>
 	</typeAliases>
@@ -21,6 +23,7 @@
 	
 	<mappers>
 		<mapper resource="mappers/TitleMapper.xml"/>
+		<mapper resource="mappers/DepartmentMapper.xml"/>
 	</mappers>
 	
 </configuration>

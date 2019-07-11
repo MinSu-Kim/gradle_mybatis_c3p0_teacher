@@ -1,7 +1,7 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.dto;
 
 public class Department {
-	private int deptNo;
+	private int deptCode;
 	private String deptName;
 	private int floor;
 
@@ -10,21 +10,21 @@ public class Department {
 	}
 
 	public Department(int deptNo) {
-		this.deptNo = deptNo;
+		this.deptCode = deptNo;
 	}
 
 	public Department(int deptNo, String deptName, int floor) {
-		this.deptNo = deptNo;
+		this.deptCode = deptNo;
 		this.deptName = deptName;
 		this.floor = floor;
 	}
 
-	public int getDeptNo() {
-		return deptNo;
+	public int getDeptCode() {
+		return deptCode;
 	}
 
-	public void setDeptNo(int deptNo) {
-		this.deptNo = deptNo;
+	public void setDeptCode(int deptCode) {
+		this.deptCode = deptCode;
 	}
 
 	public String getDeptName() {
@@ -52,7 +52,7 @@ public class Department {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + deptNo;
+		result = prime * result + deptCode;
 		return result;
 	}
 
@@ -65,12 +65,12 @@ public class Department {
 		if (getClass() != obj.getClass())
 			return false;
 		Department other = (Department) obj;
-		if (deptNo != other.deptNo)
+		if (deptCode != other.deptCode)
 			return false;
 		return true;
 	}
 
 	public Object[] toArray() {
-		return new Object[] { String.format("D%03d", deptNo), deptName, floor };
+		return new Object[] { String.format("D%03d", deptCode), deptName, floor };
 	}
 }

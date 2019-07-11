@@ -50,7 +50,7 @@ public class PanelDepartment extends JPanel {
 	}
 
 	public void setItem(Department dept) {
-		tfDeptNo.setText(String.format("D%03d", dept.getDeptNo()));
+		tfDeptNo.setText(String.format("D%03d", dept.getDeptCode()));
 		tfDeptName.setText(dept.getDeptName());
 		tfFloor.setText(dept.getFloor()+"");
 		tfDeptNo.setEditable(false);
