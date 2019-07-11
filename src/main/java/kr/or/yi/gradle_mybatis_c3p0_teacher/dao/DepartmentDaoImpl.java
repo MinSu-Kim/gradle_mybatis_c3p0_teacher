@@ -8,7 +8,8 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.jdbc.MyBatisSqlSessionFactory;
 
 public class DepartmentDaoImpl implements DepartmentDao {
-	private static final String namespace = "mappers.DepartmentMapper";
+//	private static final String namespace = "mappers.DepartmentMapper";
+	private static final String namespace = "kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDao";
 
 	@Override
 	public List<Department> selectDepartmentByAll() {

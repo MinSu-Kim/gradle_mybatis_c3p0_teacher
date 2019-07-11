@@ -7,7 +7,7 @@
       </Console>
       
       <RollingFile name="RollingFile_Daily">
-         <FileName>./logs/jdbc_study_daily_log</FileName>
+         <FileName>./logs/gradle_mybatis_c3p0_teacher.log</FileName>
          <FilePattern>./logs/time-based-logs/%d{yyyy-MM-dd}.log</FilePattern>
          <PatternLayout pattern="[%-5level] [%d{yyyy-MM-dd HH:mm}] %m%n" />
          <Policies>
