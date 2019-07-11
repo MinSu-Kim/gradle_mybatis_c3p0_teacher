@@ -1,6 +1,5 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.ui;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDao;
