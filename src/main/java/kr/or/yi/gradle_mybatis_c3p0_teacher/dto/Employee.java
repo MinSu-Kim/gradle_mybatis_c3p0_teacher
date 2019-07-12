@@ -91,6 +91,7 @@ public class Employee {
 	public String toString() {
 		return String.format("[%s, %s, %s, %s, %s, %s, %s]", 
 				eNo, 
+				eName,
 				String.format("%,d", salary),
 				String.format("%s(%s층)", dno.getDeptName(), dno.getFloor()), 
 				gender ? "남자" : "여자",

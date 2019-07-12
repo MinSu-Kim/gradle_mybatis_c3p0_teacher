@@ -11,7 +11,6 @@ import org.junit.runners.MethodSorters;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDaoImpl;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Employee;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -35,7 +34,6 @@ public class EmployeeDaoImplTest extends AbstractTest {
 		Assert.assertNotNull(empLlist);
 		
 		for(Employee emp : empLlist) {
-//			log.debug(String.format("%d %s %s", dept.getDeptCode(), dept.getDeptName(), dept.getFloor()));
 			log.debug(emp.toString());
 		}
 	}
