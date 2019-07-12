@@ -25,7 +25,7 @@ public class TitleFrameUI extends AbstractFrameUI<Title> {
 	
 	@Override
 	protected AbstractList<Title> createListPanel(){
-		return new TitleList("직책 목록");
+		return new TitleList();
 	}
 	
 	@Override
