@@ -74,11 +74,6 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 		reloadList();
 		clearContent();
 	}
-
-	protected abstract AbstractList<T> createListPanel();
-
-	protected abstract AbstractPanel<T> createContentPanel();
-
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == mntmDelete) {
@@ -100,15 +95,11 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 		}
 	}
 
-	protected abstract void clearContent();
-
 	protected void reloadList() {
 		itemList = getListAll();
 		pList.setItemList(itemList);
 		pList.reloadData();
 	}
-
-	protected abstract List<T> getListAll();
 
 	private void refreshUI(T item, int res) {
 		String message = res == 1 ? "성공" : "실패";
@@ -119,25 +110,11 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 
 	private void actionPerformedBtnUpdate(ActionEvent e) {
 		T updateDept = pContent.getItem();
-//		int res = dao.updateDepartment(updateDept);
 		int res =updateItem(updateDept);
 		refreshUI(updateDept, res);
 		btnAdd.setText("추가");
 	}
 	
-	protected abstract int updateItem(T item);
-	
-	protected void actionPerformedBtnAdd(ActionEvent e) {
-		T insertDepartment = pContent.getItem();
-		int res = insertItem(insertDepartment);
-		refreshUI(insertDepartment, res);
-	}
-	protected abstract int insertItem(T item);
-	
-	protected void actionPerformedBtnCancel(ActionEvent e) {
-		clearContent();
-	}
-
 	private void actionPerformedMntmUpdate(ActionEvent e) {
 		T updateDept = pList.getSelectedItem();
 		pContent.setItem(updateDept);
@@ -150,6 +127,23 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 		refreshUI(delDept, res);
 	}
 	
+	protected void actionPerformedBtnAdd(ActionEvent e) {
+		T insertDepartment = pContent.getItem();
+		int res = insertItem(insertDepartment);
+		refreshUI(insertDepartment, res);
+	}
+	
+	protected void actionPerformedBtnCancel(ActionEvent e) {
+		clearContent();
+	}
+	
+	protected abstract AbstractList<T> createListPanel();
+	protected abstract AbstractPanel<T> createContentPanel();
+	
+	protected abstract int updateItem(T item);
+	protected abstract List<T> getListAll();
+	protected abstract void clearContent();
 	protected abstract int deleteItem(T item);
+	protected abstract int insertItem(T item);
 
 }
