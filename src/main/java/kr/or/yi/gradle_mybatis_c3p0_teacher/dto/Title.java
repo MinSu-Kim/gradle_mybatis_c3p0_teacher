@@ -4,6 +4,10 @@ public class Title {
 	private int titleCode;
 	private String titleName;
 
+	public Title() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Title(int titleNo) {
 		this.titleCode = titleNo;
 	}
