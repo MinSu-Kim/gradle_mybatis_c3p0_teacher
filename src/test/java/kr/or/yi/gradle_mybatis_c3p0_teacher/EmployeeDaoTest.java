@@ -1,7 +1,5 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -18,6 +16,7 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Employee;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmployeeDaoTest extends AbstractTest {
 	private static EmployeeDao empDao;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		empDao = new EmployeeDaoImpl();
