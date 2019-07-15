@@ -46,6 +46,7 @@ public class PanelEmployee extends AbstractPanel<Employee> {
 
 	@Override
 	protected void initComponents(String title) {
+		setSize(450, 300);
 		setBorder(new TitledBorder(null, title + " 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new GridLayout(0, 2, 10, 10));
 

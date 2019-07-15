@@ -2,6 +2,7 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -51,6 +52,9 @@ public abstract class AbstractList<T> extends JPanel {
 	}
 
 	private Object[][] getRows() {
+		if (itemList==null) {
+			itemList = new ArrayList<>();
+		}
 		Object[][] rows = new Object[itemList.size()][];
 		for (int i = 0; i < itemList.size(); i++) {
 			rows[i] = toArray(i);
