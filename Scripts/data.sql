@@ -13,3 +13,21 @@ VALUES
 (1365,'김상원',5,1500000,0, 1, '2019-05-01'),
 (2106,'김창섭',4,2500000,0, 2, '2018-08-01'),
 (3427,'최종철',4,1500000,0, 2, '2019-03-01');
+
+-- procedure 생성
+DROP PROCEDURE IF EXISTS salary_total;
+DELIMITER $$
+$$
+CREATE PROCEDURE salary_total(in deptno int)
+BEGIN
+    select dept_name, ifnull(sum(salary),0) as total
+    from employee e right join department d on e.dno = d.dept_code
+    where dno = deptno;
+END$$
+DELIMITER ;
+
+call salary_total(2);
+
+
+
+
