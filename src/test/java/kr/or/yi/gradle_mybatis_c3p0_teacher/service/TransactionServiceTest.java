@@ -20,9 +20,7 @@ public class TransactionServiceTest extends AbstractTest {
 		title.setTitleCode(1);
 		title.setTitleName("사원");
 		Department department = new Department(6, "H/W개발", 6);
-		int res = service.addTitleDeparment(title, department);
-		Assert.assertEquals(1, res);
-		log.debug("res = " + res);
+		service.addTitleDeparment(title, department);
 	}
 
 	@Test(expected = RuntimeException.class)
@@ -32,9 +30,7 @@ public class TransactionServiceTest extends AbstractTest {
 		title.setTitleCode(7);
 		title.setTitleName("무기계약");
 		Department department = new Department(1, "개발", 6);// 에러
-		int res = service.addTitleDeparment(title, department);
-		Assert.assertEquals(1, res);
-		log.debug("res = " + res);
+		service.addTitleDeparment(title, department);
 	}
 
 	@Test
@@ -44,9 +40,7 @@ public class TransactionServiceTest extends AbstractTest {
 		title.setTitleCode(7);
 		title.setTitleName("무기계약");
 		Department department = new Department(6, "H/W개발", 6);
-		int res = service.addTitleDeparment(title, department);
-		Assert.assertEquals(2, res);
-		log.debug("res = " + res);
+		service.addTitleDeparment(title, department);
 	}
 
 	@Test(expected = RuntimeException.class)

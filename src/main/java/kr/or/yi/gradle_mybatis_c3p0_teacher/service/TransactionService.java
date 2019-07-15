@@ -10,7 +10,7 @@ public class TransactionService {
 	private static final String DEPT_NS = "kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDao";
 	private static final String TITLE_NS = "kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDao";
 
-	public int addTitleDeparment(Title title, Department department) {
+	public void addTitleDeparment(Title title, Department department) {
 		int res = 0;
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
@@ -27,7 +27,6 @@ public class TransactionService {
 		} finally {
 			sqlSession.close();
 		}
-		return res;
 	}
 
 	public int removeTitleDeparment(Title title, Department department) {
@@ -43,7 +42,7 @@ public class TransactionService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			sqlSession.rollback();
-			throw new RuntimeException(e.getCause());
+//			throw new RuntimeException(e.getCause());
 		} finally {
 			sqlSession.close();
 		}
