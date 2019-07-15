@@ -3,7 +3,6 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list;
 import javax.swing.SwingConstants;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Employee;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;
 
 @SuppressWarnings("serial")
 public class EmployeeList extends AbstractList<Employee> {
