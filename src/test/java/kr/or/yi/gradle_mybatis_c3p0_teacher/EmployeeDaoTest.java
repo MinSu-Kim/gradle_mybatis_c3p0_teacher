@@ -2,7 +2,10 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -15,6 +18,7 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Employee;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.State;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -85,5 +89,40 @@ public class EmployeeDaoTest extends AbstractTest {
 		int res = empDao.deleteEmployee(delEmp);
 		Assert.assertEquals(1, res);
 	}
+	
+	@Test
+	public void test06getSalaryByDepartment() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Map<String, Object> param = new HashMap<>();
+		param.put("deptno", 1);
+		log.debug(param.get("deptno") + "");
+		
+		Map<String, Object> result = empDao.getSalaryByDepartment(param);
+		for(Entry<String, Object> e : result.entrySet()) {
+			log.debug(String.format("%s->%d", e.getKey(), e.getValue()));
+		}
+		Assert.assertNotEquals(0, result.size());
+	}
 
+	@Test
+	public void test07getStateSalaryByDepartment() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Map<String, Object> param = new HashMap<>();
+		param.put("deptno", 2);
+		
+		State state = empDao.getStateSalaryByDepartment(param);
+		log.debug(state.toString());
+		
+		Assert.assertNotEquals(null, state);
+	}
 }
+
+
+
+
+
+
+
+
+
+
