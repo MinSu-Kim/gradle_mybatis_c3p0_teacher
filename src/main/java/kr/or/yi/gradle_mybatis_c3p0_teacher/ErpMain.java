@@ -23,7 +23,6 @@ public class ErpMain {
 					// 4. idw-gpl.jar : InfoNode Look and Feel
 //					UIManager.setLookAndFeel("net.infonode.gui.laf.InfoNodeLookAndFeel");
 
-					
 					ErpApplication frame = new ErpApplication();
 					frame.setVisible(true);
 				} catch (Exception e) {
