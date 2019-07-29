@@ -73,6 +73,17 @@ ALTER TABLE mybatis_study.employee
 		);
 		
 	
+CREATE TABLE mybatis_study.post (
+  zipcode char(5) DEFAULT NULL,
+  sido varchar(20) DEFAULT NULL,
+  sigungu varchar(20) DEFAULT NULL,
+  doro varchar(80) DEFAULT NULL,
+  building1 int(5) DEFAULT NULL,
+  building2 int(5) DEFAULT NULL,
+  KEY idx_post_sido (sido),
+  KEY idx_post_doro (doro),
+  KEY idx_post_doro_building1 (doro,building1)
+);
 
 -- 계정과 권한부여
 grant all privileges 

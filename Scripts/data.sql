@@ -29,5 +29,10 @@ DELIMITER ;
 call salary_total(2);
 
 
-
-
+LOAD data LOCAL INFILE 'D:\\zipcode_DB\\대구광역시.txt' 
+INTO table post   
+character set 'euckr'  
+fields TERMINATED by '|' 
+IGNORE 1 lines 
+(@zipcode, @sido, @d, @sigungu , @d, @d, @d, @d, @doro, @d, @d, @building1, @building2, @d, @d, @d, @d, @d, @d ,@d, @d, @d, @d, @d, @d, @d) 
+set zipcode=@zipcode, sido=@sido, sigungu=@sigungu, doro=@doro, building1=@building1, building2=@building2
