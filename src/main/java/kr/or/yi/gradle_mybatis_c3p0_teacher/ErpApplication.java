@@ -14,6 +14,8 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.AbstractFrameUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.DepartmentFrameUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.EmployeeFrameUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.TitleFrameUI;
+import com.github.lgooddatepicker.components.TimePicker;
+import com.github.lgooddatepicker.components.DatePicker;
 
 @SuppressWarnings("serial")
 public class ErpApplication extends JFrame implements ActionListener {
@@ -21,6 +23,8 @@ public class ErpApplication extends JFrame implements ActionListener {
 	private JButton btnTitle;
 	private JButton btnDepartment;
 	private JButton btnEmp;
+	private TimePicker timePicker;
+	private DatePicker datePicker;
 
 	public ErpApplication() {
 		initComponents();
@@ -28,7 +32,7 @@ public class ErpApplication extends JFrame implements ActionListener {
 	private void initComponents() {
 		setTitle("ERP 관리프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 110);
+		setBounds(100, 100, 859, 110);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -40,6 +44,12 @@ public class ErpApplication extends JFrame implements ActionListener {
 		
 		btnDepartment = new JButton("부서관리");
 		btnDepartment.addActionListener(this);
+		
+		datePicker = new DatePicker();
+		contentPane.add(datePicker);
+		
+		timePicker = new TimePicker();
+		contentPane.add(timePicker);
 		contentPane.add(btnDepartment);
 		
 		btnEmp = new JButton("사원관리");
