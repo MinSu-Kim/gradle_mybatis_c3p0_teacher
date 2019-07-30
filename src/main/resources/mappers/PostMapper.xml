@@ -3,8 +3,25 @@
 <mapper namespace="kr.or.yi.gradle_mybatis_c3p0_teacher.dao.PostDao">
 
 	<select id="selectPostByAll" resultType="Post">
+	<![CDATA[
 		select zipcode, sido, sigungu, doro, building1, building2
-		  from post limit 0, 10;
+		  from post
+		 limit 0, 100;
+	]]>
 	</select>
-
+	
+	<select id="listCriteria" resultType="Post">
+	<![CDATA[
+		select zipcode, sido, sigungu, doro, building1, building2
+		  from post 
+		 limit #{pageStart}, #{perPageNum}
+	]]>
+	</select>
+	
+	<select id="countPaging" resultType="int">
+		<![CDATA[
+		select count(zipcode) 
+		  from post 
+		]]>
+	</select>
 </mapper>
