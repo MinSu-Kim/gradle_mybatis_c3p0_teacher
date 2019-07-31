@@ -14,6 +14,6 @@ from employee e join department d on e.dno = d.dept_code
 call salary_total(2);
 
 
-select * from tbl_board;
+select bno, title, content, writer, regdate, updatedate from tbl_board;
 
 

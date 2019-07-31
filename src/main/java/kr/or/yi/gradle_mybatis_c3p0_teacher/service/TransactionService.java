@@ -42,6 +42,7 @@ public class TransactionService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			sqlSession.rollback();
+			throw new RuntimeException(e.getCause());
 		} finally {
 			sqlSession.close();
 		}
