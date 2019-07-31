@@ -84,6 +84,62 @@ CREATE TABLE mybatis_study.post (
   KEY idx_post_doro (doro),
   KEY idx_post_doro_building1 (doro,building1)
 );
+select now() , sysdate(), curdate();
+
+-- 게시판
+drop table if exists mybatis_study.tbl_reply;
+drop table if exists mybatis_study.tbl_board;
+
+create table mybatis_study.tbl_board (
+	bno        int unsigned not null comment '번호', -- 번호
+	title      varchar(200) not null comment '제목', -- 제목
+	content    text         not null comment '내용', -- 내용
+	writer     varchar(50)  not null comment '작성자', -- 작성자
+	regdate    datetime         default now() comment '작성일', -- 작성일
+	updatedate datetime         default now() comment '수정일' -- 수정일
+)comment '게시판';
+
+-- 게시판
+ALTER TABLE mybatis_study.tbl_board
+	ADD CONSTRAINT PK_tbl_board -- 게시판 기본키
+		PRIMARY KEY (
+			bno -- 번호
+		);
+	
+ALTER TABLE mybatis_study.tbl_board
+	MODIFY COLUMN bno INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '번호';
+
+-- 댓글
+CREATE TABLE mybatis_study.tbl_reply (
+	rno        INT UNSIGNED NOT NULL COMMENT '댓글번호', -- 댓글번호
+	bno        INT UNSIGNED NOT NULL COMMENT '개시판번호', -- 개시판번호
+	reply      TEXT         NOT NULL COMMENT '댓글', -- 댓글
+	replyer    VARCHAR(50)  NOT NULL COMMENT '작성자', -- 작성자
+	replayDate datetime     NULL     DEFAULT now() COMMENT '작성일', -- 작성일
+	updateDate datetime     NULL     DEFAULT now() COMMENT '수정일' -- 수정일
+)
+COMMENT '댓글';
+
+-- 댓글
+ALTER TABLE mybatis_study.tbl_reply
+	ADD CONSTRAINT PK_tbl_reply -- 댓글 기본키
+		PRIMARY KEY (
+			rno -- 댓글번호
+		);
+
+ALTER TABLE mybatis_study.tbl_reply
+	MODIFY COLUMN rno INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '댓글번호';
+
+-- 댓글
+ALTER TABLE mybatis_study.tbl_reply
+	ADD CONSTRAINT FK_tbl_board_TO_tbl_reply -- 게시판 -> 댓글
+		FOREIGN KEY (
+			bno -- 개시판번호
+		)
+		REFERENCES mybatis_study.tbl_board ( -- 게시판
+			bno -- 번호
+		);	
+
 
 -- 계정과 권한부여
 grant all privileges 
