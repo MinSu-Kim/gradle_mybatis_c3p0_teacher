@@ -18,4 +18,13 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
+	@Override
+	public int insertBoard(Board board) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			int res = sqlSession.insert(namespace + ".insertBoard", board);
+			sqlSession.commit();
+			return res;
+		}
+	}
+
 }

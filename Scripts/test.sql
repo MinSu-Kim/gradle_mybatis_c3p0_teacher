@@ -14,6 +14,7 @@ from employee e join department d on e.dno = d.dept_code
 call salary_total(2);
 
 
-select bno, title, content, writer, regdate, updatedate from tbl_board;
+select bno, title, content, writer, regdate, updatedate from tbl_board where title like '%새로%';
 
-
+insert into tbl_board(bno, title, content, writer, regdate, updatedate) 
+values(0, '', '', '', current_timestamp, current_timestamp);

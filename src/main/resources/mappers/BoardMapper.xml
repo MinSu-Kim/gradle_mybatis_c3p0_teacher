@@ -12,6 +12,12 @@
 		<include refid="boardSql"/>
 	</select>
 	
+	<insert id="insertBoard" parameterType="Board" useGeneratedKeys="true" keyProperty="bno">
+	<![CDATA[
+		insert into tbl_board(bno, title, content, writer) 
+		values (#{bno}, #{title}, #{content}, #{writer});
+	]]>
+	</insert>
 <!-- 	<select id="listCriteria" resultType="Post">
 	<![CDATA[
 		select zipcode, sido, sigungu, doro, building1, building2
