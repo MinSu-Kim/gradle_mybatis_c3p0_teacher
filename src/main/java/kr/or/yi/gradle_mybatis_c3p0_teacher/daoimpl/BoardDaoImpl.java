@@ -1,0 +1,21 @@
+package kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.jdbc.MyBatisSqlSessionFactory;
+
+public class BoardDaoImpl implements BoardDao {
+	private static final String namespace = "kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao";
+
+	@Override
+	public List<Board> getList() {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			return sqlSession.selectList(namespace + ".getList");
+		}
+	}
+
+}
