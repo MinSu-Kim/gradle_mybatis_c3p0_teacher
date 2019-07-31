@@ -12,7 +12,7 @@ public class ErpMain {
 			public void run() {
 				try {
 					// JTattoo.jar : JTattoo Look and Feel
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 					// SeaGlassLookAndFeel
 //					UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
