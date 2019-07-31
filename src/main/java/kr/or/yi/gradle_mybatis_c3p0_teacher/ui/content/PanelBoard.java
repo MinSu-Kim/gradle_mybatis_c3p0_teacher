@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
+import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class PanelBoard extends AbstractPanel<Board> {
@@ -28,7 +29,7 @@ public class PanelBoard extends AbstractPanel<Board> {
 
 	@Override
 	protected void initComponents(String title) {
-		setBorder(new TitledBorder(null, title + " 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(null, title, TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pBoard = new JPanel();
@@ -72,6 +73,15 @@ public class PanelBoard extends AbstractPanel<Board> {
 
 		taContent = new JTextArea();
 		scrollPane.setViewportView(taContent);
+		
+		JPanel pBtns = new JPanel();
+		add(pBtns, BorderLayout.SOUTH);
+		
+		JButton btnWrite = new JButton("작성");
+		pBtns.add(btnWrite);
+		
+		JButton btnCancel = new JButton("취소");
+		pBtns.add(btnCancel);
 	}
 
 	public void setItem(Board board) {
