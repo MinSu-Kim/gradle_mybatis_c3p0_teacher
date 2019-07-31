@@ -45,7 +45,7 @@ public class PostDaoTest extends AbstractTest {
 		
 		
 		try {
-			int cnt = postDao.countPaging(cri);
+			int cnt = postDao.countPaging();
 			log.debug("총 페이지 수 " + cnt);
 			
 			PageMaker pm = new PageMaker();

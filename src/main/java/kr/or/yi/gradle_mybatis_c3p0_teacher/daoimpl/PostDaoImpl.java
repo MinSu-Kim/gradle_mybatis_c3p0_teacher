@@ -27,9 +27,9 @@ public class PostDaoImpl implements PostDao {
 	}
 
 	@Override
-	public int countPaging(Criteria cri) {
+	public int countPaging() {
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
-			return sqlSession.selectOne(namespace + ".countPaging", cri);
+			return sqlSession.selectOne(namespace + ".countPaging");
 		}
 	}
 

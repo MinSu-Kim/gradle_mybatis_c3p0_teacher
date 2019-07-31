@@ -9,5 +9,5 @@ public interface PostDao {
 	List<Post> selectPostByAll();
 	
 	List<Post> listCriteria(Criteria cri) ;
-	int countPaging(Criteria cri);
+	int countPaging();
 }

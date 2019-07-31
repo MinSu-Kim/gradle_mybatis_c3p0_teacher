@@ -119,7 +119,7 @@ public class PostFrameUI extends JFrame implements ActionListener {
 		cri.setPage(startPage); // 10page
 		cri.setPerPageNum(20);// 1page당 20개
 
-		int totalCnt = dao.countPaging(cri);
+		int totalCnt = dao.countPaging();
 		pm = new PageMaker();
 		pm.setCri(cri);
 		pm.setTotalCount(totalCnt);
