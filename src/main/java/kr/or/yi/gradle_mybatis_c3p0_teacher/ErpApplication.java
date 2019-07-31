@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.AbstractFrameUI;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.BoardUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.DepartmentFrameUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.EmployeeFrameUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.TitleFrameUI;
@@ -23,8 +24,7 @@ public class ErpApplication extends JFrame implements ActionListener {
 	private JButton btnTitle;
 	private JButton btnDepartment;
 	private JButton btnEmp;
-	private TimePicker timePicker;
-	private DatePicker datePicker;
+	private JButton btnBoard;
 
 	public ErpApplication() {
 		initComponents();
@@ -44,20 +44,21 @@ public class ErpApplication extends JFrame implements ActionListener {
 		
 		btnDepartment = new JButton("부서관리");
 		btnDepartment.addActionListener(this);
-		
-		datePicker = new DatePicker();
-		contentPane.add(datePicker);
-		
-		timePicker = new TimePicker();
-		contentPane.add(timePicker);
 		contentPane.add(btnDepartment);
 		
 		btnEmp = new JButton("사원관리");
 		btnEmp.addActionListener(this);
 		contentPane.add(btnEmp);
+		
+		btnBoard = new JButton("게시판보기");
+		btnBoard.addActionListener(this);
+		contentPane.add(btnBoard);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnBoard) {
+			actionPerformedBtnBoard(e);
+		}
 		if (e.getSource() == btnEmp) {
 			actionPerformedBtnEmp(e);
 		}
@@ -81,6 +82,10 @@ public class ErpApplication extends JFrame implements ActionListener {
 	
 	protected void actionPerformedBtnEmp(ActionEvent e) {
 		EmployeeFrameUI frame = new EmployeeFrameUI("사원관리");
+		frame.setVisible(true);
+	}
+	protected void actionPerformedBtnBoard(ActionEvent e) {
+		BoardUI frame = new BoardUI();
 		frame.setVisible(true);
 	}
 }
