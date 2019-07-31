@@ -1,9 +1,10 @@
-package kr.or.yi.gradle_mybatis_c3p0_teacher.dao;
+package kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.jdbc.MyBatisSqlSessionFactory;
 

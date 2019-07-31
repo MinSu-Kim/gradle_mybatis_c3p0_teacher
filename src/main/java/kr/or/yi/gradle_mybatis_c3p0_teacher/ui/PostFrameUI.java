@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.PostDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.PostDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.PostDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.PostList;

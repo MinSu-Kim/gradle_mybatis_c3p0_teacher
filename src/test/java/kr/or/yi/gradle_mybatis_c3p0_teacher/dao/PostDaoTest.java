@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.AbstractTest;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.PostDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Post;

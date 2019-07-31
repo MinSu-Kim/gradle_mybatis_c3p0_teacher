@@ -1,4 +1,4 @@
-package kr.or.yi.gradle_mybatis_c3p0_teacher.dao;
+package kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Employee;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.State;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.jdbc.MyBatisSqlSessionFactory;

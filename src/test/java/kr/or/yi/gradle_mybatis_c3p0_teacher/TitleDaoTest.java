@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.TitleDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

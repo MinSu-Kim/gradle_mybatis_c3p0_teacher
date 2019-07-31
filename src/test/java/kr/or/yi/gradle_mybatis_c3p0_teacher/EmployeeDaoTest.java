@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.EmployeeDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Employee;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.State;

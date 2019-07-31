@@ -3,11 +3,11 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.service;
 import java.util.List;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.EmployeeDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.TitleDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.DepartmentDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.EmployeeDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.TitleDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Employee;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Title;

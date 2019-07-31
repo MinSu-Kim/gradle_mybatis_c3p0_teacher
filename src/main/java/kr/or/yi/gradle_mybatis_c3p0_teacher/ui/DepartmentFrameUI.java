@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.DepartmentDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.DepartmentDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Department;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.AbstractPanel;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelDepartment;
