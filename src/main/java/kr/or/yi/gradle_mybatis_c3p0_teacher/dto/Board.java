@@ -81,4 +81,8 @@ public class Board {
 				content, writer, regdate, updatedate);
 	}
 
+	public Object[] toArray() {
+		return new Object[] {bno, title, writer, regdate, updatedate};
+	}
+	
 }
