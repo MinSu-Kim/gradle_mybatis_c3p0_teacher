@@ -90,4 +90,13 @@ public class BoardDaoTest extends AbstractTest {
 		log.debug("total count : " + res);
 		Assert.assertNotEquals(0, res);
 	}
+	
+	
+	@Test
+	public void test07getNextBno() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		int res = dao.getNextBno();
+		log.debug("next Bno : " + res);
+		Assert.assertNotEquals(0, res);
+	}
 }

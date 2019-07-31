@@ -82,7 +82,7 @@ public class Board {
 	}
 
 	public Object[] toArray() {
-		return new Object[] {bno, title, writer, regdate, updatedate};
+		return new Object[] {bno, title, writer, String.format("%tF", regdate), String.format("%tF", updatedate)};
 	}
 	
 }

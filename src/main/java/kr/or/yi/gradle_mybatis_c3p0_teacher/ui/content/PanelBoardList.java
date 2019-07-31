@@ -12,11 +12,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.BoardUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.BoardList;
 
 @SuppressWarnings("serial")
@@ -30,6 +33,7 @@ public class PanelBoardList extends JPanel implements ActionListener {
 	private JButton btnSearch;
 	private JComboBox<String> cmbCondition;
 	private JTextField tfSearchKey;
+	private BoardUI boardUI;
 
 	public PanelBoardList() {
 		setLayout(new BorderLayout(0, 0));
@@ -64,7 +68,6 @@ public class PanelBoardList extends JPanel implements ActionListener {
 
 		pPageBtns = new JPanel();
 		pBottom.add(pPageBtns);
-		
 
 	}
 
@@ -73,19 +76,26 @@ public class PanelBoardList extends JPanel implements ActionListener {
 		if (e.getActionCommand().equals("<<")) {
 			listToPage(1);
 			initPaging();
-		} else if (e.getActionCommand().equals(">>")) {
+			return;
+		}
+		if (e.getActionCommand().equals(">>")) {
 			listToPage(pm.getTotalCount() / pm.getCri().getPerPageNum());
 			initPaging();
-		} else if (e.getActionCommand().equals("<")) {
+			return;
+		}
+		if (e.getActionCommand().equals("<")) {
 			listToPage(pm.getStartPage() - 10);
 			initPaging();
-		} else if (e.getActionCommand().equals(">")) {
+			return;
+		}
+		if (e.getActionCommand().equals(">")) {
 			listToPage(pm.getStartPage() + 10);
 			initPaging();
-		} else {
-			listToPage(Integer.parseInt(e.getActionCommand()));
-			selectedPageColor((JButton) e.getSource());
+			return;
 		}
+
+		listToPage(Integer.parseInt(e.getActionCommand()));
+		selectedPageColor((JButton) e.getSource());
 	}
 
 	private void selectedPageColor(JButton curBtn) {
@@ -106,14 +116,19 @@ public class PanelBoardList extends JPanel implements ActionListener {
 		pm.setCri(cri);
 		pm.setTotalCount(totalCnt);
 
-		pList.setItemList(dao.getListCriteria(cri));
-		pList.reloadData();
+		reloadList();
 
 		lblPage.setText(pm.toString());
 	}
 
+	public void reloadList() {
+		pList.setItemList(dao.getListCriteria(cri));
+		pList.reloadData();
+	}
+
 	private void initPaging() {
 		pPageBtns.removeAll();
+		repaint();
 		revalidate();
 
 		if (pm.isPrev()) {
@@ -149,4 +164,15 @@ public class PanelBoardList extends JPanel implements ActionListener {
 		initPaging();
 	}
 
+	public void setBoardUI(BoardUI boardUI) {
+		this.boardUI = boardUI;
+	}
+
+	public void setPopupMenu(JPopupMenu popupMenu) {
+		pList.setPopupMenu(popupMenu);
+	}
+	
+	public Board getSelectedBoard() { 
+		return pList.getSelectedItem();
+	}
 }

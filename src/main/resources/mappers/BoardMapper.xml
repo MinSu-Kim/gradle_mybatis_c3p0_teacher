@@ -60,5 +60,12 @@
 		  from tbl_board 
 	]]>
 	</select>
+	
+	<select id="getNextBno" resultType="int">
+		<![CDATA[
+		select max(bno)+1 
+		  from tbl_board 
+	]]>
+	</select>
 
 </mapper>

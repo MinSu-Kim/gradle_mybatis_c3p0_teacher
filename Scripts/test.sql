@@ -25,3 +25,6 @@ limit 1, 2;
 
 insert into tbl_board(bno, title, content, writer, regdate, updatedate) 
 values(0, '', '', '', current_timestamp, current_timestamp);
+
+
+SELECT count(*) FROM tbl_board;

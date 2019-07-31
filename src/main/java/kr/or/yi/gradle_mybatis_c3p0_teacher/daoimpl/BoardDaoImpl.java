@@ -67,4 +67,12 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
+	@Override
+	public int getNextBno() {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			return sqlSession.selectOne(namespace + ".getNextBno");
+		}
+	}
+
+
 }

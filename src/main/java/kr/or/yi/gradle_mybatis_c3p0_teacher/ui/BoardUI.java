@@ -1,23 +1,24 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.ui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.BoardDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoard;
-import javax.swing.JButton;
-import java.awt.CardLayout;
-import java.awt.EventQueue;
-
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoardList;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
 
 @SuppressWarnings("serial")
 public class BoardUI extends JFrame implements ActionListener {
@@ -30,6 +31,10 @@ public class BoardUI extends JFrame implements ActionListener {
 	final static String BOARD_WRITE = "글쓰기";
 
 	private CardLayout cardLayout;
+	private PanelBoardList pList;
+	private JPopupMenu popupMenu;
+	private JMenuItem mntmRead;
+	private PanelBoard pBoard;
 
 	public BoardUI() {
 		dao = new BoardDaoImpl();
@@ -39,7 +44,7 @@ public class BoardUI extends JFrame implements ActionListener {
 	private void initComponents() {
 		setTitle("게시판");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 400);
+		setBounds(100, 100, 750, 665);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -50,11 +55,22 @@ public class BoardUI extends JFrame implements ActionListener {
 		cardLayout = new CardLayout();
 		pContent.setLayout(cardLayout);
 		
-		PanelBoardList pList = new PanelBoardList();
+		pList = new PanelBoardList();
 		pList.setDao(dao);
+		pList.setBoardUI(this);
 		pContent.add(pList, BOARD_LIST);
+		
+		popupMenu = new JPopupMenu();
 
-		PanelBoard pBoard = new PanelBoard(BOARD_WRITE);
+		mntmRead = new JMenuItem("보기");
+		mntmRead.addActionListener(this);
+		popupMenu.add(mntmRead);
+		
+		pList.setPopupMenu(popupMenu);
+		
+		pBoard = new PanelBoard(BOARD_WRITE);
+		pBoard.setBoardUI(this);
+		pBoard.setDao(dao);
 		pContent.add(pBoard, BOARD_WRITE);
 
 		JPanel pBtn = new JPanel();
@@ -68,6 +84,9 @@ public class BoardUI extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == mntmRead) {
+			actionPerformedMntmRead(e);
+		}
 		if (e.getSource() == btnNewButton) {
 			actionPerformedBtnNewButton(e);
 		}
@@ -82,4 +101,25 @@ public class BoardUI extends JFrame implements ActionListener {
 		}
 	}
 	
+	public void changeUI() {
+		cardLayout.show(pContent, BOARD_LIST);
+	}
+	
+	public void setBtnNewButtonText() {
+		btnNewButton.setText(BOARD_WRITE);
+	}
+	
+	public void reloadList() {
+		pList.reloadList();
+	}
+	
+	protected void actionPerformedMntmRead(ActionEvent e) {
+		Board board = pList.getSelectedBoard();
+		cardLayout.show(pContent, BOARD_WRITE);
+		pBoard.setItem(board);
+		btnNewButton.setText(BOARD_LIST);
+		pBoard.setEditable(false);
+		pBoard.visibleBtnUpdate();
+		pBoard.getBtnWrite().setText("수정");
+	}
 }
