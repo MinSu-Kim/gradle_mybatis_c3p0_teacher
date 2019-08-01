@@ -127,7 +127,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	}
 
 	public void clearComponent() {
-		tfNo.setText("");
+		tfNo.setText(dao.getNextBno() + "");
 		tfTitle.setText("");
 		tfWriter.setText("");
 		taContent.setText("");
@@ -185,6 +185,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		boardUI.reloadList();
 		boardUI.changeUI();		
 		boardUI.setBtnNewButtonText();
+		clearComponent();
 	}
 
 	public JButton getBtnWrite() {
@@ -201,6 +202,8 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 			clearComponent();
 		}
 		boardUI.reloadList();
+		boardUI.setBtnNewButtonText();
 		boardUI.changeUI();
+		clearComponent();
 	}
 }

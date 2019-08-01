@@ -99,6 +99,7 @@ public class BoardUI extends JFrame implements ActionListener {
 		}else {
 			btnNewButton.setText(BOARD_LIST);
 		}
+		pBoard.clearComponent();
 	}
 	
 	public void changeUI() {
