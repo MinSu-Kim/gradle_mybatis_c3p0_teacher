@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
@@ -57,7 +56,6 @@ public class BoardUI extends JFrame implements ActionListener {
 		
 		pList = new PanelBoardList();
 		pList.setDao(dao);
-		pList.setBoardUI(this);
 		pContent.add(pList, BOARD_LIST);
 		
 		popupMenu = new JPopupMenu();

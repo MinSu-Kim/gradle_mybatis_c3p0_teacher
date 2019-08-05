@@ -168,7 +168,7 @@ public class PanelEmployee extends AbstractPanel<Employee> {
 		tfEmpName.setText("");
 		cmbTitle.setSelectedIndex(-1);
 		cmbDno.setSelectedIndex(-1);
-		spinSalary.setValue(new Integer(1500000));
+		spinSalary.setValue(1500000);
 		rdbMale.setSelected(true);
 		tfJoin.setText(String.format("%tF", new Date()));
 		tfEmpNo.setEditable(false);
