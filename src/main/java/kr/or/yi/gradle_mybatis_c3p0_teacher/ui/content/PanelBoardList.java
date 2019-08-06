@@ -19,7 +19,6 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.BoardUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.BoardList;
 
 @SuppressWarnings("serial")
@@ -33,7 +32,6 @@ public class PanelBoardList extends JPanel implements ActionListener {
 	private JButton btnSearch;
 	private JComboBox<String> cmbCondition;
 	private JTextField tfSearchKey;
-	private BoardUI boardUI;
 
 	public PanelBoardList() {
 		setLayout(new BorderLayout(0, 0));
@@ -162,10 +160,6 @@ public class PanelBoardList extends JPanel implements ActionListener {
 		this.dao = dao;
 		listToPage(1);
 		initPaging();
-	}
-
-	public void setBoardUI(BoardUI boardUI) {
-		this.boardUI = boardUI;
 	}
 
 	public void setPopupMenu(JPopupMenu popupMenu) {
