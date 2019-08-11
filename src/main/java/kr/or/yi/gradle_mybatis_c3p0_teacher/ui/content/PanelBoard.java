@@ -88,6 +88,9 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 
 		JButton btnCancel = new JButton("취소");
 		pBtns.add(btnCancel);
+		
+		JButton btnDelete = new JButton("삭제");
+		pBtns.add(btnDelete);
 	}
 
 	public void visibleBtnUpdate() {

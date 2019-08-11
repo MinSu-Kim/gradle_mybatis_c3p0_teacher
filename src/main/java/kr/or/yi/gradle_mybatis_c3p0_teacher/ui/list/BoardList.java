@@ -16,7 +16,7 @@ public class BoardList extends AbstractList<Board> {
 		// 직책번호, 직책명은 가운데 정렬  bno, title, writer, regdate, viewcnt
 		tableCellAlignment(SwingConstants.CENTER, 0, 1, 2, 3, 4);
 		// 직책번호, 직책명의 폭을 (100, 200)으로 가능하면 설정
-		tableSetWidth(100, 150, 100, 100, 100);
+		tableSetWidth(50, 400, 70, 60, 50);
 	}
 
 	@Override
