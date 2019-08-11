@@ -1,0 +1,35 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql5-16bd5701fbc-2cd17fba2ccb35cd": {
+			"provider": "mysql",
+			"driver": "mysql5",
+			"name": "MySQL - mysql(root)",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "mysql",
+				"url": "jdbc:mysql://localhost:3306/mysql",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
+				"type": "dev"
+			}
+		},
+		"mysql5-16bd5786e50-33bdce7f6f02243d": {
+			"provider": "mysql",
+			"driver": "mysql5",
+			"name": "MySQL - mybatis_study",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "mybatis_study",
+				"url": "jdbc:mysql://localhost:3306/mybatis_study",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
+				"type": "dev"
+			}
+		}
+	}
+}
