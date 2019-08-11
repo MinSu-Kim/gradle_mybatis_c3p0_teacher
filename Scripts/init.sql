@@ -90,14 +90,15 @@ select now() , sysdate(), curdate();
 drop table if exists mybatis_study.tbl_reply;
 drop table if exists mybatis_study.tbl_board;
 
-create table mybatis_study.tbl_board (
-	bno        int unsigned not null comment '번호', -- 번호
-	title      varchar(200) not null comment '제목', -- 제목
-	content    text         not null comment '내용', -- 내용
-	writer     varchar(50)  not null comment '작성자', -- 작성자
-	regdate    datetime         default now() comment '작성일', -- 작성일
-	updatedate datetime         default now() comment '수정일' -- 수정일
-)comment '게시판';
+-- 게시판
+CREATE TABLE mybatis_study.tbl_board (
+	bno     INT          NOT NULL, -- 번호
+	title   VARCHAR(200) NOT NULL, -- 제목
+	content TEXT         NULL,     -- 내용
+	writer  VARCHAR(40)  NOT NULL, -- 작성자
+	regdate TIMESTAMP    NOT NULL DEFAULT current_timestamp, -- 작성일
+	viewcnt INT          NULL     DEFAULT 0 -- 조회수
+);
 
 -- 게시판
 ALTER TABLE mybatis_study.tbl_board
@@ -105,20 +106,19 @@ ALTER TABLE mybatis_study.tbl_board
 		PRIMARY KEY (
 			bno -- 번호
 		);
-	
+
 ALTER TABLE mybatis_study.tbl_board
-	MODIFY COLUMN bno INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '번호';
+	MODIFY COLUMN bno INT NOT NULL AUTO_INCREMENT;
 
 -- 댓글
 CREATE TABLE mybatis_study.tbl_reply (
-	rno        INT UNSIGNED NOT NULL COMMENT '댓글번호', -- 댓글번호
-	bno        INT UNSIGNED NOT NULL COMMENT '개시판번호', -- 개시판번호
-	reply      TEXT         NOT NULL COMMENT '댓글', -- 댓글
-	replyer    VARCHAR(50)  NOT NULL COMMENT '작성자', -- 작성자
-	replayDate datetime     NULL     DEFAULT now() COMMENT '작성일', -- 작성일
-	updateDate datetime     NULL     DEFAULT now() COMMENT '수정일' -- 수정일
-)
-COMMENT '댓글';
+	rno        INT           NOT NULL, -- 댓글번호
+	bno        INT           NOT NULL DEFAULT 0, -- 게시판번호
+	replytext  VARCHAR(1000) NOT NULL, -- 댓글내용
+	replyer    VARCHAR(50)   NOT NULL, -- 댓글자
+	regdate    TIMESTAMP     NOT NULL DEFAULT current_timestamp, -- 등록일
+	updatedate TIMESTAMP     NOT NULL DEFAULT current_timestamp on update current_timestamp -- 수정일
+);
 
 -- 댓글
 ALTER TABLE mybatis_study.tbl_reply
@@ -128,19 +128,20 @@ ALTER TABLE mybatis_study.tbl_reply
 		);
 
 ALTER TABLE mybatis_study.tbl_reply
-	MODIFY COLUMN rno INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '댓글번호';
+	MODIFY COLUMN rno INT NOT NULL AUTO_INCREMENT;
 
 -- 댓글
 ALTER TABLE mybatis_study.tbl_reply
 	ADD CONSTRAINT FK_tbl_board_TO_tbl_reply -- 게시판 -> 댓글
 		FOREIGN KEY (
-			bno -- 개시판번호
+			bno -- 게시판번호
 		)
 		REFERENCES mybatis_study.tbl_board ( -- 게시판
 			bno -- 번호
-		);	
-
-
+		);
+		
+		
+		
 -- 계정과 권한부여
 grant all privileges 
 on mybatis_study.* 

@@ -2,8 +2,10 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.util.Date;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,13 +20,8 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.BoardUI;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 @SuppressWarnings("serial")
 public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
-	private JTextField tfNo;
 	private JTextField tfTitle;
 	private JTextField tfWriter;
 	private JTextArea taContent;
@@ -46,14 +43,6 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		JPanel pBoard = new JPanel();
 		add(pBoard, BorderLayout.NORTH);
 		pBoard.setLayout(new GridLayout(0, 2, 10, 10));
-
-		JLabel lblNo = new JLabel("  번호");
-		pBoard.add(lblNo);
-		lblNo.setHorizontalAlignment(SwingConstants.RIGHT);
-
-		tfNo = new JTextField();
-		pBoard.add(tfNo);
-		tfNo.setColumns(10);
 
 		JLabel lblTitle = new JLabel("  제목");
 		pBoard.add(lblTitle);
@@ -108,30 +97,31 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	
 	public void setItem(Board board) {
 		this.board = board;
-		tfNo.setText(board.getBno() + "");
 		tfTitle.setText(board.getTitle());
 		tfWriter.setText(board.getWriter());
 		taContent.setText(board.getContent());
-		tfNo.setEditable(false);
 		tfWriter.setEditable(false);
 	}
 
 	public Board getItem() {
-		int bno = Integer.parseInt(tfNo.getText().trim());
 		String title = tfTitle.getText().trim();
 		String content = taContent.getText();
 		String writer = tfWriter.getText().trim();
-		Date regdate = new Date();
-		Date updatedate = new Date();
-		return new Board(bno, title, content, writer, regdate, updatedate);
+		
+		if (board==null) {	//추가
+			return new Board(title, content, writer);
+		}else {				//수정
+			board.setTitle(title);
+			board.setContent(content);
+			board.setWriter(writer);
+			return board;
+		}
 	}
 
 	public void clearComponent() {
-		tfNo.setText("");
 		tfTitle.setText("");
 		tfWriter.setText("");
 		taContent.setText("");
-		tfNo.setEditable(false);
 	}
 
 	public void setEditable(boolean isEditable) {
@@ -141,7 +131,6 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	
 	public void setDao(BoardDao dao) {
 		this.dao = dao;
-		tfNo.setText(dao.getNextBno() + "");
 	}
 
 	public void setBoardUI(BoardUI boardUI) {
@@ -171,11 +160,11 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	private void actionPerformedBtnUpdate(ActionEvent e) {
 		String title = tfTitle.getText().trim();
 		String content = taContent.getText();
-		Date updatedate = new Date();
+		String writer = tfWriter.getText().trim();
 		
 		board.setTitle(title);
 		board.setContent(content);
-		board.setUpdatedate(updatedate);
+		board.setWriter(writer);
 		
 		int res = dao.updateBoard(board);
 		if (res == 1) {
