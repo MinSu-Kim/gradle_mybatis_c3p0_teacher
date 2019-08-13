@@ -13,18 +13,17 @@ from employee e join department d on e.dno = d.dept_code
     
 call salary_total(2);
 
+SELECT bno, title, content, writer, regdate, viewcnt FROM tbl_board;
 
-select bno, title, content, writer, regdate, updatedate from tbl_board where title like '%새로%';
-select bno, title, content, writer, regdate, updatedate from tbl_board where bno = 1;
 
 explain
-select bno, title, content, writer, regdate, updatedate 
+select bno, title, content, writer, regdate, viewcnt
 from tbl_board 
 order by bno desc
 limit 1, 2;
 
-insert into tbl_board(bno, title, content, writer, regdate, updatedate) 
-values(0, '', '', '', current_timestamp, current_timestamp);
+insert into tbl_board(bno, title, content, writer, regdate, viewcnt) 
+values(0, '', '', '', current_timestamp, 0);
 
 
 SELECT count(*) FROM tbl_board;

@@ -8,7 +8,7 @@ public class Board {
 	private String content;
 	private String writer;
 	private Date regdate;
-	private Date updatedate;
+	private int viewCnt;
 
 	public Board() {
 		// TODO Auto-generated constructor stub
@@ -18,13 +18,19 @@ public class Board {
 		this.bno = bno;
 	}
 
-	public Board(long bno, String title, String content, String writer, Date regdate, Date updatedate) {
+	public Board(String title, String content, String writer) {
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+	}
+
+	public Board(long bno, String title, String content, String writer, Date regdate, int viewCnt) {
 		this.bno = bno;
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 		this.regdate = regdate;
-		this.updatedate = updatedate;
+		this.viewCnt = viewCnt;
 	}
 
 	public long getBno() {
@@ -67,22 +73,22 @@ public class Board {
 		this.regdate = regdate;
 	}
 
-	public Date getUpdatedate() {
-		return updatedate;
+	public int getViewCnt() {
+		return viewCnt;
 	}
 
-	public void setUpdatedate(Date updatedate) {
-		this.updatedate = updatedate;
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Board [bno=%s, title=%s, content=%s, writer=%s, regdate=%s, updatedate=%s]", bno, title,
-				content, writer, regdate, updatedate);
+		return String.format("Board [bno=%s, title=%s, content=%s, writer=%s, regdate=%s, viewCnt=%s]", bno, title,
+				content, writer, regdate, viewCnt);
 	}
 
 	public Object[] toArray() {
-		return new Object[] {bno, title, writer, String.format("%tF", regdate), String.format("%tF", updatedate)};
+		return new Object[] { bno, title, writer, String.format("%tF", regdate), viewCnt };
 	}
-	
+
 }

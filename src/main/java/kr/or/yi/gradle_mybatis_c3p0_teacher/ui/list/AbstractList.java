@@ -35,6 +35,7 @@ public abstract class AbstractList<T> extends JPanel {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		table.setFillsViewportHeight(true);
 	}
 
 	public void setPopupMenu(JPopupMenu popupMenu) {

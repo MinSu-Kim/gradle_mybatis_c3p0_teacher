@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
@@ -19,13 +18,12 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.BoardDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoard;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoardList;
-import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class BoardUI extends JFrame implements ActionListener {
 	private BoardDao dao;
 	private JPanel contentPane;
-	private JButton btnNewButton;
+	private JButton btnNew;
 	private JPanel pContent;
 
 	final static String BOARD_LIST = "목록보기";
@@ -36,7 +34,7 @@ public class BoardUI extends JFrame implements ActionListener {
 	private JPopupMenu popupMenu;
 	private JMenuItem mntmRead;
 	private PanelBoard pBoard;
-	private JDateChooser dateChooser;
+	private JFrame writeFrame;
 
 	public BoardUI() {
 		dao = new BoardDaoImpl();
@@ -59,7 +57,6 @@ public class BoardUI extends JFrame implements ActionListener {
 		
 		pList = new PanelBoardList();
 		pList.setDao(dao);
-		pList.setBoardUI(this);
 		pContent.add(pList, BOARD_LIST);
 		
 		popupMenu = new JPopupMenu();
@@ -69,10 +66,6 @@ public class BoardUI extends JFrame implements ActionListener {
 		popupMenu.add(mntmRead);
 		
 		pList.setPopupMenu(popupMenu);
-		
-		dateChooser = new JDateChooser();
-		
-		pList.add(dateChooser, BorderLayout.EAST);
 		
 		pBoard = new PanelBoard(BOARD_WRITE);
 		pBoard.setBoardUI(this);
@@ -84,37 +77,42 @@ public class BoardUI extends JFrame implements ActionListener {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		contentPane.add(pBtn, BorderLayout.NORTH);
 
-		btnNewButton = new JButton(BOARD_WRITE);
-		btnNewButton.addActionListener(this);
-		pBtn.add(btnNewButton);
+		btnNew = new JButton(BOARD_WRITE);
+		btnNew.addActionListener(this);
+		pBtn.add(btnNew);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == mntmRead) {
 			actionPerformedMntmRead(e);
 		}
-		if (e.getSource() == btnNewButton) {
+		if (e.getSource() == btnNew) {
 			actionPerformedBtnNewButton(e);
 		}
 		
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
-		cardLayout.show(pContent, e.getActionCommand());
-		if (btnNewButton.getText().equals(BOARD_LIST)){
-			btnNewButton.setText(BOARD_WRITE);
-		}else {
-			btnNewButton.setText(BOARD_LIST);
+		if (writeFrame==null) {
+			writeFrame = new JFrame("글쓰기");
+			writeFrame.setBounds(500, 100, 400, 600);
+			PanelBoard newBoardPane = new PanelBoard("글쓰기");
+			newBoardPane.setFrame(writeFrame);
+			newBoardPane.setBoardUI(this);
+			newBoardPane.setDao(dao);
+			newBoardPane.setWriteMode();
+			writeFrame.getContentPane().add(newBoardPane, BorderLayout.CENTER);
 		}
-		pBoard.clearComponent();
+		writeFrame.setVisible(true);
 	}
 	
-	public void changeUI() {
+	public void changeListUI() {
 		cardLayout.show(pContent, BOARD_LIST);
+		btnNew.setVisible(true);
 	}
 	
 	public void setBtnNewButtonText() {
-		btnNewButton.setText(BOARD_WRITE);
+		btnNew.setText(BOARD_WRITE);
 	}
 	
 	public void reloadList() {
@@ -125,9 +123,8 @@ public class BoardUI extends JFrame implements ActionListener {
 		Board board = pList.getSelectedBoard();
 		cardLayout.show(pContent, BOARD_WRITE);
 		pBoard.setItem(board);
-		btnNewButton.setText(BOARD_LIST);
+		pBoard.setReadMode();
 		pBoard.setEditable(false);
-		pBoard.visibleBtnUpdate();
-		pBoard.getBtnWrite().setText("수정");
+		btnNew.setVisible(false);
 	}
 }

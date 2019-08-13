@@ -26,31 +26,30 @@ BEGIN
 END$$
 DELIMITER ;
 
-insert into tbl_board(title, content, writer, regdate, updatedate) values
-('테스트 제목', '테스트 내용', 'user01', date(now()),date(now())),
-('테스트 제목1', '테스트 내용1', 'user01', date(now()),date(now())),
-('테스트 제목2', '테스트 내용2', 'user01', date(now()),date(now())),
-('테스트 제목3', '테스트 내용3', 'user02', date(now()),date(now())),
-('테스트 제목4', '테스트 내용4', 'user02', date(now()),date(now())),
-('테스트 제목5', '테스트 내용5', 'user03', date(now()),date(now())),
-('테스트 제목6', '테스트 내용6', 'user03', date(now()),date(now()));
+select * from tbl_board;
+truncate table tbl_reply;
+truncate table tbl_board;
 
-insert into tbl_board(title, content, writer, regdate, updatedate)
-select title, content, writer, regdate, updatedate from tbl_board;
-insert into tbl_board(title, content, writer, regdate, updatedate)
-select title, content, writer, regdate, updatedate from tbl_board;
-insert into tbl_board(title, content, writer, regdate, updatedate)
-select title, content, writer, regdate, updatedate from tbl_board;
-insert into tbl_board(title, content, writer, regdate, updatedate)
-select title, content, writer, regdate, updatedate from tbl_board;
-insert into tbl_board(title, content, writer, regdate, updatedate)
-select title, content, writer, regdate, updatedate from tbl_board;
-insert into tbl_board(title, content, writer, regdate, updatedate)
-select title, content, writer, regdate, updatedate from tbl_board;
-insert into tbl_board(title, content, writer, regdate, updatedate)
-select title, content, writer, regdate, updatedate from tbl_board;
-insert into tbl_board(title, content, writer, regdate, updatedate)
-select title, content, writer, regdate, updatedate from tbl_board;
+insert into tbl_board(title, content, writer) values
+('테스트 제목' , '테스트 내용' , 'user01'),
+('테스트 제목1', '테스트 내용1', 'user01'),
+('테스트 제목2', '테스트 내용2', 'user01'),
+('테스트 제목3', '테스트 내용3', 'user02'),
+('테스트 제목4', '테스트 내용4', 'user02'),
+('테스트 제목5', '테스트 내용5', 'user03'),
+('테스트 제목6', '테스트 내용6', 'user03');
+
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+insert into tbl_board(title, content, writer) select title, content, writer from tbl_board;
+
+select * from tbl_board;
 
 LOAD data LOCAL INFILE 'D:\\zipcode_DB\\대구광역시.txt' 
 INTO table post   
