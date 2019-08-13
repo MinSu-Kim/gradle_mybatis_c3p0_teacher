@@ -19,6 +19,7 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.BoardDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoard;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoardList;
+import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class BoardUI extends JFrame implements ActionListener {
@@ -35,6 +36,7 @@ public class BoardUI extends JFrame implements ActionListener {
 	private JPopupMenu popupMenu;
 	private JMenuItem mntmRead;
 	private PanelBoard pBoard;
+	private JDateChooser dateChooser;
 
 	public BoardUI() {
 		dao = new BoardDaoImpl();
@@ -68,6 +70,10 @@ public class BoardUI extends JFrame implements ActionListener {
 		
 		pList.setPopupMenu(popupMenu);
 		
+		dateChooser = new JDateChooser();
+		
+		pList.add(dateChooser, BorderLayout.EAST);
+		
 		pBoard = new PanelBoard(BOARD_WRITE);
 		pBoard.setBoardUI(this);
 		pBoard.setDao(dao);
@@ -90,6 +96,7 @@ public class BoardUI extends JFrame implements ActionListener {
 		if (e.getSource() == btnNewButton) {
 			actionPerformedBtnNewButton(e);
 		}
+		
 	}
 
 	protected void actionPerformedBtnNewButton(ActionEvent e) {

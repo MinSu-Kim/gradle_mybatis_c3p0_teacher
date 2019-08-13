@@ -6,5 +6,8 @@
 	<data-source id="mysql5-16bd5786e50-33bdce7f6f02243d" provider="mysql" driver="mysql5" name="MySQL - mybatis_study" save-password="true" read-only="false">
 		<connection host="localhost" port="3306" server="" database="mybatis_study" url="jdbc:mysql://localhost:3306/mybatis_study" user="user_mybatis_study" password="AQsJNFNMSwJl8w==" home="C:\Program Files\MySQL\MySQL Server 5.7" type="dev"/>
 	</data-source>
+	<data-source id="mysql5-16c74c6bbf6-26fcf53904a0c84" provider="mysql" driver="mysql5" name="MySQL - hairshop" save-password="true" read-only="false">
+		<connection host="localhost" port="3306" server="" database="hairshop" url="jdbc:mysql://localhost:3306/hairshop" user="root" password="AQsJNFNMSwJl8w==" home="C:\Program Files\MySQL\MySQL Server 5.7" type="dev"/>
+	</data-source>
 	<filters/>
 </data-sources>
