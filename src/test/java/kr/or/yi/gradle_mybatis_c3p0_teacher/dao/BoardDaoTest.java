@@ -84,15 +84,6 @@ public class BoardDaoTest extends AbstractTest {
 		Assert.assertNotNull(list);
 	}
 	
-//	@Test
-//	public void test06countPaging() {
-//		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-//		int res = dao.countPaging();
-//		log.debug("total count : " + res);
-//		Assert.assertNotEquals(0, res);
-//	}
-	
-	
 	@Test
 	public void test07getNextBno() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");

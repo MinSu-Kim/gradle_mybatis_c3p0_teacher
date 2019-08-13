@@ -86,10 +86,6 @@
 		limit #{pageStart}, #{perPageNum}
 	</select>
 	
-<!-- 	<select id="countPaging" resultType="int">
-		<include refid="boardSqlCnt"/>
-	</select> -->
-
 	<select id="listSearchCount" resultType="int" parameterType="SearchCriteria">
 		<include refid="boardSqlCnt"/>
 		<include refid="search"/>

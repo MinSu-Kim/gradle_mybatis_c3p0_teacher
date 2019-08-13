@@ -9,7 +9,6 @@ public interface BoardDao {
 	List<Board> getList();
 	
 	List<Board> getListCriteria(SearchCriteria cri) ;
-//	int countPaging();
 	
 	int insertBoard(Board board);
 	Board readBoard(long bno);
