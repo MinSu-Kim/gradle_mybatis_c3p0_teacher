@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -19,6 +21,7 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.BoardList;
 
 @SuppressWarnings("serial")
@@ -26,7 +29,7 @@ public class PanelBoardList extends JPanel implements ActionListener {
 	private BoardList pList;
 	private JPanel pPageBtns;
 	private PageMaker pm;
-	private Criteria cri;
+	private SearchCriteria cri;
 	private JLabel lblPage;
 	private BoardDao dao;
 	private JButton btnSearch;
@@ -52,13 +55,15 @@ public class PanelBoardList extends JPanel implements ActionListener {
 		pBottom.add(pSearch);
 
 		cmbCondition = new JComboBox<>();
+		cmbCondition.setModel(getCmbModel());
 		pSearch.add(cmbCondition);
 
 		tfSearchKey = new JTextField();
 		pSearch.add(tfSearchKey);
-		tfSearchKey.setColumns(10);
+		tfSearchKey.setColumns(20);
 
 		btnSearch = new JButton("검색");
+		btnSearch.addActionListener(this);
 		pSearch.add(btnSearch);
 
 		lblPage = new JLabel();
@@ -69,8 +74,18 @@ public class PanelBoardList extends JPanel implements ActionListener {
 
 	}
 
+	private ComboBoxModel<String> getCmbModel() {
+		String[] searchStr = {"---", "Title", "Content", "Writer", "Title OR Content", "Content OR Writer", "Title OR Content OR Writer"};
+		ComboBoxModel<String> model = new DefaultComboBoxModel<String>(searchStr);
+		return model;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnSearch) {
+			actionPerformedBtnSearch(e);
+			return;
+		}
 		if (e.getActionCommand().equals("<<")) {
 			listToPage(1);
 			initPaging();
@@ -105,7 +120,7 @@ public class PanelBoardList extends JPanel implements ActionListener {
 	}
 
 	private void listToPage(int startPage) {
-		cri = new Criteria();
+		cri = new SearchCriteria();
 		cri.setPage(startPage); // 10page
 		cri.setPerPageNum(20);// 1page당 20개
 
@@ -168,5 +183,9 @@ public class PanelBoardList extends JPanel implements ActionListener {
 	
 	public Board getSelectedBoard() { 
 		return pList.getSelectedItem();
+	}
+	
+	protected void actionPerformedBtnSearch(ActionEvent e) {
+		
 	}
 }
