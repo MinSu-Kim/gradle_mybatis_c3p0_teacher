@@ -60,12 +60,12 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
-	@Override
-	public int countPaging() {
-		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
-			return sqlSession.selectOne(namespace + ".countPaging");
-		}
-	}
+//	@Override
+//	public int countPaging() {
+//		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+//			return sqlSession.selectOne(namespace + ".countPaging");
+//		}
+//	}
 
 	@Override
 	public int getNextBno() {

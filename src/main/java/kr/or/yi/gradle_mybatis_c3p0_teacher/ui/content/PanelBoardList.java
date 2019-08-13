@@ -100,43 +100,14 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 		return model;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnSearch) {
-			actionPerformedBtnSearch(e);
-			return;
-		}
-		if (e.getActionCommand().equals("<<")) {
-			listToPage(1);
-			initPaging();
-			return;
-		}
-		if (e.getActionCommand().equals(">>")) {
-			listToPage(pm.getTotalCount() / pm.getCri().getPerPageNum());
-			initPaging();
-			return;
-		}
-		if (e.getActionCommand().equals("<")) {
-			listToPage(pm.getStartPage() - 10);
-			initPaging();
-			return;
-		}
-		if (e.getActionCommand().equals(">")) {
-			listToPage(pm.getStartPage() + 10);
-			initPaging();
-			return;
-		}
-
-		listToPage(Integer.parseInt(e.getActionCommand()));
-		selectedPageColor((JButton) e.getSource());
+	private void reloadPaging(int startNum) {
+		listToPage(startNum);
+		initPaging();
 	}
-
-	private void selectedPageColor(JButton curBtn) {
-		curBtn.setForeground(Color.RED);
-		for (Component c : pPageBtns.getComponents()) {
-			if (!c.equals(curBtn))
-				c.setForeground(Color.BLACK);
-		}
+	
+	public void reloadList() {
+		pList.setItemList(dao.getListCriteria(cri));
+		pList.reloadData();
 	}
 
 	private void listToPage(int startPage) {
@@ -147,9 +118,7 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 		cri.setPage(startPage); // 10page
 		cri.setPerPageNum(20);// 1page당 20개
 		
-		if (cri.getSearchType()==null) {
-			totalCnt = dao.countPaging();
-		}
+		totalCnt = dao.listSearchCount(cri);
 		
 		if (pm==null) {
 			pm = new PageMaker();
@@ -161,10 +130,48 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 
 		lblPage.setText(pm.toString());
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnSearch) {
+			actionPerformedBtnSearch(e);
+			return;
+		}
+		if (e.getActionCommand().equals("<<")) {
+			reloadPaging(1);
+			return;
+		}
+		if (e.getActionCommand().equals(">>")) {
+			reloadPaging(pm.getTotalCount() / pm.getCri().getPerPageNum());
+			return;
+		}
+		if (e.getActionCommand().equals("<")) {
+			reloadPaging(pm.getStartPage() - 10);
+			return;
+		}
+		if (e.getActionCommand().equals(">")) {
+			reloadPaging(pm.getStartPage() + 10);
+			return;
+		}
 
-	public void reloadList() {
-		pList.setItemList(dao.getListCriteria(cri));
-		pList.reloadData();
+		listToPage(Integer.parseInt(e.getActionCommand()));
+		selectedPageColor((JButton) e.getSource());
+	}
+
+	protected void actionPerformedBtnSearch(ActionEvent e) {
+		String searchType = (String) cmbCondition.getSelectedItem();
+		String keyword = "%" + tfSearchKey.getText().trim() + "%";
+		cri.setSearchType(searchMap.get(searchType));
+		cri.setKeyword(keyword);
+		reloadPaging(1);
+	}
+	
+	private void selectedPageColor(JButton curBtn) {
+		curBtn.setForeground(Color.RED);
+		for (Component c : pPageBtns.getComponents()) {
+			if (!c.equals(curBtn))
+				c.setForeground(Color.BLACK);
+		}
 	}
 
 	private void initPaging() {
@@ -195,14 +202,9 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 		}
 	}
 
-	public JButton getBtnSearch() {
-		return btnSearch;
-	}
-
 	public void setDao(BoardDao dao) {
 		this.dao = dao;
-		listToPage(1);
-		initPaging();
+		reloadPaging(1);
 	}
 
 	public void setPopupMenu(JPopupMenu popupMenu) {
@@ -213,34 +215,12 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 		return pList.getSelectedItem();
 	}
 	
-	protected void actionPerformedBtnSearch(ActionEvent e) {
-		String searchType = (String) cmbCondition.getSelectedItem();
-		String keyStr = searchType.equals("n")?"":tfSearchKey.getText().trim();
-		String keyword = "%" + keyStr + "%";
-		
-		cri.setSearchType(searchMap.get(searchType));
-		
-		cri.setKeyword(keyword);
-		
-		pList.setItemList(dao.getListCriteria(cri));
-		
-		totalCnt = dao.listSearchCount(cri);
-		if (pm==null) {
-			pm = new PageMaker();
-		}
-		pm.setCri(cri);
-		pm.setTotalCount(totalCnt);
-		
-		listToPage(1);
-		initPaging();
-		lblPage.setText(pm.toString());
-		pList.reloadData();
-	}
 	public void itemStateChanged(ItemEvent e) {
 		if (e.getSource() == cmbCondition) {
 			itemStateChangedCmbCondition(e);
 		}
 	}
+	
 	protected void itemStateChangedCmbCondition(ItemEvent e) {
 		if (e.getStateChange()==ItemEvent.SELECTED) {
 			if (e.getItem().equals("---")) {
