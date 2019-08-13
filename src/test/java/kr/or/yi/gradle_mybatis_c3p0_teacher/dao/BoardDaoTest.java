@@ -10,7 +10,7 @@ import org.junit.runners.MethodSorters;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.AbstractTest;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.BoardDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BoardDaoTest extends AbstractTest {
@@ -71,7 +71,8 @@ public class BoardDaoTest extends AbstractTest {
 	@Test
 	public void test05getListCriteria() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Criteria cri = new Criteria();
+		
+		SearchCriteria cri = new SearchCriteria();
 		cri.setPage(1);	//1page
 		cri.setPerPageNum(20);//1page에 20개
 		
@@ -80,7 +81,7 @@ public class BoardDaoTest extends AbstractTest {
 			log.debug(p.toString());
 		}
 
-		Assert.assertEquals(20, list.size());
+		Assert.assertNotNull(list);
 	}
 	
 	@Test
@@ -98,5 +99,29 @@ public class BoardDaoTest extends AbstractTest {
 		int res = dao.getNextBno();
 		log.debug("next Bno : " + res);
 		Assert.assertNotEquals(0, res);
+	}
+	
+	@Test
+	public void test08getListSearchCriteria() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		
+		SearchCriteria cri = new SearchCriteria();
+		cri.setPage(1);	//1page
+		cri.setPerPageNum(20);//1page에 20개
+		cri.setKeyword("%글%");
+		cri.setSearchType("t");
+		
+		log.debug("cri " + cri);
+		
+		List<Board> list = dao.getListCriteria(cri);
+		for(Board p : list) {
+			log.debug(p.toString());
+		}
+		
+		Assert.assertNotNull(list);
+		
+		int res = dao.listSearchCount(cri);
+		log.debug("total count : " + res);
+		
 	}
 }

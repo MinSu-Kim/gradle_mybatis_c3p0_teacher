@@ -22,12 +22,6 @@ public class PageMaker {
 		calcData();
 	}
 
-	//313page
-	/*
-	public String makeSearch(int page) {
-		
-	}
-	*/
 	private void calcData() {
 
 		endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);

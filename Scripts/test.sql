@@ -13,7 +13,9 @@ from employee e join department d on e.dno = d.dept_code
     
 call salary_total(2);
 
-SELECT bno, title, content, writer, regdate, viewcnt FROM tbl_board;
+SELECT bno, title, content, writer, regdate, viewcnt 
+FROM tbl_board
+where title like '%제목%' or content like '%내용5';
 
 
 explain

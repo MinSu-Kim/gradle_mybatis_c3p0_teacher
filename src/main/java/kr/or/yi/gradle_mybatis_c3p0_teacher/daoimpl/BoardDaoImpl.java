@@ -6,12 +6,12 @@ import org.apache.ibatis.session.SqlSession;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.jdbc.MyBatisSqlSessionFactory;
 
 public class BoardDaoImpl implements BoardDao {
 	private static final String namespace = "kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao";
-
+	
 	@Override
 	public List<Board> getList() {
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
@@ -54,7 +54,7 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<Board> getListCriteria(Criteria cri) {
+	public List<Board> getListCriteria(SearchCriteria cri) {
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
 			return sqlSession.selectList(namespace + ".getListCriteria", cri);
 		}
@@ -74,5 +74,11 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
+	@Override
+	public int listSearchCount(SearchCriteria cri) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			return sqlSession.selectOne(namespace + ".listSearchCount", cri);
+		}
+	}
 
 }

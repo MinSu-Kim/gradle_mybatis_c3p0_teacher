@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -22,9 +24,11 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.BoardList;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 @SuppressWarnings("serial")
-public class PanelBoardList extends JPanel implements ActionListener {
+public class PanelBoardList extends JPanel implements ActionListener, ItemListener {
 	private BoardList pList;
 	private JPanel pPageBtns;
 	private PageMaker pm;
@@ -34,8 +38,26 @@ public class PanelBoardList extends JPanel implements ActionListener {
 	private JButton btnSearch;
 	private JComboBox<String> cmbCondition;
 	private JTextField tfSearchKey;
-
+	private Map<String, String> searchMap;
+	private String[] keys;
+	private int totalCnt;
+	
 	public PanelBoardList() {
+		createSearchMap();
+		initComponents();
+	}
+
+	private void createSearchMap() {
+		keys = new String[] {"---", "Title", "Content", "Writer", "Title OR Content", "Content OR Writer", "Title OR Content OR Writer"};
+		String[] values = {"n", "t", "c", "w", "tc", "cw", "tcw"};
+		
+		searchMap = new HashMap<String, String>();
+		for(int i=0; i<keys.length;i++) {
+			searchMap.put(keys[i], values[i]);
+		}
+	}
+
+	private void initComponents() {
 		setLayout(new BorderLayout(0, 0));
 		JPanel pCenter = new JPanel();
 		add(pCenter, BorderLayout.CENTER);
@@ -54,6 +76,7 @@ public class PanelBoardList extends JPanel implements ActionListener {
 		pBottom.add(pSearch);
 
 		cmbCondition = new JComboBox<>();
+		cmbCondition.addItemListener(this);
 		cmbCondition.setModel(getCmbModel());
 		pSearch.add(cmbCondition);
 
@@ -70,12 +93,10 @@ public class PanelBoardList extends JPanel implements ActionListener {
 
 		pPageBtns = new JPanel();
 		pBottom.add(pPageBtns);
-
 	}
 
 	private ComboBoxModel<String> getCmbModel() {
-		String[] searchStr = {"---", "Title", "Content", "Writer", "Title OR Content", "Content OR Writer", "Title OR Content OR Writer"};
-		ComboBoxModel<String> model = new DefaultComboBoxModel<String>(searchStr);
+		ComboBoxModel<String> model = new DefaultComboBoxModel<String>(keys);
 		return model;
 	}
 
@@ -119,12 +140,20 @@ public class PanelBoardList extends JPanel implements ActionListener {
 	}
 
 	private void listToPage(int startPage) {
-		cri = new SearchCriteria();
+		if (cri==null) {
+			cri = new SearchCriteria();
+		}
+		
 		cri.setPage(startPage); // 10page
 		cri.setPerPageNum(20);// 1page당 20개
-
-		int totalCnt = dao.countPaging();
-		pm = new PageMaker();
+		
+		if (cri.getSearchType()==null) {
+			totalCnt = dao.countPaging();
+		}
+		
+		if (pm==null) {
+			pm = new PageMaker();
+		}
 		pm.setCri(cri);
 		pm.setTotalCount(totalCnt);
 
@@ -185,6 +214,38 @@ public class PanelBoardList extends JPanel implements ActionListener {
 	}
 	
 	protected void actionPerformedBtnSearch(ActionEvent e) {
+		String searchType = (String) cmbCondition.getSelectedItem();
+		String keyStr = searchType.equals("n")?"":tfSearchKey.getText().trim();
+		String keyword = "%" + keyStr + "%";
 		
+		cri.setSearchType(searchMap.get(searchType));
+		
+		cri.setKeyword(keyword);
+		
+		pList.setItemList(dao.getListCriteria(cri));
+		
+		totalCnt = dao.listSearchCount(cri);
+		if (pm==null) {
+			pm = new PageMaker();
+		}
+		pm.setCri(cri);
+		pm.setTotalCount(totalCnt);
+		
+		listToPage(1);
+		initPaging();
+		lblPage.setText(pm.toString());
+		pList.reloadData();
+	}
+	public void itemStateChanged(ItemEvent e) {
+		if (e.getSource() == cmbCondition) {
+			itemStateChangedCmbCondition(e);
+		}
+	}
+	protected void itemStateChangedCmbCondition(ItemEvent e) {
+		if (e.getStateChange()==ItemEvent.SELECTED) {
+			if (e.getItem().equals("---")) {
+				tfSearchKey.setText("");
+			}
+		}
 	}
 }

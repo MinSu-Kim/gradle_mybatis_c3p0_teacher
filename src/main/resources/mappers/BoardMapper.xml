@@ -8,6 +8,39 @@
 	]]>
 	</sql>
 
+	<sql id="boardSqlCnt">
+	<![CDATA[
+		select count(bno) 
+		  from tbl_board 
+	]]>
+	</sql>
+	
+	<sql id="search">
+		<choose>
+			<when test='searchType==null or searchType.equals("n")'>
+				<where><![CDATA[ bno > 0 ]]></where>
+			</when>
+			<when test='searchType.equals("t")'>
+				<where>title like #{keyword}</where>
+			</when>
+			<when test='searchType.equals("c")'>
+				<where>content like #{keyword}</where>
+			</when>
+			<when test='searchType.equals("w")'>
+				<where>writer like #{keyword}</where>
+			</when>
+			<when test='searchType.equals("tc")'>
+				<where>(title like #{keyword}) or (content like #{keyword})</where>
+			</when>
+			<when test='searchType.equals("cw")'>
+				<where>(content like #{keyword}) or (writer like #{keyword})</where>
+			</when>
+			<when test='searchType.equals("tcw")'>
+				<where>(title like #{keyword}) or (content like #{keyword}) or (writer like #{keyword})</where>
+			</when>
+		</choose>
+	</sql>
+	
 	<select id="getList" resultType="Board">
 		<include refid="boardSql"/>
 	</select>
@@ -46,19 +79,20 @@
 	]]>
 	</update>
 	
-	<select id="getListCriteria" resultType="Board">
+	<select id="getListCriteria" resultType="Board" parameterType="SearchCriteria">
 		<include refid="boardSql"/>
-		<![CDATA[
+		<include refid="search"/>
 		order by bno desc
 		limit #{pageStart}, #{perPageNum}
-		]]>
 	</select>
 	
 	<select id="countPaging" resultType="int">
-	<![CDATA[
-		select count(bno) 
-		  from tbl_board 
-	]]>
+		<include refid="boardSqlCnt"/>
+	</select>
+
+	<select id="listSearchCount" resultType="int" parameterType="SearchCriteria">
+		<include refid="boardSqlCnt"/>
+		<include refid="search"/>
 	</select>
 	
 	<select id="getNextBno" resultType="int">

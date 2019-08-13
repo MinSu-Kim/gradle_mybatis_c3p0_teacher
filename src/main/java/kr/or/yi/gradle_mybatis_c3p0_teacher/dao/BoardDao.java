@@ -4,11 +4,12 @@ import java.util.List;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
 
 public interface BoardDao {
 	List<Board> getList();
 	
-	List<Board> getListCriteria(Criteria cri) ;
+	List<Board> getListCriteria(SearchCriteria cri) ;
 	int countPaging();
 	
 	int insertBoard(Board board);
@@ -17,4 +18,6 @@ public interface BoardDao {
 	int updateBoard(Board board);
 
 	int getNextBno();
+	
+	int listSearchCount(SearchCriteria cri);
 }
