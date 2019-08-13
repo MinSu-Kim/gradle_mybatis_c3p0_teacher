@@ -27,6 +27,7 @@
 		<mapper resource="mappers/EmployeeMapper.xml"/>
 		<mapper resource="mappers/PostMapper.xml"/>
 		<mapper resource="mappers/BoardMapper.xml"/>
+		<mapper resource="mappers/ReplyMapper.xml"/>
 	</mappers>
 	
 </configuration>

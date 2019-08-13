@@ -15,6 +15,7 @@ call salary_total(2);
 
 SELECT bno, title, content, writer, regdate, viewcnt 
 FROM tbl_board
+
 where title like '%제목%' or content like '%내용5';
 
 
@@ -29,3 +30,5 @@ values(0, '', '', '', current_timestamp, 0);
 
 
 SELECT count(*) FROM tbl_board;
+
+select rno, bno, replytext, replyer, regdate, updatedate from tbl_reply;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao">
+
+	<select id="listReply" resultType="Reply" parameterType="int">
+		select rno, bno, replytext, replyer, regdate, updatedate 
+		  from tbl_reply
+		 where bno = #{bno}
+		 order by rno desc 
+	</select>
+	
+	<insert id="insertReply" parameterType="Reply">
+		insert into tbl_reply (bno, replytext, replyer)
+		values (#{bno}, #{replyText}, #{replyer});
+	</insert>
+	
+	<update id="updateReply" parameterType="Reply">
+		UPDATE tbl_reply
+		<set>
+			<if test="replyText != null">replytext=#{replyText},</if>
+			<if test="updateDate != null">updateDate=#{updateDate},</if>
+		</set>
+		WHERE rno=#{rno};
+	</update>
+	
+	<delete id="deleteReply" parameterType="int">
+		delete from tbl_reply
+		WHERE rno=#{rno};
+	</delete>
+	
+</mapper>
