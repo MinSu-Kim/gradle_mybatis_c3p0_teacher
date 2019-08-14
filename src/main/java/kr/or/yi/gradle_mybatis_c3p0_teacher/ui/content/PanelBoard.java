@@ -47,6 +47,8 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	public PanelBoard(String title) {
 		super(title);
 		replyDao = new ReplyDaoImpl();
+		pReply.setReplyDao(replyDao);
+		pReply.setBoard(board);
 	}
 
 	@Override
@@ -129,6 +131,8 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnUpdate.setVisible(false);
 		btnWrite.addActionListener(this);
 		btnReplylist.addActionListener(this);
+		
+		pReply.setVisible(false);
 	}
 
 	public void setEditable(boolean isEditable) {

@@ -43,7 +43,7 @@ public class TestReplyList extends JFrame {
 		ReplyDao dao = new ReplyDaoImpl();
 		List<Reply> list = dao.listReply(4121);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 400);
+		setBounds(100, 100, 600, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -57,10 +57,6 @@ public class TestReplyList extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(pReplyList);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-
-		
-		pPageNum = new JPanel();
-		contentPane.add(pPageNum, BorderLayout.NORTH);
 	}
 
 	Complete returnComplete = new Complete() {
@@ -69,7 +65,6 @@ public class TestReplyList extends JFrame {
 			reload();
 		}
 	}; 
-	private JPanel pPageNum;
 	
 	public void reload() {
 		repaint();

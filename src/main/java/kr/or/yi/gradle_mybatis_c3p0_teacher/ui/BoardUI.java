@@ -37,7 +37,6 @@ public class BoardUI extends JFrame implements ActionListener {
 	private PanelBoard pBoard;
 	private JFrame writeFrame;
 	private JPanel panel;
-	private JScrollPane scrollPane;
 
 	public BoardUI() {
 		dao = new BoardDaoImpl();
@@ -47,7 +46,7 @@ public class BoardUI extends JFrame implements ActionListener {
 	private void initComponents() {
 		setTitle("게시판");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 750, 665);
+		setBounds(100, 100, 750, 800);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -71,17 +70,11 @@ public class BoardUI extends JFrame implements ActionListener {
 		pList.setPopupMenu(popupMenu);
 		
 		pBoard = new PanelBoard(BOARD_WRITE);
+		pContent.add(pBoard, BOARD_WRITE);
+		
 		pBoard.setBoardUI(this);
 		pBoard.setDao(dao);
 	
-		panel = new JPanel();
-		pContent.add(panel, BOARD_WRITE);
-		panel.setLayout(new BorderLayout(0, 0));
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setViewportView(pBoard);
-		panel.add(scrollPane, BorderLayout.CENTER);
-
 		JPanel pBtn = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pBtn.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
