@@ -1,25 +1,36 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.dao;
 
-import static org.junit.Assert.fail;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.AbstractTest;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.ReplyDaoImpl;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReplyDaoTest extends AbstractTest {
 	private static ReplyDao dao = new ReplyDaoImpl();
 	private static Random rnd = new Random(1234);
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		log.debug("setUpBefore()");
+		
+//		for(int i=0; i<10; i++) {
+//			int no = rnd.nextInt(100)+1;
+//			Reply reply = new Reply(4121, "댓글"+no, "replyer"+no);
+//			log.debug(reply.toString());
+//			int res = dao.insertReply(reply);
+//		}
+		
+	}
 	
 	@Test
 	public void testListReply() {
@@ -43,6 +54,8 @@ public class ReplyDaoTest extends AbstractTest {
 		int res = dao.insertReply(reply);
 		log.debug(String.format("reply(%s) res : %d", reply, res));
 		Assert.assertEquals(1, res);
+		
+		
 	}
 
 	@Test

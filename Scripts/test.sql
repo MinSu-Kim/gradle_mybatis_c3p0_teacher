@@ -31,4 +31,4 @@ values(0, '', '', '', current_timestamp, 0);
 
 SELECT count(*) FROM tbl_board;
 
-select rno, bno, replytext, replyer, regdate, updatedate from tbl_reply;
+select rno, bno, replytext, replyer, regdate, updatedate from tbl_reply where bno=4121;

@@ -117,7 +117,7 @@ CREATE TABLE mybatis_study.tbl_reply (
 	replytext  VARCHAR(1000) NOT NULL, -- 댓글내용
 	replyer    VARCHAR(50)   NOT NULL, -- 댓글자
 	regdate    TIMESTAMP     NOT NULL DEFAULT current_timestamp, -- 등록일
-	updatedate TIMESTAMP     NOT NULL DEFAULT current_timestamp on update current_timestamp -- 수정일
+	updatedate TIMESTAMP     NOT NULL DEFAULT current_timestamp -- 수정일
 );
 
 -- 댓글

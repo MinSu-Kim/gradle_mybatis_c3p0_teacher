@@ -18,6 +18,7 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.BoardDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoard;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoardList;
+import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class BoardUI extends JFrame implements ActionListener {
@@ -35,6 +36,8 @@ public class BoardUI extends JFrame implements ActionListener {
 	private JMenuItem mntmRead;
 	private PanelBoard pBoard;
 	private JFrame writeFrame;
+	private JPanel panel;
+	private JScrollPane scrollPane;
 
 	public BoardUI() {
 		dao = new BoardDaoImpl();
@@ -70,7 +73,14 @@ public class BoardUI extends JFrame implements ActionListener {
 		pBoard = new PanelBoard(BOARD_WRITE);
 		pBoard.setBoardUI(this);
 		pBoard.setDao(dao);
-		pContent.add(pBoard, BOARD_WRITE);
+	
+		panel = new JPanel();
+		pContent.add(panel, BOARD_WRITE);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setViewportView(pBoard);
+		panel.add(scrollPane, BorderLayout.CENTER);
 
 		JPanel pBtn = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pBtn.getLayout();

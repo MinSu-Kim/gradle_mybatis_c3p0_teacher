@@ -58,3 +58,11 @@ fields TERMINATED by '|'
 IGNORE 1 lines 
 (@zipcode, @sido, @d, @sigungu , @d, @d, @d, @d, @doro, @d, @d, @building1, @building2, @d, @d, @d, @d, @d, @d ,@d, @d, @d, @d, @d, @d, @d) 
 set zipcode=@zipcode, sido=@sido, sigungu=@sigungu, doro=@doro, building1=@building1, building2=@building2
+
+
+select * from tbl_board order by bno desc;
+select * from tbl_reply where bno = 4121;
+insert into tbl_reply (bno, replytext, replyer)
+		values (4121, '댓글1', '댓글러1');
+		
+insert into tbl_reply (bno, replytext, replyer)   values (4121, '댓글1', '댓글러1');
