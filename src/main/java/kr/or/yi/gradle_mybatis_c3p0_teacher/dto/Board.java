@@ -9,7 +9,8 @@ public class Board {
 	private String writer;
 	private Date regdate;
 	private int viewCnt;
-
+	private int replyCnt;
+	
 	public Board() {
 		// TODO Auto-generated constructor stub
 	}
@@ -81,14 +82,23 @@ public class Board {
 		this.viewCnt = viewCnt;
 	}
 
+	
+	public int getReplyCnt() {
+		return replyCnt;
+	}
+
+	public void setReplyCnt(int replyCnt) {
+		this.replyCnt = replyCnt;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("Board [bno=%s, title=%s, content=%s, writer=%s, regdate=%s, viewCnt=%s]", bno, title,
-				content, writer, regdate, viewCnt);
+		return "Board [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
+				+ regdate + ", viewCnt=" + viewCnt + ", replyCnt=" + replyCnt + "]";
 	}
 
 	public Object[] toArray() {
-		return new Object[] { bno, title, writer, String.format("%tF", regdate), viewCnt };
+		return new Object[] { bno, String.format("%s [%d]", title, replyCnt), writer, String.format("%tF", regdate), viewCnt };
 	}
 
 }

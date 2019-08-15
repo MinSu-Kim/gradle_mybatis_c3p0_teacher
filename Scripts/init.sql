@@ -140,7 +140,8 @@ ALTER TABLE mybatis_study.tbl_reply
 			bno -- 번호
 		);
 		
-		
+-- 댓글 카운트 처리
+alter table tbl_board add column replycnt int default 0;
 		
 -- 계정과 권한부여
 grant all privileges 

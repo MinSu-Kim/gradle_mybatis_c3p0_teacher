@@ -18,4 +18,7 @@ public interface BoardDao {
 	int getNextBno();
 	
 	int listSearchCount(SearchCriteria cri);
+	
+	//댓글 카운트 처리
+	void updateReplyCount(Integer bno, int amount);
 }

@@ -41,4 +41,11 @@
 		  from tbl_reply
 		 where bno = #{bno} 
 	</select>
+	
+	<select id="getBno" parameterType="Integer">
+	<![CDATA[
+		select bno from tbl_reply where rno = #{rno};
+	]]>
+	</select>
+	
 </mapper>

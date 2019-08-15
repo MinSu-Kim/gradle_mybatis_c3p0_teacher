@@ -14,4 +14,7 @@ public interface ReplyDao {
 	//댓글페이징
 	List<Reply> listPage(int bno, Criteria cri);
 	int count(int bno);
+	
+	//게시물댓글 관련
+	int getBno(Integer rno);
 }

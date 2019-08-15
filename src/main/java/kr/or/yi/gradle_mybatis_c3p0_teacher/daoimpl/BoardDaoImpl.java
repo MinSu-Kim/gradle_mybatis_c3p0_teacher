@@ -1,6 +1,8 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -72,6 +74,17 @@ public class BoardDaoImpl implements BoardDao {
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
 			return sqlSession.selectOne(namespace + ".listSearchCount", cri);
 		}
+	}
+
+	@Override
+	public void updateReplyCount(Integer bno, int amount) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("bno", bno);
+		map.put("amount", amount);
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			sqlSession.delete(namespace + ".updateReplyCount", map);
+			sqlSession.commit();
+		}		
 	}
 
 }
