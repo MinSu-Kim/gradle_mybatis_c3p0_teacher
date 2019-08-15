@@ -82,7 +82,7 @@ public class ReplyDaoTest extends AbstractTest {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		int bno = rnd.nextInt(100)+1;
 		Reply reply = new Reply(bno, "댓글1", "replyer");
-		int res = dao.insertReply(reply);
+		dao.insertReply(reply);
 		
 		List<Reply> list = dao.listReply(bno);
 		log.debug(list.get(0).toString());

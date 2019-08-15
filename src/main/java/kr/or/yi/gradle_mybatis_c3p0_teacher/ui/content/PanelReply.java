@@ -22,11 +22,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
-import java.awt.FlowLayout;
-import java.awt.Color;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 @SuppressWarnings("serial")
 public class PanelReply extends JPanel implements ActionListener {

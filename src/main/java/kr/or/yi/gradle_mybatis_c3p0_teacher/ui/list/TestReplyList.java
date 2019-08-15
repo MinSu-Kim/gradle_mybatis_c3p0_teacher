@@ -2,7 +2,6 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -10,12 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.ReplyDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.ReplyList.Complete;
 
+@SuppressWarnings("serial")
 public class TestReplyList extends JFrame {
 
 	private JPanel contentPane;
