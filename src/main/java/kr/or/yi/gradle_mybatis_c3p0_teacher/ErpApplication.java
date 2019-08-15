@@ -98,6 +98,7 @@ public class ErpApplication extends JFrame implements ActionListener {
 	}
 
 	protected void actionPerformedBtnBoard(ActionEvent e) {
+		((BoardUI)map.get(BOARD_STR)).changeListUI();
 		map.get(BOARD_STR).setVisible(true);
 	}
 }

@@ -14,14 +14,16 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.ReplyAddDlg;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.ReplyList;
 
 @SuppressWarnings("serial")
 public class PanelReply extends JPanel implements ActionListener {
@@ -34,9 +36,11 @@ public class PanelReply extends JPanel implements ActionListener {
 	private JLabel lblNoReplyer;
 	private JLabel lblRegDate;
 	private JButton btnModify;
-
+	private ReplyDao replyDao;
+	private ReplyList replyList;
+	private JButton btnDel;
+	
 	public PanelReply() {
-
 		initComponents();
 	}
 
@@ -75,6 +79,10 @@ public class PanelReply extends JPanel implements ActionListener {
 		btnModify = new JButton("수정");
 		btnModify.addActionListener(this);
 		pBtn.add(btnModify);
+		
+		btnDel = new JButton("삭제");
+		btnDel.addActionListener(this);
+		pBtn.add(btnDel);
 
 		JPanel pImg = new JPanel();
 		pImg.setBorder(null);
@@ -98,6 +106,10 @@ public class PanelReply extends JPanel implements ActionListener {
 		tfReplyText.setEditable(false);
 	}
 
+	public void setReplyDao(ReplyDao replyDao) {
+		this.replyDao = replyDao;
+	}
+
 	private ImageIcon createImageIcon(String path) {
 		java.net.URL imgURL = getClass().getResource(path);
 		ImageIcon icon = new ImageIcon(imgURL);
@@ -119,11 +131,27 @@ public class PanelReply extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnDel) {
+			actionPerformedBtnDel(e);
+		}
 		if (e.getSource() == btnModify) {
 			actionPerformedBtnModify(e);
 		}
 	}
 	protected void actionPerformedBtnModify(ActionEvent e) {
-		JOptionPane.showMessageDialog(null, reply);
+		ReplyAddDlg dlg = new ReplyAddDlg();
+		dlg.showDlg(ReplyAddDlg.REPLY_UPDATE);
+		dlg.setpUpdate(reply);
+		dlg.setReplyDao(replyDao);
+		dlg.setReplyListener(replyList.getReplyListener());
+		dlg.setVisible(true);
+	}
+
+	public void setParent(ReplyList replyList) {
+		this.replyList = replyList;
+	}
+	protected void actionPerformedBtnDel(ActionEvent e) {
+		replyDao.deleteReply(reply.getRno());
+		replyList.getReplyListener().replyComplete();
 	}
 }

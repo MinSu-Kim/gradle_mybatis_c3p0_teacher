@@ -49,8 +49,6 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	private ReplyList pReply;
 	private JFrame replyUI;
 	
-	private boolean noReply;
-	
 	public PanelBoard(String title) {
 		super(title);
 	}
@@ -138,8 +136,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 
 	Complete returnComplete = new Complete() {
 		@Override
-		public void isComplete(boolean noReply) {
-			PanelBoard.this.noReply = noReply;
+		public void isComplete() {
 			pReply.repaint();
 			pReply.revalidate();
 		}
@@ -363,6 +360,13 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 					replyUI.dispose();
 					btnReplylist.setText("댓글보기");
 				}
+
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					if (replyUI.isDisplayable()) {
+						replyUI.setVisible(true);
+					}
+				}
 			});
 			boardUI.addWindowStateListener(new WindowStateListener() {
 				@Override
@@ -382,7 +386,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 				}
 			});
 			int x = (int) (rv.getX() + rv.getWidth());
-			replyUI.setBounds(x, (int) rv.getY(), 400, (int) rv.getHeight());
+			replyUI.setBounds(x, (int) rv.getY(), 320, (int) rv.getHeight());
 			replyUI.setUndecorated(true);
 			replyUI.getContentPane().add(pReply);
 		}
@@ -390,13 +394,6 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	}
 
 	protected void actionPerformedBtnReplylist(ActionEvent e) {
-		System.out.println("noReply " + noReply);
-		if (noReply) {
-			JOptionPane.showMessageDialog(null, "댓글이 존재하지 않습니다");
-			btnReplylist.setText("댓글보기");
-			return;
-		}
-		
 		if (btnReplylist.getText().equals("댓글보기")) {
 			btnReplylist.setText("댓글 닫기");
 			viewReplyUI(true);

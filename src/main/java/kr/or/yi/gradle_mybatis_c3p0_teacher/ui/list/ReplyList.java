@@ -1,8 +1,8 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +11,6 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 
@@ -22,6 +20,8 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.ReplyAddDlg;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.ReplyAddDlg.ReplyResponse;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelReply;
 
 @SuppressWarnings("serial")
@@ -37,10 +37,13 @@ public class ReplyList extends JPanel implements ActionListener{
 	private PageMaker pm;
 	
 	private JLabel lblPage;
+	private JPanel pBottom;
+	private JPanel panel;
+	private JButton btnReplyAdd;
 	
 	
 	public interface Complete {
-		void isComplete(boolean noReply);
+		void isComplete();
 	}
 	
 	public ReplyList() {
@@ -51,23 +54,31 @@ public class ReplyList extends JPanel implements ActionListener{
 	}
 
 	private void initComponents() {
-		setLayout(new BorderLayout(0, 0));
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		pReplies = new JPanel();
+		add(pReplies);
 		pReplies.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		add(scrollPane, BorderLayout.CENTER);
-		
-		scrollPane.setViewportView(pReplies);
-		
-		pPageBtns = new JPanel();
-		add(pPageBtns, BorderLayout.SOUTH);
 		
 		lblPage = new JLabel("");
 		lblPage.setVisible(false);
-		add(lblPage, BorderLayout.NORTH);
+		add(lblPage);
+		
+		pBottom = new JPanel();
+		add(pBottom);
+		pBottom.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		panel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		pBottom.add(panel);
+		
+		btnReplyAdd = new JButton("댓글 등록");
+		btnReplyAdd.addActionListener(this);
+		panel.add(btnReplyAdd);
+		
+		pPageBtns = new JPanel();
+		pBottom.add(pPageBtns);
 	}
 
 	public void setBoard(Board board) {
@@ -118,20 +129,25 @@ public class ReplyList extends JPanel implements ActionListener{
 			for (Reply r : replyList) {
 				PanelReply pr = new PanelReply();
 				pr.setReply(r);
+				pr.setReplyDao(replyDao);
+				pr.setParent(ReplyList.this);
 				pReplies.add(pr);
 			}
 			return null;
 		}
 		
 		protected void done() {
-			boolean isNoReply = replyList.size() == 0? true:false;
-			returnComplete.isComplete(isNoReply);
+			returnComplete.isComplete();
 		};
 		
 	};
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnReplyAdd) {
+			actionPerformedBtnReplyAdd(e);
+			return;
+		}
 
 		if (e.getActionCommand().equals("<<")) {
 			reloadPaging(1);
@@ -190,4 +206,25 @@ public class ReplyList extends JPanel implements ActionListener{
 		}
 	}
 
+	protected void actionPerformedBtnReplyAdd(ActionEvent e) {
+		ReplyAddDlg dlg = new ReplyAddDlg();
+		dlg.showDlg(ReplyAddDlg.REPLY_ADD);
+		dlg.setReplyDao(replyDao);
+		dlg.setBno((int)board.getBno());
+		dlg.setReplyListener(replyListener);
+		dlg.setVisible(true);
+	}
+	
+	ReplyAddDlg.ReplyResponse replyListener = new ReplyResponse() {
+		@Override
+		public void replyComplete() {
+			reloadPaging(1);			
+		}
+	};
+
+	public ReplyAddDlg.ReplyResponse getReplyListener() {
+		return replyListener;
+	}
+	
+	
 }

@@ -58,10 +58,7 @@ public class TestReplyList extends JFrame {
 
 	Complete returnComplete = new Complete() {
 		@Override
-		public void isComplete(boolean noReply) {
-			if (noReply) {
-				JOptionPane.showMessageDialog(null, "댓글이 존재하지 않음");
-			}
+		public void isComplete() {
 			reload();
 		}
 	}; 
