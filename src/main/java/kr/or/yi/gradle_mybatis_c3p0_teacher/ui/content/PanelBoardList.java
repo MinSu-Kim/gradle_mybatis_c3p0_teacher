@@ -88,9 +88,12 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 		btnSearch.addActionListener(this);
 		pSearch.add(btnSearch);
 
+		////////////////////////////////////////
 		lblPage = new JLabel();
+		lblPage.setVisible(false);
 		pBottom.add(lblPage);
-
+		///////////////////////////////////////
+		
 		pPageBtns = new JPanel();
 		pBottom.add(pPageBtns);
 	}

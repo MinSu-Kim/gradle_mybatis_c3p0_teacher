@@ -5,12 +5,14 @@ import java.awt.EventQueue;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.ReplyDaoImpl;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.ReplyList.Complete;
 
@@ -26,6 +28,7 @@ public class TestReplyList extends JFrame {
 			public void run() {
 				try {
 					TestReplyList frame = new TestReplyList();
+//					frame.setUndecorated(true);
 					frame.setVisible(true);
 					frame.reload();
 				} catch (Exception e) {
@@ -40,19 +43,16 @@ public class TestReplyList extends JFrame {
 	}
 
 	private void initComponents() {
-		ReplyDao dao = new ReplyDaoImpl();
-		List<Reply> list = dao.listReply(4121);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 700);
+		setBounds(100, 100, 300, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
 		pReplyList = new ReplyList();
+		pReplyList.setBoard(new Board(8196));
 		pReplyList.setComplete(returnComplete);
-		pReplyList.setReplyList(list);
-		pReplyList.loadReplies();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(pReplyList);
@@ -61,12 +61,16 @@ public class TestReplyList extends JFrame {
 
 	Complete returnComplete = new Complete() {
 		@Override
-		public void isComplete() {
+		public void isComplete(boolean noReply) {
+			if (noReply) {
+				JOptionPane.showMessageDialog(null, "댓글이 존재하지 않음");
+			}
 			reload();
 		}
 	}; 
 	
 	public void reload() {
+		JOptionPane.showMessageDialog(null, "aaaaaa");
 		repaint();
 		revalidate();
 	}

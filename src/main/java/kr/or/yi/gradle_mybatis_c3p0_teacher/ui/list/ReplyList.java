@@ -3,25 +3,26 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingWorker;
+import javax.swing.border.TitledBorder;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.ReplyDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelReply;
 
 @SuppressWarnings("serial")
@@ -36,7 +37,17 @@ public class ReplyList extends JPanel implements ActionListener{
 	private int totalCnt;
 	private PageMaker pm;
 	
+	private JLabel lblPage;
+	
+	
+	public interface Complete {
+		void isComplete(boolean noReply);
+	}
+	
 	public ReplyList() {
+		setBorder(new TitledBorder(null, "댓글 목록", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		replyDao = new ReplyDaoImpl();
+		
 		initComponents();
 	}
 
@@ -47,7 +58,6 @@ public class ReplyList extends JPanel implements ActionListener{
 		pReplies.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(450, 600));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		add(scrollPane, BorderLayout.CENTER);
 		
@@ -55,77 +65,34 @@ public class ReplyList extends JPanel implements ActionListener{
 		
 		pPageBtns = new JPanel();
 		add(pPageBtns, BorderLayout.SOUTH);
-	}
-	
-	public void setReplyDao(ReplyDao replyDao) {
-		this.replyDao = replyDao;
+		
+		lblPage = new JLabel("");
+		lblPage.setVisible(false);
+		add(lblPage, BorderLayout.NORTH);
 	}
 
 	public void setBoard(Board board) {
 		this.board = board;
+		reloadPaging(1);
 	}
 
 	public void setComplete(Complete returnComplete) {
 		this.returnComplete = returnComplete;
 	}
-
-	public void setReplyList(List<Reply> replyList) {
-		this.replyList = replyList;
-	}
-
-
-	public void loadReplies() {
-		if (replyList == null) {
-			JOptionPane.showMessageDialog(null, "replyList is NULL");
-			return;
-		}
-
-		loadReplys.execute();
-	}
-	
-	private SwingWorker<Void, PanelReply> loadReplys = new SwingWorker<Void, PanelReply>() {
-
-		@Override
-		protected Void doInBackground() throws Exception {
-			for (Reply r : replyList) {
-				PanelReply pr = new PanelReply();
-				pr.setReply(r);
-				publish(pr);
-				pReplies.add(pr);
-			}
-			return null;
-		}
-
-		protected void done() {
-			initPaging();
-			returnComplete.isComplete();
-		};
-		
-	};
-	
-	
-	public interface Complete {
-		void isComplete();
-	}
 	
 	private void reloadPaging(int startNum) {
 		listToPage(startNum);
-		initPaging();
-	}
-	
-	public void reloadList() {
-//		setItemList(replyDao.listPage((int)board.getBno(), cri));
-//		reloadData();
+		initPaging();//페이지 버튼 생성, 리스너 추가
 	}
 	
 	private void listToPage(int startPage) {
 		if (cri==null) {
-			cri = new SearchCriteria();
+			cri = new Criteria();
 		}
 		
 		cri.setPage(startPage); // 10page
-		cri.setPerPageNum(20);// 1page당 20개
-		
+		cri.setPerPageNum(5);// 1page당 20개
+
 		totalCnt = replyDao.count((int)board.getBno());
 		
 		if (pm==null) {
@@ -134,8 +101,35 @@ public class ReplyList extends JPanel implements ActionListener{
 		pm.setCri(cri);
 		pm.setTotalCount(totalCnt);
 
+		lblPage.setText(pm.toString());
+		
 		reloadList();
 	}
+
+	private void reloadList() {
+		replyList = replyDao.listPage((int)board.getBno(), cri);
+		new LoadReplyList().execute();
+	}
+	
+	private class LoadReplyList extends SwingWorker<Void, PanelReply>{
+
+		@Override
+		protected Void doInBackground() throws Exception {
+			pReplies.removeAll();
+			for (Reply r : replyList) {
+				PanelReply pr = new PanelReply();
+				pr.setReply(r);
+				pReplies.add(pr);
+			}
+			return null;
+		}
+		
+		protected void done() {
+			boolean isNoReply = replyList.size() == 0? true:false;
+			returnComplete.isComplete(isNoReply);
+		};
+		
+	};
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

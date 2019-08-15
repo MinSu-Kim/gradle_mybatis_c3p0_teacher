@@ -22,11 +22,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
+import java.awt.FlowLayout;
+import java.awt.Color;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 @SuppressWarnings("serial")
 public class PanelReply extends JPanel implements ActionListener {
 	
-	public static int PANEL_REPLY_WIDTH = 400;
+	public static int PANEL_REPLY_WIDTH = 300;
 	public static int PANEL_REPLY_HEHIGHT = 100;
 	
 	private JTextField tfReplyText;
@@ -45,30 +50,31 @@ public class PanelReply extends JPanel implements ActionListener {
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
-		panel.setBorder(new EmptyBorder(0, 10, 0, 10));
-		add(panel);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		JPanel pCenter = new JPanel();
+		pCenter.setBorder(new EmptyBorder(0, 10, 0, 10));
+		add(pCenter);
+		pCenter.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel pReply = new JPanel();
-		panel.add(pReply);
-		pReply.setLayout(new GridLayout(1, 0, 0, 0));
+		pCenter.add(pReply);
 
 		lblNoReplyer = new JLabel("New label");
 		lblNoReplyer.setVerticalAlignment(SwingConstants.TOP);
-		pReply.add(lblNoReplyer);
 
 		lblRegDate = new JLabel("New label");
 		lblRegDate.setVerticalAlignment(SwingConstants.TOP);
 		lblRegDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		pReply.setLayout(new GridLayout(0, 2, 0, 0));
+		pReply.add(lblNoReplyer);
 		pReply.add(lblRegDate);
 
 		tfReplyText = new JTextField();
-		panel.add(tfReplyText);
+		pCenter.add(tfReplyText);
 		tfReplyText.setColumns(10);
 
 		JPanel pBtn = new JPanel();
-		panel.add(pBtn);
+		pCenter.add(pBtn);
 		pBtn.setLayout(new BoxLayout(pBtn, BoxLayout.X_AXIS));
 
 		btnModify = new JButton("수정");

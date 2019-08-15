@@ -2,8 +2,14 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,9 +23,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.apache.ibatis.exceptions.PersistenceException;
+
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.ReplyDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.BoardUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.ReplyList;
@@ -41,14 +47,12 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	private JButton btnCancel;
 	private JButton btnReplylist;
 	private ReplyList pReply;
+	private JFrame replyUI;
 	
-	private ReplyDao replyDao;
+	private boolean noReply;
 	
 	public PanelBoard(String title) {
 		super(title);
-		replyDao = new ReplyDaoImpl();
-		pReply.setReplyDao(replyDao);
-		pReply.setBoard(board);
 	}
 
 	@Override
@@ -121,9 +125,6 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnList = new JButton("목록");
 		pBtns.add(btnList);
 
-		pReply = new ReplyList();
-		pSouth.add(pReply, BorderLayout.CENTER);
-		
 		btnList.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnCancel.addActionListener(this);
@@ -131,9 +132,19 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnUpdate.setVisible(false);
 		btnWrite.addActionListener(this);
 		btnReplylist.addActionListener(this);
-		
-		pReply.setVisible(false);
+
+		pReply = new ReplyList();
 	}
+
+	Complete returnComplete = new Complete() {
+		@Override
+		public void isComplete(boolean noReply) {
+			PanelBoard.this.noReply = noReply;
+			pReply.repaint();
+			pReply.revalidate();
+		}
+	};
+
 
 	public void setEditable(boolean isEditable) {
 		tfTitle.setEditable(isEditable);
@@ -142,6 +153,9 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 
 	public void setItem(Board board) {
 		this.board = board;
+		pReply.setComplete(returnComplete);
+		pReply.setBoard(board);
+
 		tfTitle.setText(board.getTitle());
 		tfWriter.setText(board.getWriter());
 		taContent.setText(board.getContent());
@@ -226,6 +240,10 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		board = null;
 		btnUpdate.setText("수정");
 		clearComponent();
+		
+		if (replyUI.isVisible()) {
+			viewReplyUI(false);
+		}
 	}
 
 	protected void actionPerformedBtnWrite(ActionEvent e) {
@@ -248,14 +266,18 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	}
 
 	protected void actionPerformedBtnDelete(ActionEvent e) {
-		int res = dao.deleteBoard(board.getBno());
-		if (res == 1) {
-			JOptionPane.showMessageDialog(null, "삭제하였습니다");
+		try {
+			int res = dao.deleteBoard(board.getBno());
+			if (res == 1) {
+				JOptionPane.showMessageDialog(null, "삭제하였습니다");
+				clearComponent();
+			}
+			boardUI.reloadList();
+			boardUI.changeListUI();
 			clearComponent();
+		}catch(PersistenceException e1) {
+			JOptionPane.showMessageDialog(null, "댓글이 존재하여 삭제가 되지않습니다.");
 		}
-		boardUI.reloadList();
-		boardUI.changeListUI();
-		clearComponent();
 	}
 
 	public void setWriteMode() {
@@ -273,6 +295,10 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnUpdate.setText("수정");
 		btnDelete.setVisible(true);
 		btnCancel.setVisible(false);
+		
+		if (replyUI==null || !replyUI.isVisible()) {
+			btnReplylist.setText("댓글보기");
+		}
 	}
 
 	private void actionPerformedChangeUpdateMode() {
@@ -310,6 +336,10 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		if (writeFrame != null) {
 			writeFrame.dispose();
 		}
+		
+		if (replyUI != null && replyUI.isVisible()) {
+			viewReplyUI(false);
+		}
 	}
 
 	private void actionPerformedBtnList() {
@@ -318,29 +348,62 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 			writeFrame.dispose();
 			setWriteMode();
 		}
+		
+		viewReplyUI(false);
+	}
+
+	private void viewReplyUI(boolean isVisible) {
+		if (replyUI == null) {
+			replyUI = new JFrame();
+			Rectangle rv = new Rectangle();
+			boardUI.getBounds(rv);
+			boardUI.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					replyUI.dispose();
+					btnReplylist.setText("댓글보기");
+				}
+			});
+			boardUI.addWindowStateListener(new WindowStateListener() {
+				@Override
+				public void windowStateChanged(WindowEvent e) {
+					replyUI.setState(e.getNewState());
+				}
+			});
+			boardUI.addPropertyChangeListener(new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					if (evt.getPropertyName().equals("windowMoved")) {
+						Rectangle rv = new Rectangle();
+						boardUI.getBounds(rv);
+						int x = (int) (rv.getX() + rv.getWidth());
+						replyUI.setBounds(x, (int) rv.getY(), 400, (int) rv.getHeight());
+					}
+				}
+			});
+			int x = (int) (rv.getX() + rv.getWidth());
+			replyUI.setBounds(x, (int) rv.getY(), 400, (int) rv.getHeight());
+			replyUI.setUndecorated(true);
+			replyUI.getContentPane().add(pReply);
+		}
+		replyUI.setVisible(isVisible);
 	}
 
 	protected void actionPerformedBtnReplylist(ActionEvent e) {
+		System.out.println("noReply " + noReply);
+		if (noReply) {
+			JOptionPane.showMessageDialog(null, "댓글이 존재하지 않습니다");
+			btnReplylist.setText("댓글보기");
+			return;
+		}
+		
 		if (btnReplylist.getText().equals("댓글보기")) {
 			btnReplylist.setText("댓글 닫기");
-			pReply.setVisible(true);
-			pReply.setReplyList(replyDao.listReply((int)board.getBno()));
-			pReply.setComplete(new Complete() {
-				@Override
-				public void isComplete() {
-					reView();
-				}
-			});
-			pReply.loadReplies();
-		}else {
+			viewReplyUI(true);
+		} else {
 			btnReplylist.setText("댓글보기");
-			pReply.setVisible(false);
-			reView();
+			viewReplyUI(false);
 		}
 	}
-	
-	public void reView() {
-		repaint();
-		revalidate();
-	}
+
 }

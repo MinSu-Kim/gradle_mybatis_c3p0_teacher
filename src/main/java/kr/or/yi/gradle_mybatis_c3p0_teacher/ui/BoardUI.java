@@ -18,7 +18,6 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.BoardDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoard;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoardList;
-import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class BoardUI extends JFrame implements ActionListener {
@@ -36,7 +35,6 @@ public class BoardUI extends JFrame implements ActionListener {
 	private JMenuItem mntmRead;
 	private PanelBoard pBoard;
 	private JFrame writeFrame;
-	private JPanel panel;
 
 	public BoardUI() {
 		dao = new BoardDaoImpl();
@@ -46,7 +44,7 @@ public class BoardUI extends JFrame implements ActionListener {
 	private void initComponents() {
 		setTitle("게시판");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 750, 800);
+		setBounds(100, 100, 700, 610);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -83,6 +81,7 @@ public class BoardUI extends JFrame implements ActionListener {
 		btnNew = new JButton(BOARD_WRITE);
 		btnNew.addActionListener(this);
 		pBtn.add(btnNew);
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -130,4 +129,5 @@ public class BoardUI extends JFrame implements ActionListener {
 		pBoard.setEditable(false);
 		btnNew.setVisible(false);
 	}
+	
 }
