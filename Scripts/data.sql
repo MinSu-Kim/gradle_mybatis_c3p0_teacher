@@ -66,3 +66,10 @@ insert into tbl_reply (bno, replytext, replyer)
 		values (4121, '댓글1', '댓글러1');
 		
 insert into tbl_reply (bno, replytext, replyer)   values (4121, '댓글1', '댓글러1');
+
+-- 현재 tbl_reply와 tbl_board 의 댓글 숫자를 일치시킴
+update tbl_board 
+   set replycnt = (select count(rno) 
+                     from tbl_reply 
+                    where bno = tbl_board.bno)
+where bno >0;

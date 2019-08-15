@@ -66,7 +66,7 @@ public class ReplyDaoImpl implements ReplyDao {
 	}
 
 	@Override
-	public int getBno(Integer rno) {
+	public int getBno(int rno) {
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
 			return sqlSession.selectOne(namespace + ".getBno", rno);
 		}

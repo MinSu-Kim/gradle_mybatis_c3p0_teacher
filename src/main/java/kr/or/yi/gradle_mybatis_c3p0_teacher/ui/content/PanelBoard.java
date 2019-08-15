@@ -33,6 +33,8 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.ReplyList.Complete;
 
 @SuppressWarnings("serial")
 public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
+	private static String VIEW_REPLY_LIST = "댓글 보기";
+	
 	private JTextField tfTitle;
 	private JTextField tfWriter;
 	private JTextArea taContent;
@@ -105,7 +107,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		JPanel pBtns = new JPanel();
 		pSouth.add(pBtns, BorderLayout.NORTH);
 
-		btnReplylist = new JButton("댓글보기");
+		btnReplylist = new JButton(VIEW_REPLY_LIST);
 		pBtns.add(btnReplylist);
 
 		btnWrite = new JButton("작성");
@@ -137,12 +139,17 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	Complete returnComplete = new Complete() {
 		@Override
 		public void isComplete() {
+			btnReplylistChangeText();
 			pReply.repaint();
 			pReply.revalidate();
 		}
 	};
 
-
+	private void btnReplylistChangeText() {
+		Board newBoard = dao.readBoard(board.getBno());
+		VIEW_REPLY_LIST = String.format("%s [%d]", "댓글 보기", newBoard.getReplyCnt());
+		btnReplylist.setText(VIEW_REPLY_LIST);
+	}
 	public void setEditable(boolean isEditable) {
 		tfTitle.setEditable(isEditable);
 		taContent.setEditable(isEditable);
@@ -152,13 +159,16 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		this.board = board;
 		pReply.setComplete(returnComplete);
 		pReply.setBoard(board);
-
+		dao.updateViewCnt((int) board.getBno());
 		tfTitle.setText(board.getTitle());
 		tfWriter.setText(board.getWriter());
 		taContent.setText(board.getContent());
 		tfWriter.setEditable(false);
+		VIEW_REPLY_LIST = String.format("%s [%d]", VIEW_REPLY_LIST, board.getReplyCnt());
+		btnReplylist.setText(VIEW_REPLY_LIST);
 	}
 
+	
 	public Board getItem() {
 		String title = tfTitle.getText().trim();
 		String content = taContent.getText();
@@ -294,7 +304,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnCancel.setVisible(false);
 		
 		if (replyUI==null || !replyUI.isVisible()) {
-			btnReplylist.setText("댓글보기");
+			btnReplylist.setText(VIEW_REPLY_LIST);
 		}
 	}
 
@@ -325,6 +335,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		tfWriter.setText("");
 		taContent.setText("");
 		board = null;
+		VIEW_REPLY_LIST = "댓글 보기";
 	}
 
 	protected void actionPerformedBtnCancel() {
@@ -345,6 +356,8 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 			writeFrame.dispose();
 			setWriteMode();
 		}
+		// 게시판 목록 새로 읽기 추가 
+		boardUI.reloadList();
 		
 		viewReplyUI(false);
 	}
@@ -358,7 +371,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 				@Override
 				public void windowClosing(WindowEvent e) {
 					replyUI.dispose();
-					btnReplylist.setText("댓글보기");
+					btnReplylist.setText(VIEW_REPLY_LIST);
 				}
 
 				@Override
@@ -394,11 +407,11 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	}
 
 	protected void actionPerformedBtnReplylist(ActionEvent e) {
-		if (btnReplylist.getText().equals("댓글보기")) {
+		if (btnReplylist.getText().equals(VIEW_REPLY_LIST)) {
 			btnReplylist.setText("댓글 닫기");
 			viewReplyUI(true);
 		} else {
-			btnReplylist.setText("댓글보기");
+			btnReplylist.setText(VIEW_REPLY_LIST);
 			viewReplyUI(false);
 		}
 	}

@@ -20,5 +20,8 @@ public interface BoardDao {
 	int listSearchCount(SearchCriteria cri);
 	
 	//댓글 카운트 처리
-	void updateReplyCount(Integer bno, int amount);
+	int updateReplyCount(Integer bno, int amount);
+	
+	//조회 카운트 처리
+	int updateViewCnt(Integer bno);
 }

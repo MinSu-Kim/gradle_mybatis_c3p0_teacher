@@ -16,5 +16,5 @@ public interface ReplyDao {
 	int count(int bno);
 	
 	//게시물댓글 관련
-	int getBno(Integer rno);
+	int getBno(int rno);
 }

@@ -105,4 +105,12 @@
 		 where bno = #{bno}
 	]]>
 	</update>
+	
+	<update id="updateViewCnt">
+	<![CDATA[
+		update tbl_board 
+		   set viewcnt = viewcnt + 1 
+		 where bno = #{bno}
+	]]>	
+	</update>
 </mapper>

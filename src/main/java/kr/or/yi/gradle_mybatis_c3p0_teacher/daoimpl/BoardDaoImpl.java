@@ -77,14 +77,24 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public void updateReplyCount(Integer bno, int amount) {
+	public int updateReplyCount(Integer bno, int amount) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("bno", bno);
 		map.put("amount", amount);
 		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
-			sqlSession.delete(namespace + ".updateReplyCount", map);
+			int res = sqlSession.delete(namespace + ".updateReplyCount", map);
 			sqlSession.commit();
+			return res;
 		}		
+	}
+
+	@Override
+	public int updateViewCnt(Integer bno) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			int res = sqlSession.insert(namespace + ".updateViewCnt", bno);
+			sqlSession.commit();
+			return res;
+		}
 	}
 
 }

@@ -14,12 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.ReplyDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Criteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.service.ReplyUIService;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.ReplyAddDlg;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.ReplyAddDlg.ReplyResponse;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelReply;
@@ -30,7 +29,7 @@ public class ReplyList extends JPanel implements ActionListener{
 	private JPanel pPageBtns;
 	private JPanel pReplies;
 	private Complete returnComplete;
-	private ReplyDao replyDao;
+	private ReplyUIService replyService;
 	private Criteria cri;
 	private Board board;
 	private int totalCnt;
@@ -48,7 +47,7 @@ public class ReplyList extends JPanel implements ActionListener{
 	
 	public ReplyList() {
 		setBorder(new TitledBorder(null, "댓글 목록", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		replyDao = new ReplyDaoImpl();
+		replyService = ReplyUIService.getInstance();
 		
 		initComponents();
 	}
@@ -103,7 +102,7 @@ public class ReplyList extends JPanel implements ActionListener{
 		cri.setPage(startPage); // 10page
 		cri.setPerPageNum(5);// 1page당 20개
 
-		totalCnt = replyDao.count((int)board.getBno());
+		totalCnt = replyService.count((int)board.getBno());
 		
 		if (pm==null) {
 			pm = new PageMaker();
@@ -117,7 +116,7 @@ public class ReplyList extends JPanel implements ActionListener{
 	}
 
 	private void reloadList() {
-		replyList = replyDao.listPage((int)board.getBno(), cri);
+		replyList = replyService.listPage((int)board.getBno(), cri);
 		new LoadReplyList().execute();
 	}
 	
@@ -129,7 +128,7 @@ public class ReplyList extends JPanel implements ActionListener{
 			for (Reply r : replyList) {
 				PanelReply pr = new PanelReply();
 				pr.setReply(r);
-				pr.setReplyDao(replyDao);
+				pr.setReplyService(replyService);
 				pr.setParent(ReplyList.this);
 				pReplies.add(pr);
 			}
@@ -209,7 +208,7 @@ public class ReplyList extends JPanel implements ActionListener{
 	protected void actionPerformedBtnReplyAdd(ActionEvent e) {
 		ReplyAddDlg dlg = new ReplyAddDlg();
 		dlg.showDlg(ReplyAddDlg.REPLY_ADD);
-		dlg.setReplyDao(replyDao);
+		dlg.setReplyService(replyService);
 		dlg.setBno((int)board.getBno());
 		dlg.setReplyListener(replyListener);
 		dlg.setVisible(true);
@@ -218,7 +217,8 @@ public class ReplyList extends JPanel implements ActionListener{
 	ReplyAddDlg.ReplyResponse replyListener = new ReplyResponse() {
 		@Override
 		public void replyComplete() {
-			reloadPaging(1);			
+			reloadPaging(1);	
+			returnComplete.isComplete();
 		}
 	};
 

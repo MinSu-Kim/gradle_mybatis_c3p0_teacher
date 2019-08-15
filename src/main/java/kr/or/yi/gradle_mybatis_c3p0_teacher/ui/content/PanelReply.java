@@ -20,8 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.service.ReplyUIService;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.ReplyAddDlg;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.ReplyList;
 
@@ -36,7 +36,7 @@ public class PanelReply extends JPanel implements ActionListener {
 	private JLabel lblNoReplyer;
 	private JLabel lblRegDate;
 	private JButton btnModify;
-	private ReplyDao replyDao;
+	private ReplyUIService replyService;
 	private ReplyList replyList;
 	private JButton btnDel;
 	
@@ -106,8 +106,10 @@ public class PanelReply extends JPanel implements ActionListener {
 		tfReplyText.setEditable(false);
 	}
 
-	public void setReplyDao(ReplyDao replyDao) {
-		this.replyDao = replyDao;
+
+
+	public void setReplyService(ReplyUIService replyService) {
+		this.replyService = replyService;
 	}
 
 	private ImageIcon createImageIcon(String path) {
@@ -142,7 +144,7 @@ public class PanelReply extends JPanel implements ActionListener {
 		ReplyAddDlg dlg = new ReplyAddDlg();
 		dlg.showDlg(ReplyAddDlg.REPLY_UPDATE);
 		dlg.setpUpdate(reply);
-		dlg.setReplyDao(replyDao);
+		dlg.setReplyService(replyService);
 		dlg.setReplyListener(replyList.getReplyListener());
 		dlg.setVisible(true);
 	}
@@ -151,7 +153,7 @@ public class PanelReply extends JPanel implements ActionListener {
 		this.replyList = replyList;
 	}
 	protected void actionPerformedBtnDel(ActionEvent e) {
-		replyDao.deleteReply(reply.getRno());
+		replyService.removeReply(reply.getRno());
 		replyList.getReplyListener().replyComplete();
 	}
 }

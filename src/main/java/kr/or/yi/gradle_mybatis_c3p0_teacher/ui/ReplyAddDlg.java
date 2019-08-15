@@ -15,8 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.ReplyDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Reply;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.service.ReplyUIService;
 
 @SuppressWarnings("serial")
 public class ReplyAddDlg extends JDialog implements ActionListener {
@@ -37,7 +37,8 @@ public class ReplyAddDlg extends JDialog implements ActionListener {
 	private JButton okButton;
 
 	private Reply reply;
-	private ReplyDao replyDao;
+	private ReplyUIService replyService;
+
 	private int bno;
 	private ReplyResponse replyListener;
 
@@ -46,7 +47,7 @@ public class ReplyAddDlg extends JDialog implements ActionListener {
 		contentPanel = new JPanel(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPanel);
-		
+
 		pCenter = new JPanel();
 		contentPanel.add(pCenter, BorderLayout.CENTER);
 		pCenter.setLayout(new GridLayout(0, 2, 10, 0));
@@ -80,8 +81,8 @@ public class ReplyAddDlg extends JDialog implements ActionListener {
 		pBtns.add(cancelButton);
 	}
 
-	public void setReplyDao(ReplyDao replyDao) {
-		this.replyDao = replyDao;
+	public void setReplyService(ReplyUIService replyService) {
+		this.replyService = replyService;
 	}
 
 	public void setBno(int bno) {
@@ -108,7 +109,7 @@ public class ReplyAddDlg extends JDialog implements ActionListener {
 		if (e.getSource() == okButton) {
 			if (e.getActionCommand().equals(REPLY_ADD)) {
 				actionPerformedOkButton(e);
-			}else {
+			} else {
 				actionPerformedUpdateButton(e);
 			}
 		}
@@ -124,15 +125,15 @@ public class ReplyAddDlg extends JDialog implements ActionListener {
 	protected void actionPerformedUpdateButton(ActionEvent e) {
 		reply.setReplyer(tfReplyer.getText().trim());
 		reply.setReplyText(tfText.getText().trim());
-		replyDao.updateReply(reply);
+		replyService.updateReply(reply);
 		JOptionPane.showMessageDialog(null, "수정 되었습니다");
 		replyListener.replyComplete();
 		dispose();
 	}
-	
+
 	protected void actionPerformedOkButton(ActionEvent e) {
 		Reply reply = new Reply(bno, tfText.getText().trim(), tfReplyer.getText().trim());
-		replyDao.insertReply(reply);
+		replyService.addReply(reply);
 		replyListener.replyComplete();
 		dispose();
 	}
