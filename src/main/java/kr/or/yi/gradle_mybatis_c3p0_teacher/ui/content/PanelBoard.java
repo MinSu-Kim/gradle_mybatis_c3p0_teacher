@@ -1,6 +1,7 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -10,6 +11,8 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
@@ -32,7 +35,10 @@ import java.util.UUID;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -246,10 +252,118 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		taContent.setText(board.getContent());
 		tfWriter.setEditable(false);
 		
+		setUploadPaths(board.getFiles());
+		
 		VIEW_REPLY_LIST = String.format("%s [%d]", VIEW_REPLY_LIST, board.getReplyCnt());
 		btnReplylist.setText(VIEW_REPLY_LIST);
 	}
 
+	public void setUploadPaths(List<String> uploadPaths) {
+		
+		for(String subPath : uploadPaths) {
+			System.out.println("sub Path ==> " + subPath);
+			JLabel lbl = new JLabel();
+			File file = null;
+			if (MediaUtils.checkImageType(subPath.substring(subPath.indexOf(".")+1))) {
+				String front = subPath.substring(0, 12);
+				String end = subPath.substring(12);
+				file = new File(UPLOAD_DIR, front+"s_"+end);
+				lbl.setIcon(new ImageIcon(UPLOAD_DIR+ front+"s_"+end));
+			}else {
+				file = new File(UPLOAD_DIR, subPath);
+				lbl.setIcon(FileSystemView.getFileSystemView().getSystemIcon(file));
+			}
+			
+			String fname = file.getName();
+			
+			lbl.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl.setForeground(Color.RED);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl.setForeground(Color.BLACK);
+				}
+			});
+			lbl.setText(fname.substring(fname.lastIndexOf("_")+1));
+			lbl.setToolTipText(fname.substring(fname.indexOf("_")+1));
+			lbl.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getClickCount() == 2) {
+						JFileChooser f = new JFileChooser(System.getProperty("user.dir"));
+						int res = f.showSaveDialog(null);
+						File file = f.getSelectedFile();
+						if (res==JFileChooser.APPROVE_OPTION) {
+							new CreateFileWorker(subPath, file.getPath()).execute();
+						}
+					}
+				}
+				
+			});
+			
+			JPopupMenu popupMenu = new JPopupMenu();
+			lbl.setComponentPopupMenu(popupMenu);
+
+			JMenuItem mntmAttachDel = new JMenuItem("삭제");
+			mntmAttachDel.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (MediaUtils.checkImageType(fname)) {
+						String front = subPath.substring(0, 12);
+						String end = subPath.substring(14);
+						new File(UPLOAD_DIR, front+end).delete();
+					}
+					new File(UPLOAD_DIR, subPath).delete();
+					pAttachPreview.remove(lbl);
+					pAttachPreview.repaint();
+					pAttachPreview.revalidate();
+				}
+			});
+			popupMenu.add(mntmAttachDel);
+			
+			pAttachPreview.add(lbl);
+			repaint();
+			revalidate();
+		}
+		
+	}
+	
+	public class CreateFileWorker extends SwingWorker<Void, Void>{
+		private File srcFile;
+		private File destFile;
+		
+		public CreateFileWorker(String src, String dest) {
+			this.srcFile = new File(UPLOAD_DIR + src);
+			this.destFile= new File(dest);
+		}
+
+		@Override
+		protected Void doInBackground() throws Exception {
+			makeFile();
+			return null;
+		}
+
+		@Override
+		protected void done() {
+			JOptionPane.showMessageDialog(null, "저장되었습니다");
+		}
+		
+		public void makeFile(){
+			try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(srcFile));
+					BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(destFile));) {
+				byte[] readBuffer = new byte[1024];
+				while (bis.read(readBuffer, 0, readBuffer.length) != -1) {
+					bos.write(readBuffer);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public Board getItem() {
 		String title = tfTitle.getText().trim();
 		String content = taContent.getText();
@@ -485,6 +599,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnDelete.setVisible(false);
 		btnCancel.setVisible(false);
 		pAttachPreview.setVisible(false);
+
 		listFile.setEnabled(true);
 		listFile.setDragEnabled(true);
 	}
@@ -497,6 +612,13 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnDelete.setVisible(true);
 		btnCancel.setVisible(false);
 		pAttachPreview.setVisible(true);
+		
+//		for( Component c : pAttachPreview.getComponents()) {
+//			JComponent l = (JComponent) c;
+//			l.getComponentPopupMenu().setEnabled(false);
+//		}
+		
+		
 		listFile.setDragEnabled(false);
 
 		if (replyUI == null || !replyUI.isVisible()) {
@@ -511,8 +633,9 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnDelete.setVisible(false);
 		btnCancel.setVisible(true);
 		btnList.setVisible(false);
-		pAttachPreview.setVisible(true);
-
+		
+		pAttachPreview.setVisible(true);		
+		
 		listFile.setDragEnabled(true);
 	}
 

@@ -27,4 +27,5 @@ public interface BoardDao {
 	
 	//첨부파일 처리
 	int addAttach(String fullName);
+	List<String> getAttach(Integer bno);
 }

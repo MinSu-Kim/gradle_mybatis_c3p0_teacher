@@ -73,4 +73,7 @@ public class BoardUIService {
 		return boardDao.updateBoard(board);
 	}
 	
+	public List<String> getAttach(Integer bno){
+		return boardDao.getAttach(bno);
+	}
 }

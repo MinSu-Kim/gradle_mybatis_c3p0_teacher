@@ -14,6 +14,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.service.BoardUIService;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoard;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoardList;
 
@@ -115,6 +116,7 @@ public class BoardUI extends JFrame implements ActionListener {
 	
 	protected void actionPerformedMntmRead(ActionEvent e) {
 		Board board = pList.getSelectedBoard();
+		board.setFiles(BoardUIService.getInstance().getAttach((int)board.getBno()));
 		cardLayout.show(pContent, BOARD_WRITE);
 		pBoard.setItem(board);
 		pBoard.setReadMode();

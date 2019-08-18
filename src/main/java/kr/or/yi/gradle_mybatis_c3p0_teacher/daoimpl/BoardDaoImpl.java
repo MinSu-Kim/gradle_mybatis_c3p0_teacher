@@ -106,4 +106,11 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
+	@Override
+	public List<String> getAttach(Integer bno) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			return sqlSession.selectList(namespace + ".getAttach", bno);
+		}
+	}
+
 }
