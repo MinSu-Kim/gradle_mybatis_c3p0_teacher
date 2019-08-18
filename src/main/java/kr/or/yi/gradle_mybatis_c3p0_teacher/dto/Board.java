@@ -1,6 +1,7 @@
 package kr.or.yi.gradle_mybatis_c3p0_teacher.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class Board {
 	private long bno;
@@ -10,7 +11,8 @@ public class Board {
 	private Date regdate;
 	private int viewCnt;
 	private int replyCnt;
-	
+	private List<String> files;
+
 	public Board() {
 		// TODO Auto-generated constructor stub
 	}
@@ -32,6 +34,18 @@ public class Board {
 		this.writer = writer;
 		this.regdate = regdate;
 		this.viewCnt = viewCnt;
+	}
+
+	public Board(long bno, String title, String content, String writer, Date regdate, int viewCnt, int replyCnt,
+			List<String> files) {
+		this.bno = bno;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.regdate = regdate;
+		this.viewCnt = viewCnt;
+		this.replyCnt = replyCnt;
+		this.files = files;
 	}
 
 	public long getBno() {
@@ -82,7 +96,6 @@ public class Board {
 		this.viewCnt = viewCnt;
 	}
 
-	
 	public int getReplyCnt() {
 		return replyCnt;
 	}
@@ -91,14 +104,24 @@ public class Board {
 		this.replyCnt = replyCnt;
 	}
 
+	
+	public List<String> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<String> files) {
+		this.files = files;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", viewCnt=" + viewCnt + ", replyCnt=" + replyCnt + "]";
+				+ regdate + ", viewCnt=" + viewCnt + ", replyCnt=" + replyCnt + ", files=" + files + "]";
 	}
 
 	public Object[] toArray() {
-		return new Object[] { bno, String.format("%s [%d]", title, replyCnt), writer, String.format("%tF", regdate), viewCnt };
+		return new Object[] { bno, String.format("%s [%d] %s", title, replyCnt, files==null?"":"- 첨부파일"), writer, String.format("%tF", regdate),
+				viewCnt };
 	}
 
 }

@@ -13,15 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
-import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.BoardDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoard;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.content.PanelBoardList;
 
 @SuppressWarnings("serial")
 public class BoardUI extends JFrame implements ActionListener {
-	private BoardDao dao;
 	private JPanel contentPane;
 	private JButton btnNew;
 	private JPanel pContent;
@@ -37,7 +34,6 @@ public class BoardUI extends JFrame implements ActionListener {
 	private JFrame writeFrame;
 
 	public BoardUI() {
-		dao = new BoardDaoImpl();
 		initComponents();
 	}
 
@@ -56,7 +52,6 @@ public class BoardUI extends JFrame implements ActionListener {
 		pContent.setLayout(cardLayout);
 		
 		pList = new PanelBoardList();
-		pList.setDao(dao);
 		pContent.add(pList, BOARD_LIST);
 		
 		popupMenu = new JPopupMenu();
@@ -71,7 +66,6 @@ public class BoardUI extends JFrame implements ActionListener {
 		pContent.add(pBoard, BOARD_WRITE);
 		
 		pBoard.setBoardUI(this);
-		pBoard.setDao(dao);
 	
 		JPanel pBtn = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pBtn.getLayout();
@@ -100,7 +94,6 @@ public class BoardUI extends JFrame implements ActionListener {
 			PanelBoard newBoardPane = new PanelBoard("글쓰기");
 			newBoardPane.setFrame(writeFrame);
 			newBoardPane.setBoardUI(this);
-			newBoardPane.setDao(dao);
 			newBoardPane.setWriteMode();
 			writeFrame.getContentPane().add(newBoardPane, BorderLayout.CENTER);
 		}

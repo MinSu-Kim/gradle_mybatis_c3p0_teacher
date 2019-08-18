@@ -24,4 +24,7 @@ public interface BoardDao {
 	
 	//조회 카운트 처리
 	int updateViewCnt(Integer bno);
+	
+	//첨부파일 처리
+	int addAttach(String fullName);
 }

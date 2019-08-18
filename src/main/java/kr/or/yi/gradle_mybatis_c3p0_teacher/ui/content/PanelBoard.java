@@ -25,8 +25,8 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.service.BoardUIService;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.BoardUI;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.ReplyList;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.ReplyList.Complete;
@@ -38,7 +38,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	private JTextField tfTitle;
 	private JTextField tfWriter;
 	private JTextArea taContent;
-	private BoardDao dao;
+//	private BoardUIService dao;
 	private BoardUI boardUI;
 	private Board board;
 	private JButton btnUpdate;
@@ -146,7 +146,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	};
 
 	private void btnReplylistChangeText() {
-		Board newBoard = dao.readBoard(board.getBno());
+		Board newBoard = BoardUIService.getInstance().readBoard(board.getBno());
 		VIEW_REPLY_LIST = String.format("%s [%d]", "댓글 보기", newBoard.getReplyCnt());
 		btnReplylist.setText(VIEW_REPLY_LIST);
 	}
@@ -159,7 +159,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		this.board = board;
 		pReply.setComplete(returnComplete);
 		pReply.setBoard(board);
-		dao.updateViewCnt((int) board.getBno());
+		BoardUIService.getInstance().updateViewCnt((int) board.getBno());
 		tfTitle.setText(board.getTitle());
 		tfWriter.setText(board.getWriter());
 		taContent.setText(board.getContent());
@@ -186,10 +186,6 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 			board.setWriter(writer);
 			return board;
 		}
-	}
-
-	public void setDao(BoardDao dao) {
-		this.dao = dao;
 	}
 
 	public void setBoardUI(BoardUI boardUI) {
@@ -236,7 +232,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		board.setContent(content);
 		JOptionPane.showMessageDialog(null, "board" + board);
 
-		int res = dao.updateBoard(board);
+		int res = BoardUIService.getInstance().updateBoard(board);
 		if (res == 1) {
 			JOptionPane.showMessageDialog(null, "수정하였습니다");
 			clearComponent();
@@ -256,9 +252,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	protected void actionPerformedBtnWrite(ActionEvent e) {
 
 		try {
-			if (dao == null)
-				throw new RuntimeException("dao null");
-			int res = dao.insertBoard(getItem());
+			int res = BoardUIService.getInstance().insertBoard(getItem());
 			if (res == 1) {
 				JOptionPane.showMessageDialog(null, "추가하였습니다");
 				clearComponent();
@@ -274,7 +268,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 
 	protected void actionPerformedBtnDelete(ActionEvent e) {
 		try {
-			int res = dao.deleteBoard(board.getBno());
+			int res = BoardUIService.getInstance().deleteBoard(board.getBno());
 			if (res == 1) {
 				JOptionPane.showMessageDialog(null, "삭제하였습니다");
 				clearComponent();

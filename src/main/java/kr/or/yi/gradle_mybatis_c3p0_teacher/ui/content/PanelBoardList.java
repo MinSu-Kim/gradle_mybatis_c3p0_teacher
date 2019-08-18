@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,13 +21,11 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
-import kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.PageMaker;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.service.BoardUIService;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.list.BoardList;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 @SuppressWarnings("serial")
 public class PanelBoardList extends JPanel implements ActionListener, ItemListener {
@@ -34,7 +34,6 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 	private PageMaker pm;
 	private SearchCriteria cri;
 	private JLabel lblPage;
-	private BoardDao dao;
 	private JButton btnSearch;
 	private JComboBox<String> cmbCondition;
 	private JTextField tfSearchKey;
@@ -96,6 +95,8 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 		
 		pPageBtns = new JPanel();
 		pBottom.add(pPageBtns);
+		
+		reloadPaging(1);
 	}
 
 	private ComboBoxModel<String> getCmbModel() {
@@ -109,7 +110,7 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 	}
 	
 	public void reloadList() {
-		pList.setItemList(dao.getListCriteria(cri));
+		pList.setItemList(BoardUIService.getInstance().getListCriteria(cri));
 		pList.reloadData();
 	}
 
@@ -121,7 +122,7 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 		cri.setPage(startPage); // 10page
 		cri.setPerPageNum(20);// 1page당 20개
 		
-		totalCnt = dao.listSearchCount(cri);
+		totalCnt = BoardUIService.getInstance().listSearchCount(cri);
 		
 		if (pm==null) {
 			pm = new PageMaker();
@@ -203,11 +204,6 @@ public class PanelBoardList extends JPanel implements ActionListener, ItemListen
 			lastBtn.addActionListener(this);
 			pPageBtns.add(lastBtn);
 		}
-	}
-
-	public void setDao(BoardDao dao) {
-		this.dao = dao;
-		reloadPaging(1);
 	}
 
 	public void setPopupMenu(JPopupMenu popupMenu) {

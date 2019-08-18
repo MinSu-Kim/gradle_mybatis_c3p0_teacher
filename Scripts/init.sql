@@ -88,6 +88,7 @@ select now() , sysdate(), curdate();
 
 -- 게시판
 drop table if exists mybatis_study.tbl_reply;
+drop table if exists mybatis_study.tbl_attach;
 drop table if exists mybatis_study.tbl_board;
 
 -- 게시판
@@ -140,9 +141,36 @@ ALTER TABLE mybatis_study.tbl_reply
 			bno -- 번호
 		);
 		
+	
 -- 댓글 카운트 처리
 alter table tbl_board add column replycnt int default 0;
-		
+	
+
+-- 첨부파일
+CREATE TABLE mybatis_study.tbl_attach (
+	fullName VARCHAR(150) NOT NULL, -- 파일FULL경로
+	bno      INT          NOT NULL, -- 번호
+	regdate  TIMESTAMP    NOT NULL DEFAULT current_timestamp
+	 -- 첨부일
+);
+
+-- 첨부파일
+ALTER TABLE mybatis_study.tbl_attach
+	ADD CONSTRAINT PK_tbl_attach -- 첨부파일 기본키
+		PRIMARY KEY (
+			fullName -- 파일FULL경로
+		);
+
+-- 첨부파일
+ALTER TABLE mybatis_study.tbl_attach
+	ADD CONSTRAINT FK_tbl_board_TO_tbl_attach -- 게시판 -> 첨부파일
+		FOREIGN KEY (
+			bno -- 번호
+		)
+		REFERENCES mybatis_study.tbl_board ( -- 게시판
+			bno -- 번호
+		);
+
 -- 계정과 권한부여
 grant all privileges 
 on mybatis_study.* 

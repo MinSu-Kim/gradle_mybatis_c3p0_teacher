@@ -97,4 +97,13 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
+	@Override
+	public int addAttach(String fullName) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
+			int res = sqlSession.insert(namespace + ".addAttach", fullName);
+			sqlSession.commit();
+			return res;
+		}
+	}
+
 }
