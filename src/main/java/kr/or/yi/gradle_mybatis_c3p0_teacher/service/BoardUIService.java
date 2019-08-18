@@ -11,6 +11,9 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.jdbc.MyBatisSqlSessionFactory;
 
 public class BoardUIService {
+	private static final String BOARD_NAME_SPACE = "kr.or.yi.gradle_mybatis_c3p0_teacher.dao.BoardDao";
+
+	
 	private static final BoardUIService instance = new BoardUIService();
 	private BoardDao boardDao;
 	
@@ -26,12 +29,11 @@ public class BoardUIService {
 		int res = 0;
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
-			res += boardDao.insertBoard(board);
+			res += sqlSession.insert(BOARD_NAME_SPACE + ".insertBoard", board);
 			List<String> files = board.getFiles();
 			for(String file : files) {
-				res += boardDao.addAttach(file);
+				res += sqlSession.insert(BOARD_NAME_SPACE + ".addAttach", file);
 			}
-			
 			if (res == files.size()+1)
 				sqlSession.commit();
 			else
@@ -59,10 +61,6 @@ public class BoardUIService {
 
 	public void updateViewCnt(int bno) {
 		boardDao.updateViewCnt(bno);
-	}
-
-	public int insertBoard(Board item) {
-		return boardDao.insertBoard(item);
 	}
 
 	public int deleteBoard(long bno) {

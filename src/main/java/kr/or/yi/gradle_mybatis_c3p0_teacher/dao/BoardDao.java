@@ -10,7 +10,7 @@ public interface BoardDao {
 	
 	List<Board> getListCriteria(SearchCriteria cri) ;
 	
-	int insertBoard(Board board);
+//	int insertBoard(Board board);
 	Board readBoard(long bno);
 	int deleteBoard(long bno);
 	int updateBoard(Board board);
@@ -26,6 +26,6 @@ public interface BoardDao {
 	int updateViewCnt(Integer bno);
 	
 	//첨부파일 처리
-	int addAttach(String fullName);
+//	int addAttach(String fullName);
 	List<String> getAttach(Integer bno);
 }
