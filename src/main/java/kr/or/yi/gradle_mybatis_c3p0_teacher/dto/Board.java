@@ -27,6 +27,13 @@ public class Board {
 		this.writer = writer;
 	}
 
+	public Board(String title, String content, String writer, List<String> files) {
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.files = files;
+	}
+
 	public Board(long bno, String title, String content, String writer, Date regdate, int viewCnt) {
 		this.bno = bno;
 		this.title = title;
