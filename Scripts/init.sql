@@ -143,7 +143,7 @@ ALTER TABLE mybatis_study.tbl_reply
 		
 	
 -- 댓글 카운트 처리
-alter table tbl_board add column replycnt int default 0;
+alter table mybatis_study.tbl_board add column replycnt int default 0;
 	
 
 -- 첨부파일
