@@ -2,6 +2,8 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
 
@@ -12,8 +14,8 @@ public interface BoardDao {
 	
 //	int insertBoard(Board board);
 	Board readBoard(long bno);
-	int deleteBoard(long bno);
-	int updateBoard(Board board);
+	int deleteBoard(SqlSession sqlSession, long bno);
+	int updateBoard(SqlSession sqlSession, Board board);
 
 	int getNextBno();
 	
@@ -28,4 +30,7 @@ public interface BoardDao {
 	//첨부파일 처리
 //	int addAttach(String fullName);
 	List<String> getAttach(Integer bno);
+	
+	void deleteAttach(SqlSession sqlSession, Integer bno);
+	void replaceAttach(SqlSession sqlSession, String fullName, int bno);
 }

@@ -2,6 +2,7 @@ package kr.or.yi.gradle_mybatis_c3p0_teacher.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -11,10 +12,13 @@ import kr.or.yi.gradle_mybatis_c3p0_teacher.AbstractTest;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.daoimpl.BoardDaoImpl;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.SearchCriteria;
+import kr.or.yi.gradle_mybatis_c3p0_teacher.jdbc.MyBatisSqlSessionFactory;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BoardDaoTest extends AbstractTest {
 	private static BoardDao dao = new BoardDaoImpl();
+	private static SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+	
 	private long bno = 4087;
 	@Test
 	public void test01getList() {
@@ -46,7 +50,7 @@ public class BoardDaoTest extends AbstractTest {
 	@Test
 	public void test04deleteBoard() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		int res = dao.deleteBoard(bno+1);
+		int res = dao.deleteBoard(sqlSession, bno+1);
 		Assert.assertEquals(1, res);
 	}
 	
@@ -56,15 +60,15 @@ public class BoardDaoTest extends AbstractTest {
 		Board newBoard = new Board();
 		newBoard.setBno(1);
 		newBoard.setTitle("수정한 글");
-		int res = dao.updateBoard(newBoard);
+		int res = dao.updateBoard(sqlSession, newBoard);
 		Assert.assertEquals(1, res);
 		
 		newBoard.setContent("수정한 내용");
-		res = dao.updateBoard(newBoard);
+		res = dao.updateBoard(sqlSession, newBoard);
 		Assert.assertEquals(1, res);
 		
 		newBoard.setWriter("updateBie");
-		res = dao.updateBoard(newBoard);
+		res = dao.updateBoard(sqlSession, newBoard);
 		Assert.assertEquals(1, res);
 	}
 	

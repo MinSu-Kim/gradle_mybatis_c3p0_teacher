@@ -130,5 +130,17 @@
 	]]>
 	</select>
 	
-
+	<delete id="deleteAttach">
+	<![CDATA[
+		delete from tbl_attach 
+		 where bno = #{bno}
+	]]>	
+	</delete>
+	
+	<update id="replaceAttach" parameterType="map">
+	<![CDATA[
+		insert into tbl_attach(fullname, bno) 
+		values (#{fullName}, #{bno});
+	]]>	
+	</update>
 </mapper>

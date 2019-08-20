@@ -364,23 +364,52 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		int[] selIndexes = listFile.getSelectedIndices();
 		System.out.println(Arrays.toString(selIndexes));
 		System.out.println(model);
+		
 		for (int i = selIndexes.length - 1; i >= 0; i--) {
+			File deleteFile = model.get(selIndexes[i]);
+			deleteFile.delete();
+			String start = deleteFile.getPath().substring(0, deleteFile.getPath().lastIndexOf("\\")+1);
+			String end = deleteFile.getPath().substring(deleteFile.getPath().lastIndexOf("\\")+1);
+			String thumbnailName = start + "s_" + end;
+			File newFile = new File(thumbnailName);
+			newFile.delete();
 			model.removeElementAt(selIndexes[i]);
 		}
 	}
 
 	private void actionPerformedUpdate() {
+		//수정후 저장
 		String title = tfTitle.getText().trim();
 		String content = taContent.getText();
+		
 		board.setTitle(title);
 		board.setContent(content);
+		
+		
+		System.out.println("model.getSize() : " + model.getSize());
+		
+		if (model.getSize() >0) {
+			List<String> files = new ArrayList<String>();
+			for(int i=model.getSize()-1; i>-1; i--){
+				String f = model.getElementAt(i).getPath();
+				System.out.println(f);
+				System.out.println(f.indexOf("upload"));
+				String sub = f.substring(f.indexOf("upload")+6).replace("\\", "/");
+				System.out.println("sub ========== " + sub);
+				files.add(sub);
+			}
+			
+			board.setFiles(files);
+			System.out.println("update files " + files);
+		}else {
+			board.setFiles(null);
+		}
+		
 		JOptionPane.showMessageDialog(null, "board" + board);
 
-		int res = BoardUIService.getInstance().updateBoard(board);
-		if (res == 1) {
-			JOptionPane.showMessageDialog(null, "수정하였습니다");
-			clearComponent();
-		}
+		BoardUIService.getInstance().modify(board);
+		JOptionPane.showMessageDialog(null, "수정하였습니다");
+		clearComponent();
 		boardUI.reloadList();
 		boardUI.changeListUI();
 		boardUI.setBtnNewButtonText();
@@ -388,7 +417,7 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 		btnUpdate.setText("수정");
 		clearComponent();
 
-		if (replyUI.isVisible()) {
+		if (replyUI!=null && replyUI.isVisible()) {
 			viewReplyUI(false);
 		}
 	}
@@ -496,6 +525,8 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 	}
 
 	protected void actionPerformedBtnDelete(ActionEvent e) {
+		
+		///// 파일삭제, DB 삭제
 		try {
 			int res = BoardUIService.getInstance().deleteBoard(board.getBno());
 			if (res == 1) {

@@ -38,21 +38,13 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int deleteBoard(long bno) {
-		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
-			int res = sqlSession.delete(namespace + ".deleteBoard", bno);
-			sqlSession.commit();
-			return res;
-		}
+	public int deleteBoard(SqlSession sqlSession, long bno) {
+		return sqlSession.delete(namespace + ".deleteBoard", bno);
 	}
 
 	@Override
-	public int updateBoard(Board board) {
-		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
-			int res = sqlSession.update(namespace + ".updateBoard", board);
-			sqlSession.commit();
-			return res;
-		}
+	public int updateBoard(SqlSession sqlSession, Board board) {
+		return sqlSession.update(namespace + ".updateBoard", board);
 	}
 
 	@Override
@@ -112,5 +104,21 @@ public class BoardDaoImpl implements BoardDao {
 			return sqlSession.selectList(namespace + ".getAttach", bno);
 		}
 	}
+
+//service에서 sqlSession받아서 처리
+	@Override
+	public void deleteAttach(SqlSession sqlSession, Integer bno) {
+		sqlSession.delete(namespace + ".deleteAttach", bno);
+	}
+
+	@Override
+	public void replaceAttach(SqlSession sqlSession, String fullName, int bno) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("bno", bno);
+		map.put("fullName", fullName);
+		System.out.println(map);
+		sqlSession.update(namespace + ".replaceAttach", map);
+	}
+
 
 }
