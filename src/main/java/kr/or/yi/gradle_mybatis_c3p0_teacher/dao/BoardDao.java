@@ -12,7 +12,7 @@ public interface BoardDao {
 	
 	List<Board> getListCriteria(SearchCriteria cri) ;
 	
-//	int insertBoard(Board board);
+	void insertBoard(SqlSession sqlSession,Board board);
 	Board readBoard(long bno);
 	int deleteBoard(SqlSession sqlSession, long bno);
 	int updateBoard(SqlSession sqlSession, Board board);
@@ -28,7 +28,7 @@ public interface BoardDao {
 	int updateViewCnt(Integer bno);
 	
 	//첨부파일 처리
-//	int addAttach(String fullName);
+	void addAttach(SqlSession sqlSession, String fullName);
 	List<String> getAttach(Integer bno);
 	
 	void deleteAttach(SqlSession sqlSession, Integer bno);

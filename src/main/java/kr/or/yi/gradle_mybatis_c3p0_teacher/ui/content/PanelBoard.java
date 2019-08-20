@@ -52,8 +52,6 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileSystemView;
 
-import org.apache.ibatis.exceptions.PersistenceException;
-
 import kr.or.yi.gradle_mybatis_c3p0_teacher.dto.Board;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.service.BoardUIService;
 import kr.or.yi.gradle_mybatis_c3p0_teacher.ui.BoardUI;
@@ -526,21 +524,33 @@ public class PanelBoard extends AbstractPanel<Board> implements ActionListener {
 
 	protected void actionPerformedBtnDelete(ActionEvent e) {
 		
-		///// 파일삭제, DB 삭제
+		
 		try {
-			int res = BoardUIService.getInstance().deleteBoard(board.getBno());
-			if (res == 1) {
-				JOptionPane.showMessageDialog(null, "삭제하였습니다");
-				clearComponent();
+		
+			BoardUIService.getInstance().remove((int)board.getBno());
+			
+			for (int i = model.size() - 1; i >= 0; i--) {
+				File deleteFile = model.get(i);
+				deleteFile.delete();
+				String start = deleteFile.getPath().substring(0, deleteFile.getPath().lastIndexOf("\\")+1);
+				String end = deleteFile.getPath().substring(deleteFile.getPath().lastIndexOf("\\")+1);
+				String thumbnailName = start + "s_" + end;
+				File newFile = new File(thumbnailName);
+				newFile.delete();
+				model.removeElementAt(i);
 			}
+			
+			JOptionPane.showMessageDialog(null, "삭제하였습니다");
+			clearComponent();
 			boardUI.reloadList();
 			boardUI.changeListUI();
 			clearComponent();
-		} catch (PersistenceException e1) {
+		} catch (RuntimeException e1) {
 			JOptionPane.showMessageDialog(null, "댓글이 존재하여 삭제가 되지않습니다.");
 		}
 	}
 
+	
 	public void setWriteMode() {
 		btnWrite.setVisible(true);
 		btnList.setVisible(true);

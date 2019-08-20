@@ -21,14 +21,10 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
-//	@Override
-//	public int insertBoard(Board board) {
-//		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
-//			int res = sqlSession.insert(namespace + ".insertBoard", board);
-//			sqlSession.commit();
-//			return res;
-//		}
-//	}
+	@Override
+	public void insertBoard(SqlSession sqlSession, Board board) {
+			sqlSession.insert(namespace + ".insertBoard", board);
+	}
 
 	@Override
 	public Board readBoard(long bno) {
@@ -89,14 +85,10 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	}
 
-//	@Override
-//	public int addAttach(String fullName) {
-//		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
-//			int res = sqlSession.insert(namespace + ".addAttach", fullName);
-//			sqlSession.commit();
-//			return res;
-//		}
-//	}
+	@Override
+	public void addAttach(SqlSession sqlSession, String fullName) {
+		sqlSession.insert(namespace + ".addAttach", fullName);
+	}
 
 	@Override
 	public List<String> getAttach(Integer bno) {
